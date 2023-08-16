@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Browse Games</title>
+</head>
+<body>
+    <h1>Total Games - {{ num_games }}</h1>
+
+    <!-- Games table layout -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>RELEASE DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+            <tr>
+                <td>{{ game.game_id }}</td>
+                <td>{{ game.title }}</td>
+                <td>{{ game.game_url }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
