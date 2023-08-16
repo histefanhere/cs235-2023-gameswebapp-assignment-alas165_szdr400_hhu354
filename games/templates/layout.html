@@ -47,12 +47,9 @@
 
     <div id="nav-offset">
         <header class="site-header">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <img src="img/logo.png" alt="Logo">
-                    <span class="nav-item">Team Socks</span>
-                </a>
-            </div>
+            {% block header %}
+            <h1>Socks Gaming Library Website</h1>
+            {% endblock %}
         </header>
 
         {% block content %} {% endblock %}

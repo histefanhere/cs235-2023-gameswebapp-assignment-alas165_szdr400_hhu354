@@ -32,6 +32,14 @@ div#nav-offset {
     height: 100vh;
 }
 
+header {
+    background: #fff;
+    padding: 20px 20px;
+    text-align: center;
+    color: #7a7a7a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
 .logo {
     text-align: center;
     display: flex;
