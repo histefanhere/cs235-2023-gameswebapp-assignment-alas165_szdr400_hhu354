@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;&display=swap");
 
+:root {
+    --col-bg-dark: #dfe9f5;
+    --col-bg-light: #f5f5f5;
+
+    --col-text-soft: #555353;
+
+    --col-text-highlight: #e0e0e0;
+
+    --col-shadow: #0000000C;
+}
+
  * { /* I Don't really like using a catch all like this. it's bad for performance and can creates some annoying behavior */
     margin: 0;
     padding: 0;
@@ -11,7 +22,7 @@
 }
 
 body {
-    background: #dfe9f5;
+    background: var(--col-bg-dark);
 }
 
 nav {
@@ -19,11 +30,11 @@ nav {
     top: 0;
     bottom: 0;
     left: 0;
-    background: #f5f5f5;
+    background: var(--col-bg-light);
     width: 90px;
     overflow: hidden;
     transition: width 0.2s linear;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 35px var(--col-shadow);
     height: 100vh;
 }
 
@@ -44,7 +55,7 @@ nav:hover .logo span {
 
 nav a {
     position: relative;
-    color: rgb(85, 83, 83);
+    color: var(--col-text-soft);
     font-size: 14px;
     display: table;
     width: 300px;
@@ -52,7 +63,7 @@ nav a {
 }
 
 nav a:hover {
-    background: #e0e0e0;
+    background: var(--col-text-highlight);
 }
 
 .logo {
@@ -81,11 +92,11 @@ div#nav-offset {
 }
 
 header {
-    background: #fff;
+    background: var(--col-bg-light);
     padding: 20px 20px;
     text-align: center;
-    color: #7a7a7a;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    color: var(--col-text-soft);
+    box-shadow: 0 4px 8px var(--col-shadow);
 }
 
 div.content {
@@ -93,8 +104,8 @@ div.content {
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background: var(--col-bg-light);
+    box-shadow: 0 4px 8px var(--col-shadow);
 }
 
 .fas {
@@ -112,12 +123,12 @@ div.content {
 }
 
 footer {
-    background-color: #fff;
+    background-color: var(--col-bg-light);
     padding: 40px 0;
     text-align: center;
-    color: #7a7a7a;
+    color: var(--col-text-soft);
     margin-top: 40px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 -4px 8px var(--col-shadow);
 }
 
 footer p {
