@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment Phase 2</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -27,11 +27,11 @@
                     <span class="nav-item">Team Socks</span>
                 </a>
             </li>
-            <li><a href="#">
+            <li><a href="{{ url_for('home') }}">
                     <i class="fas fa-home"></i>
                     <span class="nav-item">Home</span>
                 </a></li>
-            <li><a href="#">
+            <li><a href="{{ url_for('games_bp.browse_games') }}">
                     <i class="fas fa-gamepad"></i>
                     <span class="nav-item">Games</span>
                 </a></li>
@@ -53,6 +53,8 @@
                 </a></li>
         </ul>
     </nav>
+
+    {% block content %} {% endblock %}
 
     <footer>
         <p>&copy; 2023 Team Socks. All rights reserved.</p>
