@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint
 
 import games.adapters.repository as repo
-import services
+import games.browse.services
 
 
 browse_blueprint = Blueprint(
