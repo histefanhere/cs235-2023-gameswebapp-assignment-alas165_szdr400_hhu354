@@ -10,15 +10,6 @@
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <a href="#" class="logo">
-                <img src="img/logo.png" alt="Logo">
-                <span class="nav-item">Team Socks</span>
-            </a>
-        </div>
-    </header>
-
     <nav>
         <ul>
             <li>
@@ -54,11 +45,22 @@
         </ul>
     </nav>
 
-    {% block content %} {% endblock %}
+    <div id="nav-offset">
+        <header class="site-header">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <img src="img/logo.png" alt="Logo">
+                    <span class="nav-item">Team Socks</span>
+                </a>
+            </div>
+        </header>
 
-    <footer>
-        <p>&copy; 2023 Team Socks. All rights reserved.</p>
-    </footer>
+        {% block content %} {% endblock %}
+
+        <footer>
+            <p>&copy; 2023 Team Socks. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 
 </html>

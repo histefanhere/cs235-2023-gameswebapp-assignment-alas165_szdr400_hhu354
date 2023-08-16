@@ -27,6 +27,11 @@ nav {
     height: 100vh;
 }
 
+div#nav-offset {
+    margin-left: 90px;
+    height: 100vh;
+}
+
 .logo {
     text-align: center;
     display: flex;
