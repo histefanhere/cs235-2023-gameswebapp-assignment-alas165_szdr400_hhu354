@@ -52,7 +52,16 @@
             {% endblock %}
         </header>
 
-        {% block content %} {% endblock %}
+        {% block content %}
+        <div class="content" style="width: fit-content; text-align: center">
+            <h2>Uh oh</h2>
+            <p>
+                well this is embarrassing, you aren't supposed to see this.<br>
+                Please contact the site administrator to let them know what happened.<br>
+                <a href="{{ url_for('home') }}">Click here to go back to the home page</a>
+            </p>
+        </div>
+        {% endblock %}
 
         <footer>
             <p>&copy; 2023 Team Socks. All rights reserved.</p>

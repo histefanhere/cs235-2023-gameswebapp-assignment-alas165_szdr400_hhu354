@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;&display=swap");
 
-* {
+ * { /* I Don't really like using a catch all like this. it's bad for performance and can creates some annoying behavior */
     margin: 0;
     padding: 0;
     outline: none;
@@ -27,17 +27,32 @@ nav {
     height: 100vh;
 }
 
-div#nav-offset {
-    margin-left: 90px;
-    height: 100vh;
+nav:hover {
+    width: 250px;
+    transition: all 0.2s linear;
 }
 
-header {
-    background: #fff;
-    padding: 20px 20px;
-    text-align: center;
-    color: #7a7a7a;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+nav:hover .logo span {
+    visibility: visible;
+}
+
+.nav-item {
+    position: relative;
+    top: 12px;
+    margin-left: 10px;
+}
+
+nav a {
+    position: relative;
+    color: rgb(85, 83, 83);
+    font-size: 14px;
+    display: table;
+    width: 300px;
+    padding: 10px;
+}
+
+nav a:hover {
+    background: #e0e0e0;
 }
 
 .logo {
@@ -60,13 +75,26 @@ header {
     visibility: hidden;
 }
 
-a {
-    position: relative;
-    color: rgb(85, 83 ,83);
-    font-size: 14px;
-    display: table;
-    width: 300px;
-    padding: 10px;
+div#nav-offset {
+    margin-left: 90px;
+    height: 100vh;
+}
+
+header {
+    background: #fff;
+    padding: 20px 20px;
+    text-align: center;
+    color: #7a7a7a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+div.content {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .fas {
@@ -76,25 +104,6 @@ a {
     top: 14px;
     font-size: 20px;
     text-align: center;
-}
-
-.nav-item {
-    position: relative;
-    top: 12px;
-    margin-left: 10px;
-}
-
-a:hover {
-    background: #e0e0e0;
-}
-
-nav:hover {
-    width: 250px;
-    transition: all 0.2s linear;
-}
-
-nav:hover .logo span {
-    visibility: visible;
 }
 
 .logout {
