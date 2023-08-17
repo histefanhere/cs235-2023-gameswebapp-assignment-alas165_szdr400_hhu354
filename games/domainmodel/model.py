@@ -83,6 +83,7 @@ class Game:
         self.__genres: list = []
         self.__reviews: list = []
         self.__publisher = None
+        self.__tags: list = []
 
     @property
     def publisher(self) -> Publisher:
@@ -190,6 +191,24 @@ class Game:
             self.__genres.remove(genre)
         except ValueError:
             print(f"Could not find {genre} in list of genres.")
+            pass
+    
+    @property
+    def tags(self) -> list:
+        return self.__tags
+    
+    def add_tag(self, tag: str):
+        if not isinstance(tag, str) or tag in self.__tags:
+            return
+        self.__tags.append(tag)
+    
+    def remove_tag(self, tag: str):
+        if not isinstance(tag, str):
+            return
+        try:
+            self.__tags.remove(tag)
+        except ValueError:
+            print(f"Could not find {tag} in list of tags.")
             pass
 
     def __repr__(self):

@@ -13,10 +13,11 @@
 
     <div class="sort-by-section">
         <label>Sort by: </label>
-        <a href="{{ url_for('games_bp.browse_games', sort='alphabetical') }}"><div>Alphabetical</div></a>
-        <a href="{{ url_for('games_bp.browse_games_with_options', new_sort='popular') }}"><div>Popular</div></a>
-        <a href="{{ url_for('games_bp.browse_games') }}"><div>Price</div></a>
-        <a href="{{ url_for('games_bp.browse_games') }}"><div>Recent</div></a>
+        <!-- <a href="{{ url_for('games_bp.browse_games', sort='alphabetical') }}"><div>Alphabetical</div></a> -->
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='title/'+cur_tag_path) }}"><div>Title</div></a>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='popular/'+cur_tag_path) }}"><div>Popular</div></a>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='price/'+cur_tag_path) }}"><div>Price</div></a>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='recent/'+cur_tag_path) }}"><div>Recent</div></a>
     </div>
     
     <div class="search-options">

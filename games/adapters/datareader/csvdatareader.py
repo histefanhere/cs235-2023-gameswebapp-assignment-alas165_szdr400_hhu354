@@ -10,6 +10,7 @@ class GameFileCSVReader:
         self.__dataset_of_games = []
         self.__dataset_of_publishers = set()
         self.__dataset_of_genres = set()
+        self.__dataset_of_tags = set()
 
     def read_csv_file(self):
         if not os.path.exists(self.__filename):
@@ -36,6 +37,13 @@ class GameFileCSVReader:
                         self.__dataset_of_genres.add(genre)
                         game.add_genre(genre)
 
+                    tags = row["Tags"].split(",")
+                    for tag in tags:
+                        # Could maybe make a class for tags, probably make a general class that parents genre and tag.
+                        tag = tag.strip().lower()
+                        self.__dataset_of_tags.add(tag)
+                        game.add_tag(tag)
+
                     self.__dataset_of_games.append(game)
 
                 except ValueError as e:
@@ -51,6 +59,9 @@ class GameFileCSVReader:
 
     def get_unique_publishers_count(self):
         return len(self.__dataset_of_publishers)
+    
+    def get_unique_tags_count(self):
+        return len(self.__dataset_of_tags)
 
     @property
     def dataset_of_games(self) -> list:
@@ -63,3 +74,7 @@ class GameFileCSVReader:
     @property
     def dataset_of_genres(self) -> set:
         return self.__dataset_of_genres
+    
+    @property
+    def dataset_of_tags(self) -> set:
+        return self.__dataset_of_tags

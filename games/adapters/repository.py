@@ -27,3 +27,8 @@ class AbstractRepository(abc.ABC):
     def get_number_of_games(self):
         """ Returns the number of games that exist in the repository. """
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_tags(self) -> list[str]:
+        """ Returns the list of tags. """
+        raise NotImplementedError
