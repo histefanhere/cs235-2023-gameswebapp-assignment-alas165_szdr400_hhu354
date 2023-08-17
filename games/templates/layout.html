@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Phase 2</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -47,9 +47,7 @@
 
     <div id="nav-offset">
         <header class="site-header">
-            {% block header %}
-            <h1>Socks Gaming Library Website</h1>
-            {% endblock %}
+            <h1>{{ heading }}</h1>
         </header>
 
         {% block content %}
