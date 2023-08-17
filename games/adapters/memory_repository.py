@@ -10,6 +10,7 @@ from games.domainmodel.model import Game
 class MemoryRepository(AbstractRepository):
     def __init__(self):
         self.__games = list()
+        self.__tags = list()
 
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -22,6 +23,13 @@ class MemoryRepository(AbstractRepository):
 
     def get_number_of_games(self):
         return len(self.__games)
+    
+    def get_tags(self) -> list[str]:
+        return self.__tags
+
+    def add_tag(self, tag: str):
+        if tag not in self.__tags:
+            self.__tags.append(tag)
 
 
 def populate(repo: AbstractRepository):
@@ -32,7 +40,12 @@ def populate(repo: AbstractRepository):
     reader.read_csv_file()
 
     games = reader.dataset_of_games
+    tags = reader.dataset_of_tags
 
     # Add games to the repo:
     for game in games:
         repo.add_game(game)
+    
+    # Add tags to the repo:
+    for tag in tags:
+        repo.add_tag(tag)

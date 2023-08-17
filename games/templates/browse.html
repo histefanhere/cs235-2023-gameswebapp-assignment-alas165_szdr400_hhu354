@@ -1,6 +1,34 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
+<div class="content">
+    <h2>Browse Games</h2>
+
+    <!-- This stuff hasn't been styled properly, feel free to move stuff around if you like. -->
+
+    <div class="search-section">
+        {% include "search.html" %}
+    </div>
+
+    <div class="sort-by-section">
+        <label>Sort by: </label>
+        <!-- <a href="{{ url_for('games_bp.browse_games', sort='alphabetical') }}"><div>Alphabetical</div></a> -->
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='title/'+cur_tag_path) }}"><div>Title</div></a>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='popular/'+cur_tag_path) }}"><div>Popular</div></a>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='price/'+cur_tag_path) }}"><div>Price</div></a>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath='recent/'+cur_tag_path) }}"><div>Recent</div></a>
+    </div>
+    
+    <div class="search-options">
+        <form>
+
+        </form>
+    </div>
+    
+    
+</div>
+
 <h1>Total Games - {{ num_games }}</h1>
 
 <!-- Games table layout -->

@@ -21,7 +21,7 @@ nav {
     width: 70px;
     overflow: visible;
     transition: width 0.2s linear;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 35px var(--col-shadow);
     height: 100vh;
     padding-right: 25px;
 }
@@ -148,7 +148,7 @@ footer {
     text-align: center;
     color: #5a5a5a;
     margin-top: 40px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 -4px 8px var(--col-shadow);
 }
 
 footer p {
