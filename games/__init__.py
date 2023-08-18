@@ -33,6 +33,9 @@ def create_app():
         from .browse import browse
         app.register_blueprint(browse.browse_blueprint)
 
+        from .game import game
+        app.register_blueprint(game.game_blueprint)
+
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided csv file.

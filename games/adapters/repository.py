@@ -24,6 +24,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
     
     @abc.abstractmethod
+    def get_game(self, id: int) -> Game:
+        """ Returns the game with the given id from the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
     def get_number_of_games(self):
         """ Returns the number of games that exist in the repository. """
         raise NotImplementedError

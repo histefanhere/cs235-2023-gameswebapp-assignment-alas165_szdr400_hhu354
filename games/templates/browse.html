@@ -44,7 +44,7 @@
         {% for game in games %}
         <tr>
             <td>{{ game.game_id }}</td>
-            <td>{{ game.title }}</td>
+            <td><a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">{{ game.title }}</a></td>
             <td>{{ game.game_url }}</td>
         </tr>
         {% endfor %}

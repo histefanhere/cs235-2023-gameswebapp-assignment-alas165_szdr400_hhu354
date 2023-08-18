@@ -21,6 +21,11 @@ class MemoryRepository(AbstractRepository):
     def get_games(self) -> List[Game]:
         return self.__games
 
+    def get_game(self, id: int) -> Game:
+        for g in self.__games:
+            if g.game_id == id: return g
+        return None
+
     def get_number_of_games(self):
         return len(self.__games)
     
