@@ -1,6 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+:root {
+
+    /* These colours are really not doing it for me. */
+    --col-shadow: rgba(0, 0, 0, 0.05);
+    --col-border: #3a3a3a;
+
+    --col-bg-light: #f2e2d2;
+    --col-bg-dark: #a89f91;
+    --col-bg-highlight: #8c8279;
+    --col-bg-selected: #f5e4d5;
+
+    --col-text-faded: #5a5a5a;
+    --col-text: #000;
+}
+
 body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, dl, dt, dd, table, th, td {
     margin: 0;
     padding: 0;
@@ -8,8 +23,8 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, dl, dt, dd, table, th, td {
 
 body {
     font-family: "Poppins", sans-serif;
-    background: #f2e2d2;
-    color: #5a5a5a;
+    background: var(--col-bg-light);
+    color: var(--col-text-faded);
 }
 
 nav {
@@ -17,7 +32,7 @@ nav {
     top: 0;
     bottom: 0;
     left: 0;
-    background: #a89f91;
+    background: var(--col-bg-dark);
     width: 70px;
     overflow: visible;
     transition: width 0.2s linear;
@@ -56,7 +71,7 @@ nav:hover .nav-item {
 
 nav a {
     position: relative;
-    color: #f2e2d2;
+    color: var(--col-bg-light);
     font-size: 14px;
     display: flex;
     align-items: flex-start;
@@ -74,7 +89,7 @@ nav ul {
 }
 
 nav a:hover {
-    background: #8c8279;
+    background: var(--col-bg-highlight);
 }
 
 .logo {
@@ -108,11 +123,11 @@ div#nav-offset {
 }
 
 header {
-    background: #f2e2d2;
+    background: var(--col-bg-light);
     padding: 20px 20px;
     text-align: center;
-    color: #5a5a5a;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    color: var(--col-text-faded);
+    box-shadow: 0 4px 8px var(--col-shadow);
 }
 
 .content {
@@ -120,8 +135,8 @@ header {
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
-    background: #f2e2d2;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background: var(--col-bg-light);
+    box-shadow: 0 4px 8px var(--col-shadow);
     width: fit-content;
     text-align: center;
 }
@@ -133,7 +148,7 @@ header {
     top: 14px;
     font-size: 20px;
     text-align: center;
-    color: #f2e2d2;
+    color: var(--col-bg-light);
     margin-right: 10px;
 }
 
@@ -143,14 +158,55 @@ header {
 }
 
 footer {
-    background-color: #f2e2d2;
+    background-color: var(--col-bg-light);
     padding: 40px 0;
     text-align: center;
-    color: #5a5a5a;
+    color: var(--col-text-faded);
     margin-top: 40px;
     box-shadow: 0 -4px 8px var(--col-shadow);
 }
 
 footer p {
     font-size: 14px;
+}
+
+
+
+/* Browse page */
+
+.tag-filter input[type="checkbox"] {
+    display: none;
+}
+  
+.tag-filter span {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid var(--col-border);
+    border-radius: 0.5em;
+    margin: 4px;
+    cursor: pointer;
+    color: var(--col-text-faded);
+    box-shadow: 2px 2px 1px 0px var(--col-shadow);
+}
+
+.tag-filter span:hover {
+    background-color: var(--col-bg-highlight);
+    color: var(--col-text);
+}
+  
+.tag-filter input[type="checkbox"]:checked + span {
+    background-color: var(--col-bg-selected);
+    color: var(--col-text);
+}
+
+.tag-puck {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid var(--col-border);
+    border-radius: 0.5em;
+    margin: 4px;
+    color: var(--col-text);
+    box-shadow: 2px 2px 1px 0px var(--col-shadow);
+    background-color: var(--col-bg-selected);
+    
 }

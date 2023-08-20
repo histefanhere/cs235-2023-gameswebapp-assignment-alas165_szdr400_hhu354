@@ -37,3 +37,8 @@ class AbstractRepository(abc.ABC):
     def get_tags(self) -> list[str]:
         """ Returns the list of tags. """
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_random_tags(self, n: int) -> list[str]:
+        """ Returns a list of n random tags. """
+        raise NotImplementedError

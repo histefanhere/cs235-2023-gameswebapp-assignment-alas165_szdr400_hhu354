@@ -33,8 +33,15 @@ class MemoryRepository(AbstractRepository):
         return self.__tags
 
     def add_tag(self, tag: str):
-        if tag not in self.__tags:
-            self.__tags.append(tag)
+        if (not isinstance(tag, str) or
+            tag == ''):
+            return
+        elif tag not in self.__tags:
+            insort_left(self.__tags, tag)
+        
+    def get_random_tags(self, n: int) -> list[str]:
+        import random
+        return random.sample(self.__tags, n)
 
 
 def populate(repo: AbstractRepository):
