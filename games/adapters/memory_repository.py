@@ -42,6 +42,13 @@ class MemoryRepository(AbstractRepository):
     def get_random_tags(self, n: int) -> list[str]:
         import random
         return random.sample(self.__tags, n)
+    
+    def get_games_with_tags(self, tags: list[str]) -> List[Game]:
+        games = []
+        for game in self.__games:
+            if all(tag in game.tags for tag in tags):
+                games.append(game)
+        return games
 
 
 def populate(repo: AbstractRepository):

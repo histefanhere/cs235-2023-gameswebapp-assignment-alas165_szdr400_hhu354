@@ -17,21 +17,21 @@ def browse_games():
 
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET'])
 def browse_games_with_options(subpath: str):
-    num_games = services.get_number_of_games(repo.repo_instance)
-    all_games = services.get_games(repo.repo_instance)
-    
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
 
     if bad_url: # Redirect to correct url
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath))
     
+    games = services.get_games_with_tags(repo.repo_instance, tags)
+    num_games = len(games)
+
     return _browse_games_render(
             cur_sort = sort,
             cur_tags = tags,
             cur_subpath = subpath,
             cur_tag_path = tag_path,
             num_games = num_games,
-            games = all_games)
+            games = games)
 
 def _browse_games_render(
         cur_sort = 'title',

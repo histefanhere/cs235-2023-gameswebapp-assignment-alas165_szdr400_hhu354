@@ -42,3 +42,8 @@ class AbstractRepository(abc.ABC):
     def get_random_tags(self, n: int) -> list[str]:
         """ Returns a list of n random tags. """
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_games_with_tags(self, tags: list[str]) -> List[Game]:
+        """ Returns the list of games that have all the given tags. """
+        raise NotImplementedError

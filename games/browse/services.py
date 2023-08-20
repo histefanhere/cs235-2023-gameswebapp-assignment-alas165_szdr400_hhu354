@@ -19,6 +19,9 @@ def get_games(repo: AbstractRepository):
         game_dicts.append(game_dict)
     return game_dicts
 
+def get_games_with_tags(repo: AbstractRepository, tags: list[str]):
+    return repo.get_games_with_tags(tags)
+
 def parse_subpath(subpath, repo: AbstractRepository):
     subpath = subpath.strip().split('/')
     sort = ''
