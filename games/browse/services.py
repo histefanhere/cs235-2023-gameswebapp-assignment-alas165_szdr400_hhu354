@@ -1,5 +1,6 @@
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game
+import bisect
 
 
 def get_number_of_games(repo: AbstractRepository):
@@ -22,19 +23,30 @@ def parse_subpath(subpath, repo: AbstractRepository):
     subpath = subpath.strip().split('/')
     sort = ''
     tag_str = ''
-    tags = []
+    tags_in_path = []
+
     if subpath[0] in ['title', 'popular', 'price', 'recent']:
         sort = subpath[0]
-        tags = subpath[1:]
+        tags_in_path = subpath[1:]
     else:
-        tags = subpath
+        tags_in_path = subpath
+
     all_tags = repo.get_tags()
-    tags = list(filter(lambda x: x in all_tags, tags))
+    # tags = list(filter(lambda x: x in all_tags, tags)).sort()
+    redirect = False
+    tags = []
+    for tag in tags_in_path:
+        if tag in all_tags:
+            bisect.insort_left(tags, tag)
+        else:
+            redirect = True
+        
     tag_str = '/'.join(tags)
+    
     if tags == []:
         path_str = sort
     elif sort == '':
         path_str = tag_str
     else:
         path_str = sort + '/' + tag_str
-    return path_str, tag_str, sort, tags
+    return path_str, tag_str, sort, tags, redirect

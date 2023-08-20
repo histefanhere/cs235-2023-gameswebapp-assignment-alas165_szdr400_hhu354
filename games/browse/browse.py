@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, redirect, url_for
 
 import games.adapters.repository as repo
 from games.browse import services
@@ -30,7 +30,12 @@ def browse_games():
 def browse_games_with_options(subpath: str):
     num_games = services.get_number_of_games(repo.repo_instance)
     all_games = services.get_games(repo.repo_instance)
-    subpath, tag_path, sort, tags = services.parse_subpath(subpath, repo.repo_instance)
+    
+    subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
+
+    if bad_url: # Redirect to correct url
+        return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath))
+    
     return render_template(
         'browse.html',
         # Custom page title

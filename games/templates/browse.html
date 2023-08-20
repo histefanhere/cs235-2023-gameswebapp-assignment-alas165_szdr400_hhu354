@@ -26,7 +26,19 @@
         </form>
     </div>
     
-    
+</div>
+
+<div class="content">
+    <h3>Tags:</h3>
+    <div class="tag-selection">
+        {% if cur_tags %}
+            {% for tag in cur_tags %}
+            <div class="tag-puck">{{ tag }}</div>
+            {% endfor %}
+        {% else %}
+            Use the options above to refine your search.
+        {% endif %}
+    </div>
 </div>
 
 <h1>Total Games - {{ num_games }}</h1>
