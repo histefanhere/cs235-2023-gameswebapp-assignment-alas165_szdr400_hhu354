@@ -84,6 +84,7 @@ class Game:
         self.__reviews: list = []
         self.__publisher = None
         self.__tags: list = []
+        self.__popularity = 0
 
     @property
     def publisher(self) -> Publisher:
@@ -210,6 +211,15 @@ class Game:
         except ValueError:
             print(f"Could not find {tag} in list of tags.")
             pass
+    
+    @property
+    def rating(self) -> float:
+        return self.__popularity
+    
+    @rating.setter
+    def rating(self, popularity: float):
+        if isinstance(popularity, float) and 0 <= popularity:
+            self.__popularity = popularity
 
     def __repr__(self):
         return f"<Game {self.__game_id}, {self.__game_title}>"

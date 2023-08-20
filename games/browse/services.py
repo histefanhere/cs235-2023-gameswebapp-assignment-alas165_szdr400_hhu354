@@ -22,6 +22,17 @@ def get_games(repo: AbstractRepository):
 def get_games_with_tags(repo: AbstractRepository, tags: list[str]):
     return repo.get_games_with_tags(tags)
 
+def sort_games(games: list[Game], sort: str):
+    if sort == 'title':
+        games.sort(key=lambda x: x.title)
+    elif sort == 'popular':
+        games.sort(key=lambda x: x.popularity, reverse=True)
+    elif sort == 'price':
+        games.sort(key=lambda x: x.price)
+    elif sort == 'recent':
+        games.sort(key=lambda x: x.release_date) # kinda broken since we're using strings
+    return games
+
 def parse_subpath(subpath, repo: AbstractRepository):
     subpath = subpath.strip().split('/')
     sort = ''

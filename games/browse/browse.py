@@ -27,6 +27,7 @@ def browse_games_with_options(subpath: str):
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath))
     
     games = services.get_games_with_tags(repo.repo_instance, tags)
+    games = services.sort_games(games, sort)
     num_games = len(games)
 
     return _browse_games_render(

@@ -43,6 +43,8 @@ class GameFileCSVReader:
                         tag = tag.strip().lower()
                         self.__dataset_of_tags.add(tag)
                         game.add_tag(tag)
+                    
+                    game.popularity = float(row["Recommendations"])
 
                     self.__dataset_of_games.append(game)
 
