@@ -15,6 +15,10 @@ def browse_games():
     all_games = services.get_games(repo.repo_instance)
     return _browse_games_render(num_games=num_games, games=all_games)
 
+@browse_blueprint.route('/browse/', methods=['GET'])
+def browse_games_with_slash():
+    return redirect(url_for('games_bp.browse_games'))
+
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET'])
 def browse_games_with_options(subpath: str):
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
