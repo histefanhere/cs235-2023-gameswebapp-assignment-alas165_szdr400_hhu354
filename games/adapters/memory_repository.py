@@ -49,6 +49,20 @@ class MemoryRepository(AbstractRepository):
             if all(tag in game.tags for tag in tags):
                 games.append(game)
         return games
+    
+    def search_games(self, title: str = None,
+                    price: float = float('inf'),
+                    #  release_date: (int, str idk),
+                    tags: list[str] = None,
+                    popularity: int = 0) -> list[Game]:
+        # print(f"Searching for games with title: {title}, price: {price}, tags: {tags}, popularity: {popularity}")
+        games = []
+        for game in self.__games:
+            if ((game.price <= price and game.popularity >= popularity) and
+                (tags is None or all(tag in game.tags for tag in tags)) and
+                (title is None or title in game.title)):
+                    games.append(game)
+        return games
 
 
 def populate(repo: AbstractRepository):

@@ -44,6 +44,14 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
     
     @abc.abstractmethod
-    def get_games_with_tags(self, tags: list[str]) -> List[Game]:
+    def get_games_with_tags(self, tags: list[str]) -> list[Game]:
         """ Returns the list of games that have all the given tags. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def search_games(self, price: float = float('inf'),
+                    #  release_date: (int, str idk),
+                    tags: list[str] = None,
+                    popularity: int = 0) -> list[Game]:
+        """ Returns the list of games that match the given criteria. """
         raise NotImplementedError

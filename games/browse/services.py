@@ -6,7 +6,6 @@ import bisect
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 
-
 def get_games(repo: AbstractRepository):
     games = repo.get_games()
     game_dicts = []
@@ -64,3 +63,12 @@ def parse_subpath(subpath, repo: AbstractRepository):
     else:
         path_str = sort + '/' + tag_str
     return path_str, tag_str, sort, tags, redirect
+
+# def search_games(repo: AbstractRepository,
+#                  title: str = None,
+#                  price: float = float('inf'),
+#                  tags: list[str] = None,
+#                  popularity: int = 0,) -> list[Game]:
+def search_games(repo: AbstractRepository, *args, **kwargs):
+    return repo.search_games(*args, **kwargs)
+    

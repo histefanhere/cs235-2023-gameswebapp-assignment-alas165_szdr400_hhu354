@@ -9,33 +9,37 @@ browse_blueprint = Blueprint(
     'games_bp', __name__
 )
 
-@browse_blueprint.route('/browse', methods=['GET'])
+@browse_blueprint.route('/browse', methods=['GET', 'POST'])
 def browse_games():
-    num_games = services.get_number_of_games(repo.repo_instance)
-    all_games = services.get_games(repo.repo_instance)
-    return _browse_games_render(num_games=num_games, games=all_games)
+    print(f"url1 {list(request.args.items())}")
+    search_string = request.args.get('search') if 'search' in request.args else None
+    games = services.search_games(repo.repo_instance, title=search_string)
+    return _browse_games_render(games=games)
 
-@browse_blueprint.route('/browse/', methods=['GET'])
+@browse_blueprint.route('/browse/', methods=['GET', 'POST'])
 def browse_games_with_slash():
-    return redirect(url_for('games_bp.browse_games'))
+    print(f"url2 {list(request.args.items())}")
+    search_string = request.args.get('search') if 'search' in request.args else None
+    return redirect(url_for('games_bp.browse_games', search_string=search_string))
 
-@browse_blueprint.route('/browse/<path:subpath>', methods=['GET'])
+@browse_blueprint.route('/browse/<path:subpath>', methods=['GET', 'POST'])
 def browse_games_with_options(subpath: str):
+    print(f"url3 {list(request.args.items())}")
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
 
     if bad_url: # Redirect to correct url
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath))
     
-    games = services.get_games_with_tags(repo.repo_instance, tags)
+    search_string = request.args.get('search') if 'search' in request.args else None
+
+    games = services.search_games(repo.repo_instance, title=search_string, tags=tags)
     games = services.sort_games(games, sort)
-    num_games = len(games)
 
     return _browse_games_render(
             cur_sort = sort,
             cur_tags = tags,
             cur_subpath = subpath,
             cur_tag_path = tag_path,
-            num_games = num_games,
             games = games)
 
 def _browse_games_render(
@@ -66,7 +70,7 @@ def _browse_games_render(
 
         # Search Results
         games = games,
-        num_games = num_games,
+        num_games = len(games),
     )
 
 @browse_blueprint.route('/browse/read_form', methods=['POST'])
@@ -74,7 +78,7 @@ def browse_games_read_form():
     # Read form data
     form_tags = []
     for key, value in request.form.items():
-        print(f"key: {key}, value: {value}")
+        # print(f"key: {key}, value: {value}")
         if key == 'tag-dropdown' and value != 'null-selection':
             insort_left(form_tags, value)
         else:

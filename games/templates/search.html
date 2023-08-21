@@ -1,11 +1,10 @@
-<form method="post">
+<form action="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath) }}" method="GET">
     <label for="search">Search: </label>
     <input type="text" 
            name="search"
            class="search-bar"
            placeholder="Search for a game..." 
-           value="{{ request.form['search'] }}"
     />
     
-    <button type="submit">Search</button>
+    <input type="submit" value="Search">
 </form>
