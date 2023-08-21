@@ -1,5 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
+:root {
+
+    /* Colours have been messed up, these will need to be unified */
+    --col-shadow: rgba(0, 0, 0, 0.05);
+    --col-border: #3a3a3a;
+
+    --col-bg-light: #f2e2d2;
+    --col-bg-dark: #a89f91;
+    --col-bg-highlight: #8c8279;
+    --col-bg-selected: #f5e4d5;
+
+    --col-text-faded: #5a5a5a;
+    --col-text: #000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -333,4 +348,61 @@ footer {
 
 .footer-social a:hover {
   color: #f39c12;
+}
+
+
+/* Browse page */
+
+.tag-filter input[type="checkbox"] {
+    display: none;
+}
+
+.tag-filter span {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid var(--col-border);
+    border-radius: 0.5em;
+    margin: 4px;
+    cursor: pointer;
+    color: var(--col-text-faded);
+    box-shadow: 2px 2px 1px 0px var(--col-shadow);
+}
+
+.tag-filter span:hover {
+    background-color: var(--col-bg-highlight);
+    color: var(--col-text);
+}
+
+.tag-filter input[type="checkbox"]:checked+span {
+    background-color: var(--col-bg-selected);
+    color: var(--col-text);
+}
+
+.tag-puck {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid var(--col-border);
+    border-radius: 0.5em;
+    margin: 4px;
+    color: var(--col-text);
+    box-shadow: 2px 2px 1px 0px var(--col-shadow);
+    background-color: var(--col-bg-selected);
+
+}
+
+.clear-tags-button {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid var(--col-border);
+    border-radius: 0.5em;
+    margin: 4px;
+    color: var(--col-text);
+    box-shadow: 2px 2px 1px 0px var(--col-shadow);
+    background-color: var(--col-bg-selected);
+    cursor: pointer;
+}
+
+.clear-tags-button:hover {
+    background-color: var(--col-bg-highlight);
+    color: var(--col-text);
 }
