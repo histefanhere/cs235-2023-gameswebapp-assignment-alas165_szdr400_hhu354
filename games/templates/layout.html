@@ -2,69 +2,109 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socks Gaming Library Website</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>CS235</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <div class="container">
     <nav>
-        <ul>
-            <li>
-                <a href="#" class="logo">
-                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
-                    <span class="nav-item">Team Socks</span>
-                </a>
-            </li>
-            <li><a href="{{ url_for('home') }}">
-                    <i class="fas fa-home"></i>
-                    <span class="nav-item">Home</span>
-                </a></li>
-            <li><a href="{{ url_for('games_bp.browse_games') }}">
-                    <i class="fas fa-gamepad"></i>
-                    <span class="nav-item">Games</span>
-                </a></li>
-            <li><a href="#">
-                    <i class="fas fa-star"></i>
-                    <span class="nav-item">Reviews</span>
-                </a></li>
-            <li><a href="#">
-                    <i class="fas fa-users"></i>
-                    <span class="nav-item">Out Team</span>
-                </a></li>
-            <li><a href="#">
-                    <i class="fas fa-question-circle"></i>
-                    <span class="nav-item">Help</span>
-                </a></li>
-            <li><a href="#" class="logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="nav-item">Log out</span>
-                </a></li>
-        </ul>
-    </nav>
-
-    <div id="nav-offset">
-        <header class="site-header">
-            <h1>{{ heading }}</h1>
-        </header>
-
-        {% block content %}
-        <div class="content" style="width: fit-content; text-align: center">
-            <h2>Uh oh</h2>
-            <p>
-                well this is embarrassing, you aren't supposed to see this.<br>
-                Please contact the site administrator to let them know what happened.<br>
-                <a href="{{ url_for('home') }}">Click here to go back to the home page</a>
-            </p>
+      <div class="navbar">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+          <h1>Team Socks</h1>
         </div>
+        <ul>
+          <li>
+            <a href="{{ url_for('home') }}">
+              <i class="fas fa-home"></i>
+              <span class="nav-item">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('games_bp.browse_games') }}">
+              <i class="fas fa-gamepad"></i>
+              <span class="nav-item">Games</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fas fa-star"></i>
+              <span class="nav-item">Reviews</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fas fa-users"></i>
+              <span class="nav-item">Out Team</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fas fa-question-circle"></i>
+              <span class="nav-item">Help</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="nav-item">Log out</span>
+            </a>
+          </li>
+        </ul>
+        </ul>
+      </div>
+    </nav>
+    <section class="main">
+      <section class="hero">
+        <div class="main-top">
+            <p>{{ heading  }}</p>
+        </div>
+        <img class="background-wallpaper" src="{{ url_for('static', filename='img/wallpaper.jpg') }}" alt="Game themed wallpaper">
+        <div class="hero-content">
+            <img src="{{ url_for('static', filename='img/hero.png') }}" alt="Hero Image" class="hero-image">
+            <h1>Read About Games that you enjoy</h1>
+            <div class="search-container">
+                <input type="search" placeholder="Search game title or reviewer...">
+                <select name="search-type" id="search-type">
+                    <option value="game-title">Game Title</option>
+                    <option value="reviewer">Reviewer</option>
+                </select>
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+    </section>  
+      <div class="main-body">
+        {% block content %}
         {% endblock %}
-
         <footer>
-            <p>&copy; 2023 Team Socks. All rights reserved.</p>
-        </footer>
-    </div>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Team Socks Logo">
+                <h3>Team Socks</h3>
+            </div>
+            <div class="footer-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('games_bp.browse_games') }}">Games</a>
+                <a href="#">Reviews</a>
+                <a href="#">Out Team</a>
+                <a href="#">Help</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-twitch"></i></a>
+                <a href="#"><i class="fab fa-steam"></i></a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2023 Team Socks. All rights reserved.
+            </div>
+        </div>
+    </footer>
+      </div>
+  </section>
+  </div>
 </body>
-
 </html>
