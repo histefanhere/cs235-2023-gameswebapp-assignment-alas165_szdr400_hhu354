@@ -2,10 +2,58 @@
 
 {% block content %}
 
-<!-- <div class="content">
-    <h2>Browse Games</h2>
-</div> -->
+<img src="{{ game.image_url }}" alt="Header image of game" class="game-image">
 
-Showing game with title {{ game.title }}
+<h2>{{ game.title }}</h2>
+
+<!-- info chips -->
+<div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
+<div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.popularity }} Recommend This</div>
+
+<!-- description -->
+<h3><i class="fas fa-circle-info"></i>About</h3>
+<div id="game-about"><i>{{ game.description }}</i></div>
+
+<!-- details -->
+<ul id="game-details">
+    <li><i class="fas fa-calendar"></i><strong>Release Date:</strong>Mar 9, 2021</li>
+    <li><i class="fas fa-gamepad"></i><strong>Genres:</strong> Racing</li>
+    <li><i class="fas fa-trophy"></i><strong>Achievements:</strong> 178</li>
+    <li><i class="fas fa-desktop"></i><strong>Platforms:</strong> Windows</li>
+    <li><i class="fas fa-gamepad"></i><strong>Controller:</strong> Full Support</li>
+    <li><i class="fas fa-cloud"></i><strong>Steam Cloud:</strong> Supported</li>
+    <li><i class="fas fa-user"></i><strong>Developers:</strong> Playground Games</li>
+    <li><i class="fas fa-user"></i><strong>Publishers:</strong> Xbox Game Studios</li>
+</ul>
+
+<!-- categories -->
+<h3><i class="fas fa-shapes"></i>Categories</h3>
+Single-player, Multi-player, PvP, Online PvP, Co-op, Online Co-op, Cross-Platform Multiplayer, Steam Achievements, Full controller support, Steam Trading Cards, Steam Cloud
+
+<!-- tags -->
+<h3><i class="fas fa-tags"></i>Tags</h3>
+{% for tag in game.tags %}
+    <div class="chip tag-chip">{{ tag }}</div>
+{% endfor %}
+<!-- <div class="chip tag-chip">Racing</div>
+<div class="chip tag-chip">Open World</div>
+<div class="chip tag-chip">Driving</div>
+<div class="chip tag-chip">Multiplayer</div>
+<div class="chip tag-chip">Online Co-Op</div>
+<div class="chip tag-chip">Automobile Sim</div>
+<div class="chip tag-chip">Singleplayer</div>
+<div class="chip tag-chip">Realistic</div>
+<div class="chip tag-chip">Adventure</div>
+<div class="chip tag-chip">PvP</div>
+<div class="chip tag-chip">Arcade</div>
+<div class="chip tag-chip">Controller</div>
+<div class="chip tag-chip">Simulation</div>
+<div class="chip tag-chip">Exploration</div>
+<div class="chip tag-chip">Action</div>
+<div class="chip tag-chip">Sports</div>
+<div class="chip tag-chip">Great Soundtrack</div>
+<div class="chip tag-chip">Atmospheric</div>
+<div class="chip tag-chip">First-Person</div>
+<div class="chip tag-chip">Funny</div> -->
 
 {% endblock %}
