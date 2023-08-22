@@ -5,6 +5,7 @@
 __pycache__
 htmlcov
 venv
+.venv
 *.db
 *.egg-info
 .DS_Store
