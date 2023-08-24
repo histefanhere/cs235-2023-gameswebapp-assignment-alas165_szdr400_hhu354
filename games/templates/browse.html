@@ -23,7 +23,9 @@
 
     <div class="tag-filter-section">
         <h3>Filter by tags:</h3>
-        <form class="tag-filter" action="{{ url_for('games_bp.browse_games_read_form', subpath=cur_subpath) }}" method="POST">
+        <form class="tag-filter" action="{{ url_for('games_bp.browse_games_read_form', subpath=cur_subpath, search=cur_search) }}" method="POST">
+            subpath: {{cur_subpath}}<br>
+            search: {{cur_search}}<br>
             <label>Select a tag:</label>
             {% for tag in random_tags %}
             <label><input type="checkbox" name="tag-{{tag}}" value="{{ tag }}"><span>{{ tag }}</span></label>
