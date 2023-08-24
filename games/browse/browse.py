@@ -11,20 +11,20 @@ browse_blueprint = Blueprint(
 
 @browse_blueprint.route('/browse', methods=['GET', 'POST'])
 def browse_games():
-    print(f"url1 {list(request.args.items())}")
+    # print(f"url1 {list(request.args.items())}")
     search_string = request.args.get('search') if 'search' in request.args else None
     games = services.search_games(repo.repo_instance, title=search_string)
     return _browse_games_render(games=games, cur_search=search_string)
 
 @browse_blueprint.route('/browse/', methods=['GET', 'POST'])
 def browse_games_with_slash():
-    print(f"url2 {list(request.args.items())}")
+    # print(f"url2 {list(request.args.items())}")
     search_string = request.args.get('search') if 'search' in request.args else None
     return redirect(url_for('games_bp.browse_games', search=search_string))
 
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET', 'POST'])
 def browse_games_with_options(subpath: str):
-    print(f"url3 {list(request.args.items())}")
+    # print(f"url3 {list(request.args.items())}")
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
 
     search_string = request.args.get('search') if 'search' in request.args else None
@@ -44,7 +44,7 @@ def browse_games_with_options(subpath: str):
             games = games)
 
 def _browse_games_render(
-        cur_sort = 'title',
+        cur_sort = '',
         cur_tags = [],
         cur_subpath = '',
         cur_tag_path = '',
@@ -77,14 +77,6 @@ def _browse_games_render(
 
 @browse_blueprint.route('/browse/read_form', methods=['POST'])
 def browse_games_read_form():
-    
-    print("- args:")
-    for key, value in request.args.items():
-        print(f"key: {key}, value: {value}")
-    
-    print("- form:")
-    for key, value in request.form.items():
-        print(f"key: {key}, value: {value}")
     
     # Read form data
     form_tags = []

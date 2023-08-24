@@ -378,7 +378,7 @@ footer {
     color: var(--col-text);
 }
 
-.tag-puck {
+.info-puck {
     display: inline-block;
     padding: 4px;
     border: 1px solid var(--col-border);
@@ -390,7 +390,7 @@ footer {
 
 }
 
-.clear-tags-button {
+.button {
     display: inline-block;
     padding: 4px;
     border: 1px solid var(--col-border);
@@ -402,7 +402,7 @@ footer {
     cursor: pointer;
 }
 
-.clear-tags-button:hover {
+.button:hover {
     background-color: var(--col-bg-highlight);
     color: var(--col-text);
 }

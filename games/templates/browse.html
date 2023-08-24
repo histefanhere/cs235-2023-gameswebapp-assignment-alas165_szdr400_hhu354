@@ -37,24 +37,31 @@
                 {% endfor %}
             </select><br>
 
-            <input type="submit" value="Add tags">
-            <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_sort, search=cur_search) }}"><div class="clear-tags-button">Clear selected tags</div></a>
+            <input type="submit" value="Add tags" class="button">
         </form>
     </div>
-    
 </div>
 
 <div class="content">
-    <h3>Tags:</h3>
-    <div class="tag-selection">
-        {% if cur_tags %}
-            {% for tag in cur_tags %}
-            <div class="tag-puck">{{ tag }}</div>
-            {% endfor %}
-        {% else %}
-            Use the options above to refine your search.
-        {% endif %}
-    </div>
+    {% if cur_search %}
+        <b>Search Query: </b>
+        <div class="info-puck">{{ cur_search }}</div>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath) }}"><div class="button">Clear search</div></a><br>
+    {% endif %}
+
+    {% if cur_sort %}
+        <b>Sort Query: </b>
+        <div class="info-puck">{{ cur_sort }}</div>
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_tag_path, search=cur_search) }}"><div class="button">Clear sort</div></a><br>
+    {% endif %}
+
+    {% if cur_tags %}
+        <b>Tags: </b>
+        {% for tag in cur_tags %}
+            <div class="info-puck">{{ tag }}</div>
+        {% endfor %}
+        <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_sort, search=cur_search) }}"><div class="button">Clear selected tags</div></a><br>
+    {% endif %}
 </div>
 
 <h1>Total Games - {{ num_games }}</h1>
