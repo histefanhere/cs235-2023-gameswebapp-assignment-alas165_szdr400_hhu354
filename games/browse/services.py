@@ -64,11 +64,6 @@ def parse_subpath(subpath, repo: AbstractRepository):
         path_str = sort + '/' + tag_str
     return path_str, tag_str, sort, tags, redirect
 
-# def search_games(repo: AbstractRepository,
-#                  title: str = None,
-#                  price: float = float('inf'),
-#                  tags: list[str] = None,
-#                  popularity: int = 0,) -> list[Game]:
 def search_games(repo: AbstractRepository, *args, **kwargs):
     return repo.search_games(*args, **kwargs)
     
