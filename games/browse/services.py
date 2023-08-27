@@ -1,5 +1,5 @@
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game
+from games.domainmodel.model import Game, Genre
 import bisect
 
 
@@ -66,4 +66,15 @@ def parse_subpath(subpath, repo: AbstractRepository):
 
 def search_games(repo: AbstractRepository, *args, **kwargs):
     return repo.search_games(*args, **kwargs)
+
+def get_random_tags(repo: AbstractRepository, n: int = 5) -> list[str]:
+    from random import sample
+    return sample(repo.get_tags(), n)
+
+def get_all_genres(repo: AbstractRepository) -> list[Genre]:
+    return [g.genre_name for g in repo.get_genres()]
+
+def get_random_genres(repo: AbstractRepository, n: int) -> list[Genre]:
+    from random import sample
+    return [g.genre_name for g in sample(repo.get_genres(), n)]
     
