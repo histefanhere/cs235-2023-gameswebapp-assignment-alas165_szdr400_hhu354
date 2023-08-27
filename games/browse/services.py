@@ -2,6 +2,7 @@ from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game, Genre
 import bisect
 
+GAMES_PER_PAGE = 15
 
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
@@ -13,7 +14,7 @@ def get_games(repo: AbstractRepository):
         game_dict = {
             'game_id': game.game_id,
             'title': game.title,
-            'game_url': game.release_date
+            'game_url': game.release_date # wtf is this, I didn't write this did I?
         }
         game_dicts.append(game_dict)
     return game_dicts
@@ -64,8 +65,12 @@ def parse_subpath(subpath, repo: AbstractRepository):
         path_str = sort + '/' + tag_str
     return path_str, tag_str, sort, tags, redirect
 
-def search_games(repo: AbstractRepository, *args, **kwargs):
-    return repo.search_games(*args, **kwargs)
+def search_games(repo: AbstractRepository, page: int = 1, *args, **kwargs):
+    games = repo.search_games(*args, **kwargs)
+    num_games = len(games)
+    games = sort_games(games, 'popular')
+    games = games[(page-1)*GAMES_PER_PAGE:page*GAMES_PER_PAGE]
+    return games, num_games
 
 def get_random_tags(repo: AbstractRepository, n: int = 5) -> list[str]:
     from random import sample

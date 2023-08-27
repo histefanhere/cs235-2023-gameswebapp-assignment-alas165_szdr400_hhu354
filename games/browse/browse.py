@@ -1,5 +1,6 @@
 from flask import render_template, Blueprint, redirect, url_for, request
 from bisect import insort_left
+from math import ceil
 
 import games.adapters.repository as repo
 from games.browse import services
@@ -12,31 +13,35 @@ browse_blueprint = Blueprint(
 @browse_blueprint.route('/browse', methods=['GET', 'POST'])
 def browse_games():
     # print(f"url1 {list(request.args.items())}")
-    search_string = request.args.get('search') if 'search' in request.args else None
-    genre = request.args.get('genre') if 'genre' in request.args else None
-    games = services.search_games(repo.repo_instance, title=search_string, genre=genre)
-    return _browse_games_render(games=games, cur_search=search_string, cur_genre=genre)
+    # search_string = request.args.get('search') if 'search' in request.args else None
+    # genre = request.args.get('genre') if 'genre' in request.args else None
+    search_string = request.args.get('search', None, type=str)
+    genre = request.args.get('genre', None, type=str)
+    page = request.args.get('page', 1, type=int)
+    games, num_games = services.search_games(repo.repo_instance, page=page, title=search_string, genre=genre)
+    return _browse_games_render(games=games, cur_search=search_string, cur_genre=genre, num_games=num_games, page=page)
 
 @browse_blueprint.route('/browse/', methods=['GET', 'POST'])
 def browse_games_with_slash():
     # print(f"url2 {list(request.args.items())}")
-    search_string = request.args.get('search') if 'search' in request.args else None
-    genre = request.args.get('genre') if 'genre' in request.args else None
-    return redirect(url_for('games_bp.browse_games', search=search_string, genre=genre))
+    search_string = request.args.get('search', None, type=str)
+    genre = request.args.get('genre', None, type=str)
+    page = request.args.get('page', 1, type=int)
+    return redirect(url_for('games_bp.browse_games', search=search_string, genre=genre, page=page))
 
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET', 'POST'])
 def browse_games_with_options(subpath: str):
     # print(f"url3 {list(request.args.items())}")
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
 
-    search_string = request.args.get('search') if 'search' in request.args else None
-    genre = request.args.get('genre') if 'genre' in request.args else None
+    search_string = request.args.get('search', None, type=str)
+    genre = request.args.get('genre', None, type=str)
+    page = request.args.get('page', 1, type=int)
 
     if bad_url: # Redirect to correct url
-        return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search = search_string, genre=genre))
+        return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, genre=genre, page=page))
 
-    games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre)
-    games = services.sort_games(games, sort)
+    games, num_games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre, page=page)
 
     return _browse_games_render(
             cur_sort = sort,
@@ -45,7 +50,9 @@ def browse_games_with_options(subpath: str):
             cur_tag_path = tag_path,
             cur_search = search_string,
             cur_genre = genre,
-            games = games)
+            games = games,
+            page=page,
+            num_games=num_games)
 
 def _browse_games_render(
         cur_sort = '',
@@ -54,7 +61,9 @@ def _browse_games_render(
         cur_tag_path = '',
         cur_search = None,
         cur_genre = None,
-        games = []):
+        games = [],
+        page = 1,
+        num_games = 0):
     random_tags = services.get_random_tags(repo.repo_instance, 5)
     random_genres = services.get_random_genres(repo.repo_instance, 5)
     return render_template(
@@ -83,7 +92,11 @@ def _browse_games_render(
 
         # Search Results
         games = games,
-        num_games = len(games),
+        num_games = num_games,
+
+        # Pagination
+        page = page,
+        max_page = ceil(num_games/services.GAMES_PER_PAGE)
     )
 
 @browse_blueprint.route('/browse/read_form', methods=['POST'])
@@ -97,10 +110,11 @@ def browse_games_read_form():
         else:
             insort_left(form_tags, value)
 
-    subpath = request.args.get('subpath') if 'subpath' in request.args else ''
+    subpath = request.args.get('subpath', '', type=str)
     for tag in form_tags:
         subpath += '/' + tag
 
-    search_string = request.args.get('search') if 'search' in request.args else None
+    search_string = request.args.get('search', None, type=str)
+    page = request.args.get('page', 1, type=int)
 
-    return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string))
+    return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, page=page))
