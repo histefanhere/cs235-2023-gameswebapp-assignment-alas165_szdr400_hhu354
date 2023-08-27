@@ -12,9 +12,6 @@ browse_blueprint = Blueprint(
 
 @browse_blueprint.route('/browse', methods=['GET', 'POST'])
 def browse_games():
-    # print(f"url1 {list(request.args.items())}")
-    # search_string = request.args.get('search') if 'search' in request.args else None
-    # genre = request.args.get('genre') if 'genre' in request.args else None
     search_string = request.args.get('search', None, type=str)
     genre = request.args.get('genre', None, type=str)
     page = request.args.get('page', 1, type=int)
@@ -23,7 +20,6 @@ def browse_games():
 
 @browse_blueprint.route('/browse/', methods=['GET', 'POST'])
 def browse_games_with_slash():
-    # print(f"url2 {list(request.args.items())}")
     search_string = request.args.get('search', None, type=str)
     genre = request.args.get('genre', None, type=str)
     page = request.args.get('page', 1, type=int)
@@ -31,7 +27,6 @@ def browse_games_with_slash():
 
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET', 'POST'])
 def browse_games_with_options(subpath: str):
-    # print(f"url3 {list(request.args.items())}")
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
 
     search_string = request.args.get('search', None, type=str)
@@ -41,7 +36,7 @@ def browse_games_with_options(subpath: str):
     if bad_url: # Redirect to correct url
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, genre=genre, page=page))
 
-    games, num_games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre, page=page)
+    games, num_games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre, page=page, sort=sort)
 
     return _browse_games_render(
             cur_sort = sort,

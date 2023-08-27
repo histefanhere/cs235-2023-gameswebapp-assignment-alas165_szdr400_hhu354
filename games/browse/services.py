@@ -65,10 +65,11 @@ def parse_subpath(subpath, repo: AbstractRepository):
         path_str = sort + '/' + tag_str
     return path_str, tag_str, sort, tags, redirect
 
-def search_games(repo: AbstractRepository, page: int = 1, *args, **kwargs):
+def search_games(repo: AbstractRepository, page: int = 1, sort: str = None, *args, **kwargs):
     games = repo.search_games(*args, **kwargs)
     num_games = len(games)
-    games = sort_games(games, 'popular')
+    if sort:
+        games = sort_games(games, sort)
     games = games[(page-1)*GAMES_PER_PAGE:page*GAMES_PER_PAGE]
     return games, num_games
 
