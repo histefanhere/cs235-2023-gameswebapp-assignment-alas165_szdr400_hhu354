@@ -1,40 +1,71 @@
 {% extends "layout.html" %}
 
+{% block head %}
+    {{ super() }}
+    <title>{{ game.title }} | CS235 Game Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chip.css')}}"/>
+{% endblock %}
+
+
+{% block heading %}
+    <!-- <img src="{{ game.image_url }}" alt="Header image of game" class="game-image"> -->
+{% endblock %}
+
+
 {% block content %}
 
-<img src="{{ game.image_url }}" alt="Header image of game" class="game-image">
+<div id="game-header">
+    <img src="{{ game.image_url }}" alt="Header image of game" class="game-image">
+    <div id="game-info">
+        <h1>{{ game.title }}</h1>
 
-<h2>{{ game.title }}</h2>
+        <!-- info chips -->
+        <div class="info-puck price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
+        <div class="info-puck recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.popularity }} Recommend This</div>
 
-<!-- info chips -->
-<div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
-<div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.popularity }} Recommend This</div>
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque sit illum, dolore porro nemo doloremque repellat iste dignissimos, natus repudiandae dolores est repellendus nobis? Error quam deleniti aperiam voluptatum quod...
+        </p>
+
+        <i class="fas fa-calendar"></i><strong>Release Date:</strong> {{ game.release_date }}
+    </div>
+
+</div>
+
 
 <!-- description -->
-<h3><i class="fas fa-circle-info"></i>About</h3>
+<h2><i class="fas fa-circle-info"></i>About</h2>
 <div id="game-about"><i>{{ game.description }}</i></div>
 
 <!-- details -->
 <ul id="game-details">
-    <li><i class="fas fa-calendar"></i><strong>Release Date:</strong>Mar 9, 2021</li>
-    <li><i class="fas fa-gamepad"></i><strong>Genres:</strong> Racing</li>
-    <li><i class="fas fa-trophy"></i><strong>Achievements:</strong> 178</li>
-    <li><i class="fas fa-desktop"></i><strong>Platforms:</strong> Windows</li>
-    <li><i class="fas fa-gamepad"></i><strong>Controller:</strong> Full Support</li>
-    <li><i class="fas fa-cloud"></i><strong>Steam Cloud:</strong> Supported</li>
-    <li><i class="fas fa-user"></i><strong>Developers:</strong> Playground Games</li>
-    <li><i class="fas fa-user"></i><strong>Publishers:</strong> Xbox Game Studios</li>
+    <li><i class="fas fa-calendar"></i><strong>Release Date:</strong> {{ game.release_date }}</li>
+    <li><i class="fas fa-gamepad"></i><strong>Genres:</strong> 
+        {% for genre in game.genres %}
+            {{ genre.genre_name }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </li>
+    <li><i class="fas fa-trophy"></i><strong>Achievements:</strong> {{ game.achievements }}</li>
+    <li><i class="fas fa-desktop"></i><strong>Platforms:</strong> {{ platform_support }}</li>
+    <li><i class="fas fa-gamepad"></i><strong>Controller:</strong> {{ controller_support }}</li>
+    <li><i class="fas fa-cloud"></i><strong>Steam Cloud:</strong> {{ cloud_support }}</li>
+    <li><i class="fas fa-user"></i><strong>Developers:</strong> {{ game.developer }}</li>
+    <li><i class="fas fa-user"></i><strong>Publishers:</strong> {{ game.publisher.publisher_name }}</li>
 </ul>
 
 <!-- categories -->
 <h3><i class="fas fa-shapes"></i>Categories</h3>
-Single-player, Multi-player, PvP, Online PvP, Co-op, Online Co-op, Cross-Platform Multiplayer, Steam Achievements, Full controller support, Steam Trading Cards, Steam Cloud
+{% for cat in game.categories %}
+{{ cat }}{% if not loop.last %}, {% endif %}
+{% endfor %}
 
 <!-- tags -->
 <h3><i class="fas fa-tags"></i>Tags</h3>
 {% for tag in game.tags %}
-    <div class="chip tag-chip">{{ tag }}</div>
+    <div class="info-puck tag-chip">{{ tag }}</div>
 {% endfor %}
+
 <!-- <div class="chip tag-chip">Racing</div>
 <div class="chip tag-chip">Open World</div>
 <div class="chip tag-chip">Driving</div>
