@@ -20,20 +20,38 @@ def browse_games():
 
 @browse_blueprint.route('/browse/', methods=['GET', 'POST'])
 def browse_games_with_slash():
+
     search_string = request.args.get('search', None, type=str)
+    if not search_string:
+        search_string = request.form.get('search', None, type=str)
     genre = request.args.get('genre', None, type=str)
     page = request.args.get('page', 1, type=int)
     return redirect(url_for('games_bp.browse_games', search=search_string, genre=genre, page=page))
 
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET', 'POST'])
 def browse_games_with_options(subpath: str):
+
+    print('3')
+    print('args')
+    for key, value in request.args.items():
+        print(f'{key}: {value}')
+    print('form')
+    for key, value in request.form.items():
+        print(f'{key}: {value}')
+
     subpath, tag_path, sort, tags, bad_url = services.parse_subpath(subpath, repo.repo_instance)
 
+    from_form = False
     search_string = request.args.get('search', None, type=str)
+    if not search_string:
+        search_string = request.form.get('search', None, type=str)
+        if search_string:
+            from_form = True # This is a little bit hacky.
+        # The problem is that if the form sends a GET request then the form data replaces the query string. We need both the query string and the form data, so this is what we got.
     genre = request.args.get('genre', None, type=str)
     page = request.args.get('page', 1, type=int)
 
-    if bad_url: # Redirect to correct url
+    if bad_url or from_form: # Redirect to correct url
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, genre=genre, page=page))
 
     games, num_games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre, page=page, sort=sort)
@@ -94,9 +112,11 @@ def _browse_games_render(
         max_page = ceil(num_games/services.GAMES_PER_PAGE)
     )
 
-@browse_blueprint.route('/browse/add_tags', methods=['POST'])
+@browse_blueprint.route('/add_tags', methods=['POST'])
 def add_tags():
     
+    print('2')
+
     # Read form data
     form_tags = []
     for key, value in request.form.items():
@@ -111,13 +131,15 @@ def add_tags():
 
     search_string = request.args.get('search', None, type=str)
     page = request.args.get('page', 1, type=int)
+    genre = request.args.get('genre', None, type=str)
 
-    return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, page=page))
+    return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, page=page, genre=genre))
 
-@browse_blueprint.route('/browse/set_genre', methods=['GET'])
+@browse_blueprint.route('/set_genre', methods=['GET'])
 def set_genre():
     genre = request.args.get('genre', None, type=str)
     genre = None if genre == 'null-selection' else genre
     search_string = request.args.get('search', None, type=str)
     page = request.args.get('page', None, type=int)
-    return redirect(url_for('games_bp.browse_games', search=search_string, genre=genre, page=page))
+    subpath = request.args.get('subpath', '', type=str)
+    return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, genre=genre, page=page))
