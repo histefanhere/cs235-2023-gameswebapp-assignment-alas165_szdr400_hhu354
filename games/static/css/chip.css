@@ -1,0 +1,10 @@
+.info-puck {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid var(--col-border);
+    border-radius: 0.5em;
+    margin: 4px;
+    color: var(--col-text);
+    box-shadow: 2px 2px 1px 0px var(--col-shadow);
+    background-color: var(--col-bg-selected);
+}
