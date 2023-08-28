@@ -13,6 +13,7 @@
     --col-button-text-inactive: #ffffff;
     --col-button-border-inactive: #a0a0a0;
 
+
     --col-check: #e26e2b;
     --col-check-text: #ffffff;
     --col-check-border: #a44a1e;
@@ -25,8 +26,12 @@
     --col-check-text-selected: #e26e2b;
     --col-check-border-selected: #a44a1e;
 
+
+    --col-card-border: var(--col-button-border);
+    --width-card-image: 400px;
 }
 
+/* Search/filter stuff  */
 .checkbox-label input[type="checkbox"] {
     display: none;
 }
@@ -108,4 +113,44 @@ form > input[type="submit"] {
     padding: 0.1em 1em 0.1em 1em;
     border-left: 0px;
     margin-left: 0px;
+}
+
+/* Results */
+.game-card {
+    display: inline-block;
+    border: 2px solid var(--col-card-border);
+    border-radius: 2.5rem;
+    height: fit-content;
+    margin: 1rem auto 1rem auto;
+    font-size: 0;
+    text-decoration: none;
+    color: black;
+    background-color: #c8abe4;
+}
+
+.game-card > img {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 2.5rem 0 0 2.5rem;
+    width: var(--width-card-image);
+}
+
+.game-card-info {
+    display: inline-block;
+    padding: 0.5em;
+    font-size: 1rem;
+    /* text-align: center; */
+    text-align:left;
+    vertical-align: middle;
+    box-sizing: border-box;
+    max-width: calc(100% - var(--width-card-image));
+}
+
+.game-card-info > h3 {
+    text-decoration: underline;
+    padding-bottom: 1em;
+}
+
+.pagination {
+    margin: 1em 0em 2em 0em;
 }

@@ -94,37 +94,58 @@
 {% endif %}
 
 <!-- Results of search -->
-<h2>Showing {{games|length}} out of {{num_games}}</h2>
+<div style="text-align: center;">
+    <h2>Showing {{games|length}} out of {{num_games}}</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>TITLE</th>
-            <th>RELEASE DATE</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for game in games %}
-        <tr>
-            <td>{{ game.game_id }}</td>
-            <td><a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">{{ game.title }}</a></td>
-            <td>{{ game.game_url }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <!-- <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>RELEASE DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+            <tr>
+                <td>{{ game.game_id }}</td>
+                <td><a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">{{ game.title }}</a></td>
+                <td>{{ game.game_url }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> -->
 
-{% if page > 1 %}
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search, genre=cur_genre, page=page-1) }}"><div class="button">Previous Page</div></a>
-{% else %}
-    <div class="inactive-button">Previous Page</div>
-{% endif %}
-<b>Page: {{ page }} of: {{ max_page }}</b>
-{% if page < max_page %}
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search, genre=cur_genre, page=page+1) }}"><div class="button">Next Page</div></a>
-{% else %}
-    <div class="inactive-button">Next Page</div>
-{% endif %}
+    {% for game in games %}
+        <div style="width: 100%">
+            <a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">
+                <div class="game-card">
+                    <img src="{{ game.image_url }}" alt="Game Cover">
+                    <div class="game-card-info">
+                        <h3>{{ game.title }}</h3>
+                        <b>Price: </b> ${{ game.price }}<br>
+                        <b>Release Date: </b> {{ game.release_date }}<br>
+                        <b>popularity: </b> {{ game.popularity }}<br>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search, genre=cur_genre, page=page-1) }}"><div class="button">Previous Page</div></a>
+        {% else %}
+            <div class="inactive-button">Previous Page</div>
+        {% endif %}
+
+        <b>Page: {{ page }} of: {{ max_page }}</b>
+
+        {% if page < max_page %}
+            <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search, genre=cur_genre, page=page+1) }}"><div class="button">Next Page</div></a>
+        {% else %}
+            <div class="inactive-button">Next Page</div>
+        {% endif %}
+    </div>
 
 {% endblock %}
