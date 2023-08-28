@@ -13,6 +13,14 @@
     --col-button-text-inactive: #ffffff;
     --col-button-border-inactive: #a0a0a0;
 
+    --col-button-remove: #b10000;
+    --col-button-text-remove: #ffffff;
+    --col-button-border-remove: #700000;
+
+    --col-button-remove-hover: #880000;
+    --col-button-text-remove-hover: #ffffff;
+    --col-button-border-remove-hover: #530000;
+
 
     --col-check: #e26e2b;
     --col-check-text: #ffffff;
@@ -89,6 +97,18 @@
     background-color: var(--col-button-inactive);
 }
 
+.clear {
+    color: var(--col-button-text-remove);
+    border-color: var(--col-button-border-remove);
+    background-color: var(--col-button-remove);
+}
+
+.clear:hover {
+    color: var(--col-button-text-remove-hover);
+    border-color: var(--col-button-border-remove-hover);
+    background-color: var(--col-button-remove-hover);
+}
+
 form {
     font-size: 0;
 }
@@ -126,12 +146,12 @@ form > input[type="submit"] {
     text-decoration: none;
     color: black;
     background-color: #c8abe4;
+    overflow: hidden;
 }
 
 .game-card > img {
     display: inline-block;
     vertical-align: middle;
-    border-radius: 2.5rem 0 0 2.5rem;
     width: var(--width-card-image);
 }
 

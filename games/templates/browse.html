@@ -70,51 +70,32 @@
 <!-- Current search settings -->
 {% if cur_search %}
     <b>Search by: </b>
-    <div class="info-puck">{{ cur_search }}</div>
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, genre=cur_genre) }}"><div class="button">Clear search</div></a><br>
+    <div class="info-chip">{{ cur_search }}</div>
+    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, genre=cur_genre) }}"><div class="button clear">Clear search</div></a><br>
 {% endif %}
 
 {% if cur_sort %}
     <b>Sort Query: </b>
-    <div class="info-puck">{{ cur_sort }}</div>
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_tag_path, search=cur_search, genre=cur_genre) }}"><div class="button">Clear sort</div></a><br>
+    <div class="info-chip">{{ cur_sort }}</div>
+    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_tag_path, search=cur_search, genre=cur_genre) }}"><div class="button clear">Clear sort</div></a><br>
 {% endif %}
 
 {% if cur_tags %}
     <b>Tags: </b>
     {% for tag in cur_tags %}
-        <div class="info-puck">{{ tag }}</div>
+        <div class="info-chip">{{ tag }}</div>
     {% endfor %}
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_sort, search=cur_search, genre=cur_genre) }}"><div class="button">Clear selected tags</div></a><br>
+    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_sort, search=cur_search, genre=cur_genre) }}"><div class="button clear">Clear selected tags</div></a><br>
 {% endif %}
 
 {% if cur_genre %}
-    <b>Genre: </b>{{cur_genre}}
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search) }}"><div class="button">Browse all</div></a>
+    <b>Genre: </b><div class="info-chip">{{cur_genre}}</div>
+    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search) }}"><div class="button clear">Browse all</div></a>
 {% endif %}
 
 <!-- Results of search -->
 <div style="text-align: center;">
     <h2>Showing {{games|length}} out of {{num_games}}</h2>
-
-    <!-- <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>TITLE</th>
-                <th>RELEASE DATE</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for game in games %}
-            <tr>
-                <td>{{ game.game_id }}</td>
-                <td><a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">{{ game.title }}</a></td>
-                <td>{{ game.game_url }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table> -->
 
     {% for game in games %}
         <div style="width: 100%">

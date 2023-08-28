@@ -1,10 +1,16 @@
-.info-puck {
+:root {
+    --col-info-chip: #17a7fa;
+    --col-info-chip-text: #ffffff;
+    --col-info-chip-border: #006caa;
+}
+
+.info-chip {
     display: inline-block;
-    padding: 4px;
-    border: 1px solid var(--col-border);
-    border-radius: 0.5em;
+    padding: 0.1em 1em 0.1em 1em;
+    border: 2px solid var(--col-info-chip-border);
+    border-radius: 1em;
     margin: 4px;
-    color: var(--col-text);
+    color: var(--col-info-chip-text);
     box-shadow: 2px 2px 1px 0px var(--col-shadow);
-    background-color: var(--col-bg-selected);
+    background-color: var(--col-info-chip);
 }
