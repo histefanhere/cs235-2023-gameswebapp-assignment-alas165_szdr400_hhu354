@@ -59,24 +59,8 @@
       </div>
     </nav>
     <section class="main">
-      <section class="hero">
-        <div class="main-top">
-            <p>{{ heading  }}</p>
-        </div>
-        <img class="background-wallpaper" src="{{ url_for('static', filename='img/wallpaper.jpg') }}" alt="Game themed wallpaper">
-        <div class="hero-content">
-            <img src="{{ url_for('static', filename='img/hero.png') }}" alt="Hero Image" class="hero-image">
-            <h1>Read About Games that you enjoy</h1>
-            <div class="search-container">
-                <input type="search" placeholder="Search game title or reviewer...">
-                <select name="search-type" id="search-type">
-                    <option value="game-title">Game Title</option>
-                    <option value="reviewer">Reviewer</option>
-                </select>
-                <button type="submit"><i class="fas fa-search"></i> Search</button>
-            </div>
-        </div>
-    </section>  
+      {% block heading %}
+      {% endblock %}
       <div class="main-body">
         {% block content %}
         {% endblock %}
