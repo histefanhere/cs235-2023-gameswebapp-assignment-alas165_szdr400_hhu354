@@ -47,6 +47,19 @@ class GameFileCSVReader:
                         self.__dataset_of_tags.add(tag)
                         game.add_tag(tag)
 
+                    # Shhhhh don't tell anyone how bad of a security flaw this is
+                    game.languages = eval(row["Supported languages"])
+
+                    game.windows = row["Windows"] == "TRUE"
+                    game.mac = row["Mac"] == "TRUE"
+                    game.linux = row["Linux"] == "TRUE"
+
+                    game.achievements = int(row["Achievements"])
+                    game.developer = row["Developers"]
+                    game.categories = row["Categories"].split(",")
+                    game.screenshots = row['Screenshots'].split(",")
+                    game.movies = row['Movies'].split(",")
+
                     self.__dataset_of_games.append(game)
 
                 except ValueError as e:

@@ -85,6 +85,15 @@ class Game:
         self.__publisher = None
         self.__tags: list = []
         self.__popularity = 0
+        self.__languages: list = []
+        self.__windows: bool = False
+        self.__mac: bool = False
+        self.__linux: bool = False
+        self.__achievements: int = 0
+        self.__developer: str = None
+        self.__categories: list = []
+        self.__screenshots: list = []
+        self.__movies: list = []
 
     @property
     def publisher(self) -> Publisher:
@@ -220,6 +229,89 @@ class Game:
     def rating(self, popularity: float):
         if isinstance(popularity, float) and 0 <= popularity:
             self.__popularity = popularity
+
+    @property
+    def languages(self) -> list:
+        return self.__languages
+    
+    @languages.setter
+    def languages(self, languages: list):
+        if isinstance(languages, list):
+            self.__languages = languages
+
+    @property
+    def windows(self) -> bool:
+        return self.__windows
+    
+    @windows.setter
+    def windows(self, windows: bool):
+        if isinstance(windows, bool):
+            self.__windows = windows
+
+    @property
+    def mac(self) -> bool:
+        return self.__mac
+    
+    @mac.setter
+    def mac(self, mac: bool):
+        if isinstance(mac, bool):
+            self.__mac = mac
+
+    @property
+    def linux(self) -> bool:
+        return self.__linux
+    
+    @linux.setter
+    def linux(self, linux: bool):
+        if isinstance(linux, bool):
+            self.__linux = linux
+
+    @property
+    def achievements(self) -> int:
+        return self.__achievements
+    
+    @achievements.setter
+    def achievements(self, achievements: int):
+        if isinstance(achievements, int) and 0 <= achievements:
+            self.__achievements = achievements
+
+    @property
+    def developer(self) -> str: 
+        return self.__developer
+    
+    @developer.setter
+    def developer(self, developer: str):
+        if isinstance(developer, str) and developer.strip() != "":
+            self.__developer = developer.strip()
+        else:
+            self.__developer = None
+
+    @property
+    def categories(self) -> list:
+        return self.__categories
+    
+    @categories.setter
+    def categories(self, categories: list):
+        if isinstance(categories, list):
+            self.__categories = categories
+
+    @property
+    def screenshots(self) -> list:
+        return self.__screenshots
+    
+    @screenshots.setter
+    def screenshots(self, screenshots: list):
+        if isinstance(screenshots, list):
+            self.__screenshots = screenshots
+
+    @property
+    def movies(self) -> list:
+        return self.__movies
+    
+    @movies.setter
+    def movies(self, movies: list):
+        if isinstance(movies, list):
+            self.__movies = movies
 
     def __repr__(self):
         return f"<Game {self.__game_id}, {self.__game_title}>"
