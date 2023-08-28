@@ -94,8 +94,8 @@ def _browse_games_render(
         max_page = ceil(num_games/services.GAMES_PER_PAGE)
     )
 
-@browse_blueprint.route('/browse/read_form', methods=['POST'])
-def browse_games_read_form():
+@browse_blueprint.route('/browse/add_tags', methods=['POST'])
+def add_tags():
     
     # Read form data
     form_tags = []
@@ -113,3 +113,11 @@ def browse_games_read_form():
     page = request.args.get('page', 1, type=int)
 
     return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, page=page))
+
+@browse_blueprint.route('/browse/set_genre', methods=['GET'])
+def set_genre():
+    genre = request.args.get('genre', None, type=str)
+    genre = None if genre == 'null-selection' else genre
+    search_string = request.args.get('search', None, type=str)
+    page = request.args.get('page', None, type=int)
+    return redirect(url_for('games_bp.browse_games', search=search_string, genre=genre, page=page))
