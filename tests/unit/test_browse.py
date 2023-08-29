@@ -1,0 +1,85 @@
+import pytest
+
+from games.domainmodel.model import *
+from games.browse import services as browse_services
+from games.adapters import memory_repository as memory_repo
+
+
+@pytest.fixture
+def repo():
+    repo = memory_repo.MemoryRepository()
+    memory_repo.populate(repo)
+    return repo
+
+@pytest.fixture
+def list_of_games():
+    game1 = Game(1, 'a')
+    game1.price = 1.0
+    game1.release_date = 'Nov 12, 2007'
+    game1.publisher = Publisher("publisher a")
+    game1.add_genre(Genre('genre a'))
+    game1.popularity = 10
+
+    game2 = Game(2, 'b')
+    game2.price = 1.2
+    game2.release_date = 'Nov 13, 2007'
+    game2.publisher = Publisher("publisher b")
+    game2.add_genre(Genre('genre a'))
+    game2.add_genre(Genre('genre b'))
+    game2.popularity = 5
+
+    game3 = Game(3, 'c')
+    game3.price = 0.9
+    game3.release_date = 'Nov 14, 2007'
+    game3.publisher = Publisher("publisher c")
+    game3.add_genre(Genre('genre b'))
+    game3.popularity = 15
+
+    return [game1, game2, game3]
+
+
+def test_sort_games(list_of_games):
+    browse_services.sort_games(list_of_games, 'price')
+    assert list_of_games[0] == Game(3, 'c')
+    assert list_of_games[1] == Game(1, 'a')
+    assert list_of_games[2] == Game(2, 'b')
+
+    browse_services.sort_games(list_of_games, 'title')
+    assert list_of_games[0] == Game(1, 'a')
+    assert list_of_games[1] == Game(2, 'b')
+    assert list_of_games[2] == Game(3, 'c')
+
+    browse_services.sort_games(list_of_games, 'popular')
+    assert list_of_games[0] == Game(3, 'c')
+    assert list_of_games[1] == Game(1, 'a')
+    assert list_of_games[2] == Game(2, 'b')
+
+def test_search_games(repo):
+    # Note that search_games also handles pagination, so the returned list will always have 15 games (or less if we're on the final page). This is also why we need to return num_games alongside the list of games.
+    a_games, num_games = browse_services.search_games(repo, title='a')
+    for game in a_games:
+        assert 'a' in game.title.lower()
+    b_games, num_games = browse_services.search_games(repo, title='b')
+    for game in b_games:
+        assert 'b' in game.title.lower()
+
+    free_games, num_games = browse_services.search_games(repo, price=0)
+    for game in free_games:
+        assert game.price == 0
+    cheap_games, num_games = browse_services.search_games(repo, price=1)
+    for game in cheap_games:
+        assert game.price <= 1
+    
+    action_games, num_games = browse_services.search_games(repo, genre='Action')
+    for game in action_games:
+        assert Genre('Action') in game.genres
+    adventure_games, num_games = browse_services.search_games(repo, genre='Adventure')
+    for game in adventure_games:
+        assert Genre('Adventure') in game.genres
+    
+    adventure_games2, num_games = browse_services.search_games(repo, genre='Adventure', page=2)
+    for game in adventure_games2:
+        assert Genre('Adventure') in game.genres
+        assert game not in adventure_games
+
+    

@@ -68,16 +68,21 @@ class MemoryRepository(AbstractRepository):
                     price: float = float('inf'),
                     #  release_date: (int, str idk),
                     tags: list[str] = None,
-                    genre: Genre = None,
+                    genre: [Genre, str] = None,
                     popularity: int = 0) -> list[Game]:
-        # print(f"Searching for games with title: {title}, price: {price}, tags: {tags}, popularity: {popularity}")
         title = title.lower() if title is not None else None
+        genre_name = None
+        if isinstance(genre, Genre):
+            genre_name = genre.genre_name.lower()
+        elif isinstance(genre, str):
+            genre_name = genre.lower()
         games = []
         for game in self.__games:
             if ((game.price <= price and game.popularity >= popularity) and
                 (tags is None or all(tag in game.tags for tag in tags)) and
-                (genre is None or genre in [g.genre_name for g in game.genres]) and
+                (genre_name is None or genre_name in [g.genre_name.lower() for g in game.genres]) and
                 (title is None or title in game.title.lower()) ):
+                    
                     games.append(game)
         return games
 
