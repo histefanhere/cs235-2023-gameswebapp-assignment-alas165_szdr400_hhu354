@@ -2,6 +2,7 @@
 
 {% block head %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}" />
     <title>CS235</title>
 {% endblock %}
 
@@ -15,14 +16,15 @@
     <div class="hero-content">
         <img src="{{ url_for('static', filename='img/hero.png') }}" alt="Hero Image" class="hero-image">
         <h1>Read About Games that you enjoy</h1>
-        <div class="search-container">
+        <!-- <div class="search-container">
             <input type="search" placeholder="Search game title or reviewer...">
             <select name="search-type" id="search-type">
                 <option value="game-title">Game Title</option>
                 <option value="reviewer">Reviewer</option>
             </select>
             <button type="submit"><i class="fas fa-search"></i> Search</button>
-        </div>
+        </div> -->
+        {% include "search.html" %}
     </div>
 </section>  
 {% endblock %}

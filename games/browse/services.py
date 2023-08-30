@@ -1,6 +1,8 @@
+import bisect
+from flask import request
+
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game, Genre
-import bisect
 
 GAMES_PER_PAGE = 15
 
@@ -83,4 +85,13 @@ def get_all_genres(repo: AbstractRepository) -> list[Genre]:
 def get_random_genres(repo: AbstractRepository, n: int) -> list[Genre]:
     from random import sample
     return [g.genre_name for g in sample(repo.get_genres(), n)]
-    
+
+def get_genre_from_request(req: request):
+    genre = req.args.get('genre', None, type=str)
+    if isinstance(genre, str):
+        genre = genre.lower().strip()
+    if genre == '' or genre == 'null-selection':
+        genre = None
+    return genre
+
+# TODO: make similar helper functions for other args.

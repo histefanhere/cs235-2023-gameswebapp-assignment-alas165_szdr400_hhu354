@@ -2,14 +2,7 @@ import pytest
 
 from games.domainmodel.model import *
 from games.browse import services as browse_services
-from games.adapters import memory_repository as memory_repo
 
-
-@pytest.fixture
-def repo():
-    repo = memory_repo.MemoryRepository()
-    memory_repo.populate(repo)
-    return repo
 
 @pytest.fixture
 def list_of_games():
@@ -77,9 +70,15 @@ def test_search_games(repo):
     for game in adventure_games:
         assert Genre('Adventure') in game.genres
     
-    adventure_games2, num_games = browse_services.search_games(repo, genre='Adventure', page=2)
-    for game in adventure_games2:
-        assert Genre('Adventure') in game.genres
-        assert game not in adventure_games
+    all_games_page_1, num_games = browse_services.search_games(repo, page=1)
+    assert len(all_games_page_1) == 15
+    all_games_page_2, num_games = browse_services.search_games(repo, page=2)
+    assert len(all_games_page_2) == 5
+    # 20 games in total, 15 on page 1, 5 on page 2
+    for game in all_games_page_1:
+        assert game not in all_games_page_2
+    for game in all_games_page_2:
+        assert game not in all_games_page_1
+
 
     

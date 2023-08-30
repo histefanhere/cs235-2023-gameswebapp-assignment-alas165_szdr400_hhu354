@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from bisect import insort_left
 from typing import List
 
@@ -77,6 +78,7 @@ class MemoryRepository(AbstractRepository):
         elif isinstance(genre, str):
             genre_name = genre.lower()
         games = []
+        # print(f"searching for - title: {title}, price: {price}, tags: {tags}, genre: {genre_name}, recommendations: {recommendations}")
         for game in self.__games:
             if ((game.price <= price and game.recommendations >= recommendations) and
                 (tags is None or all(tag in game.tags for tag in tags)) and
@@ -87,9 +89,10 @@ class MemoryRepository(AbstractRepository):
         return games
 
 
-def populate(repo: AbstractRepository):
-    dir_name = os.path.dirname(os.path.abspath(__file__))
-    games_file_name = os.path.join(dir_name, "data/games.csv")
+def populate(data_path: Path, repo: AbstractRepository):
+    # dir_name = os.path.dirname(os.path.abspath(__file__))
+    # games_file_name = os.path.join(dir_name, "data/games.csv")
+    games_file_name = str(Path(data_path) / "games.csv")
     reader = GameFileCSVReader(games_file_name)
 
     reader.read_csv_file()
