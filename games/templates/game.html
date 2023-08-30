@@ -65,7 +65,7 @@
 <!-- tags -->
 <h2><i class="fas fa-tags header-icon"></i>Tags</h2>
 {% for tag in game.tags %}
-    <div class="chip info-chip">{{ tag }}</div>
+    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=tag) }}"><div class="button">{{ tag }}</div></a>
 {% endfor %}
 
 <div style="height: 200px"></div>
