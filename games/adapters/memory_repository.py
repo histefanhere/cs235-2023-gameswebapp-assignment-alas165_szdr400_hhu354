@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from bisect import insort_left
 from typing import List
 
@@ -87,9 +88,10 @@ class MemoryRepository(AbstractRepository):
         return games
 
 
-def populate(repo: AbstractRepository):
-    dir_name = os.path.dirname(os.path.abspath(__file__))
-    games_file_name = os.path.join(dir_name, "data/games.csv")
+def populate(data_path: Path, repo: AbstractRepository):
+    # dir_name = os.path.dirname(os.path.abspath(__file__))
+    # games_file_name = os.path.join(dir_name, "data/games.csv")
+    games_file_name = str(Path(data_path) / "games.csv")
     reader = GameFileCSVReader(games_file_name)
 
     reader.read_csv_file()
