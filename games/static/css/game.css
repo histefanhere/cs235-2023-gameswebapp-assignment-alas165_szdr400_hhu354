@@ -25,3 +25,22 @@
 #game-info h1 {
     font-size: 2.5em;
 }
+
+#game-details {
+    list-style: none;
+    /* padding: 0; */
+}
+
+#game-details li {
+    margin-bottom: 0.3em;
+}
+
+#game-details li i {
+    margin-right: 0.5em;
+    width: 20px;
+    height: auto;
+}
+
+.header-icon {
+    margin-right: 0.5em;
+}

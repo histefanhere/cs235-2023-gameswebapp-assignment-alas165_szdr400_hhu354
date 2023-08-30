@@ -24,18 +24,20 @@
         <div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
         <div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.recommendations }} Recommend This</div>
 
-        <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque sit illum, dolore porro nemo doloremque repellat iste dignissimos, natus repudiandae dolores est repellendus nobis? Error quam deleniti aperiam voluptatum quod...
-        </p>
+        <!-- <br/> -->
 
-        <i class="fas fa-calendar"></i><strong>Release Date:</strong> {{ game.release_date }}
+        <!-- <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque sit illum, dolore porro nemo doloremque repellat iste dignissimos, natus repudiandae dolores est repellendus nobis? Error quam deleniti aperiam voluptatum quod...
+        </p> -->
+
+        <!-- <i class="fas fa-calendar"></i><strong>Release Date:</strong> {{ game.release_date }} -->
     </div>
 
 </div>
 
 
 <!-- description -->
-<h2><i class="fas fa-circle-info"></i>About</h2>
+<h2><i class="fas fa-info-circle header-icon"></i>About</h2>
 <div id="game-about"><i>{{ game.description }}</i></div>
 
 <!-- details -->
@@ -55,36 +57,17 @@
 </ul>
 
 <!-- categories -->
-<h3><i class="fas fa-shapes"></i>Categories</h3>
+<h2><i class="fas fa-shapes header-icon"></i>Categories</h2>
 {% for cat in game.categories %}
 {{ cat }}{% if not loop.last %}, {% endif %}
 {% endfor %}
 
 <!-- tags -->
-<h3><i class="fas fa-tags"></i>Tags</h3>
+<h2><i class="fas fa-tags header-icon"></i>Tags</h2>
 {% for tag in game.tags %}
-    <div class="info-puck tag-chip">{{ tag }}</div>
+    <div class="chip info-chip">{{ tag }}</div>
 {% endfor %}
 
-<!-- <div class="chip tag-chip">Racing</div>
-<div class="chip tag-chip">Open World</div>
-<div class="chip tag-chip">Driving</div>
-<div class="chip tag-chip">Multiplayer</div>
-<div class="chip tag-chip">Online Co-Op</div>
-<div class="chip tag-chip">Automobile Sim</div>
-<div class="chip tag-chip">Singleplayer</div>
-<div class="chip tag-chip">Realistic</div>
-<div class="chip tag-chip">Adventure</div>
-<div class="chip tag-chip">PvP</div>
-<div class="chip tag-chip">Arcade</div>
-<div class="chip tag-chip">Controller</div>
-<div class="chip tag-chip">Simulation</div>
-<div class="chip tag-chip">Exploration</div>
-<div class="chip tag-chip">Action</div>
-<div class="chip tag-chip">Sports</div>
-<div class="chip tag-chip">Great Soundtrack</div>
-<div class="chip tag-chip">Atmospheric</div>
-<div class="chip tag-chip">First-Person</div>
-<div class="chip tag-chip">Funny</div> -->
+<div style="height: 200px"></div>
 
 {% endblock %}
