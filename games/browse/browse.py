@@ -55,8 +55,6 @@ def browse_games_with_options(subpath: str):
     if bad_url or from_form: # Redirect to correct url
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, genre=genre, page=page))
 
-    print(f"search_string: {search_string}, genre: {genre}, page: {page}, games: {games}, num_games: {num_games}")
-
     games, num_games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre, page=page, sort=sort)
     print(f'games: {games}')
 
