@@ -18,7 +18,7 @@ def list_of_games():
     game1.release_date = 'Nov 12, 2007'
     game1.publisher = Publisher("publisher a")
     game1.add_genre(Genre('genre a'))
-    game1.popularity = 10
+    game1.recommendations = 10
 
     game2 = Game(2, 'b')
     game2.price = 1.2
@@ -26,14 +26,14 @@ def list_of_games():
     game2.publisher = Publisher("publisher b")
     game2.add_genre(Genre('genre a'))
     game2.add_genre(Genre('genre b'))
-    game2.popularity = 5
+    game2.recommendations = 5
 
     game3 = Game(3, 'c')
     game3.price = 0.9
     game3.release_date = 'Nov 14, 2007'
     game3.publisher = Publisher("publisher c")
     game3.add_genre(Genre('genre b'))
-    game3.popularity = 15
+    game3.recommendations = 15
 
     return [game1, game2, game3]
 

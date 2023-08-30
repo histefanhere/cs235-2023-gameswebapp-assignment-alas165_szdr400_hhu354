@@ -57,7 +57,7 @@ class AbstractRepository(abc.ABC):
     def search_games(self, price: float = float('inf'),
                     #  release_date: (int, str idk),
                     tags: list[str] = None,
-                    popularity: int = 0,
+                    recommendations: int = 0,
                     genre: Genre = None ) -> list[Game]:
         """ Returns the list of games that match the given criteria. """
         raise NotImplementedError
