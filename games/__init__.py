@@ -35,6 +35,10 @@ def create_app(test_config=None):
         from .game import game
         app.register_blueprint(game.game_blueprint)
 
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html'), 404
+
     @app.route('/')
     def home():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.

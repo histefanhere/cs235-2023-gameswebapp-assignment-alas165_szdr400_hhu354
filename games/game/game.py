@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import abort, render_template, Blueprint
 
 import games.adapters.repository as repo
 from games.game import services
@@ -11,6 +11,9 @@ game_blueprint = Blueprint(
 @game_blueprint.route('/game/<int:game_id>', methods=['GET'])
 def game_view(game_id):
     game_data = services.get_game_data(repo.repo_instance, game_id)
+
+    if game_data is None:
+        abort(404)
 
     platform_support = []
     if game_data.windows: platform_support.append('Windows')
