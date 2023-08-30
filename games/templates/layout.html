@@ -36,10 +36,34 @@
               <span class="nav-item">Reviews</span>
             </a>
           </li>
+          <li class="genre-li">
+            <a href="#">
+              <i class="fas fa-music"></i>
+              <span class="nav-item">Genres</span>
+            </a>
+            <div class="mega-menu">
+              <div class="genre-column">
+                <h3>Popular Genres</h3>
+                <a href="#">Action</a>
+                <a href="#">Adventure</a>
+                <a href="#">Casual</a>
+                <a href="#">Indie</a>
+                <a href="#">Simulation</a>
+              </div>
+              <div class="genre-column">
+                <h3>Classical Genres</h3>
+                <a href="#">Racing</a>
+                <a href="#">RPG</a>
+                <a href="#">Strategy</a>
+                <a href="#">Utilities</a>
+                <a href="#">More</a>
+              </div>
+            </div>
+          </li>
           <li>
             <a href="#">
               <i class="fas fa-users"></i>
-              <span class="nav-item">Out Team</span>
+              <span class="nav-item">Our Team</span>
             </a>
           </li>
           <li>
@@ -54,7 +78,6 @@
               <span class="nav-item">Log out</span>
             </a>
           </li>
-        </ul>
         </ul>
       </div>
     </nav>
@@ -74,7 +97,7 @@
                 <a href="{{ url_for('home') }}">Home</a>
                 <a href="{{ url_for('games_bp.browse_games') }}">Games</a>
                 <a href="#">Reviews</a>
-                <a href="#">Out Team</a>
+                <a href="#">Our Team</a>
                 <a href="#">Help</a>
             </div>
             <div class="footer-social">
