@@ -30,6 +30,7 @@ def game_view(game_id):
         cloud_support = 'Supported'
     else:
         cloud_support = 'Not Supported'
+    all_genres = repo.repo_instance.get_genres()
 
     return render_template(
         'game.html',
@@ -38,5 +39,6 @@ def game_view(game_id):
         game = game_data,
         controller_support = controller_support,
         platform_support = platform_support,
-        cloud_support = cloud_support
+        cloud_support = cloud_support,
+        all_genres = [g.genre_name for g in all_genres]
     )
