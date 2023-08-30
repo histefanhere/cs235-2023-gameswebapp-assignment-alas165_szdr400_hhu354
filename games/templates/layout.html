@@ -30,36 +30,20 @@
               <i class="fas fa-gamepad"></i>
               <span class="nav-item">Games</span>
             </a>
-          </li>
-          <li class="dropdown">
-            <div class="dropdown-box"> <!-- New container -->
-              <a href="#" class="dropdown-btn">
-                <i class="fas fa-tags"></i>
-                <span class="nav-item">Genres</span>
-                <i class="fas fa-caret-down"></i>
-              </a>
-              <div class="dropdown-content">
-                <a href="#">Action</a>
-                <a href="#">Adventure</a>
-                <a href="#">Casual</a>
-                <a href="#">Indie</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
-                <a href="#">Simulation</a>
+            <li class="dropdown">
+              <div class="dropdown-box">
+                <a href="#" class="dropdown-btn">
+                  <i class="fas fa-tags"></i>
+                  <span class="nav-item">Genres</span>
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                  {% for genre in all_genres %}
+                  <a href="{{ url_for('games_bp.browse_games', genre=genre) }}">{{ genre }}</a>
+                  {% endfor %}
+                </div>
               </div>
-            </div>
-          </li>
+            </li>             
           <div class="nav-items"> <!-- Wrap the items you want to move down here -->
             <li>
               <a href="#">

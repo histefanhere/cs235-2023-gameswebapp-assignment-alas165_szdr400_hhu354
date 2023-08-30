@@ -342,7 +342,7 @@ footer {
   width: 100%;  
   z-index: 1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: calc(40px * 5);  
+  max-height: calc(40px * 4.5);  
   overflow-y: auto;  
 }
 
