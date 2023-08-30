@@ -32,6 +32,7 @@ def list_of_games():
 
 
 def test_sort_games(list_of_games):
+    # Checking that games are in correct order after sorting.
     browse_services.sort_games(list_of_games, 'price')
     assert list_of_games[0] == Game(3, 'c')
     assert list_of_games[1] == Game(1, 'a')
@@ -49,6 +50,7 @@ def test_sort_games(list_of_games):
 
 def test_search_games(repo):
     # Note that search_games also handles pagination, so the returned list will always have 15 games (or less if we're on the final page). This is also why we need to return num_games alongside the list of games.
+    # Checking searching by title
     a_games, num_games = browse_services.search_games(repo, title='a')
     for game in a_games:
         assert 'a' in game.title.lower()
@@ -56,6 +58,7 @@ def test_search_games(repo):
     for game in b_games:
         assert 'b' in game.title.lower()
 
+    # Checking searching by price
     free_games, num_games = browse_services.search_games(repo, price=0)
     for game in free_games:
         assert game.price == 0
@@ -63,6 +66,7 @@ def test_search_games(repo):
     for game in cheap_games:
         assert game.price <= 1
     
+    # Checking searching by genre
     action_games, num_games = browse_services.search_games(repo, genre='Action')
     for game in action_games:
         assert Genre('Action') in game.genres
@@ -70,6 +74,7 @@ def test_search_games(repo):
     for game in adventure_games:
         assert Genre('Adventure') in game.genres
     
+    # Checking pages
     all_games_page_1, num_games = browse_services.search_games(repo, page=1)
     assert len(all_games_page_1) == 15
     all_games_page_2, num_games = browse_services.search_games(repo, page=2)
