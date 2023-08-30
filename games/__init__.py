@@ -35,9 +35,16 @@ def create_app(test_config=None):
         from .game import game
         app.register_blueprint(game.game_blueprint)
 
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html'), 404
+
     @app.route('/')
     def home():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('main.html', heading="Discover new games")
+        genres = repo.repo_instance.get_genres()
+        print(genres)
+        return render_template('main.html', all_genres = genres, heading="Discover new games")
+
 
     return app
