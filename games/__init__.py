@@ -42,6 +42,9 @@ def create_app(test_config=None):
     @app.route('/')
     def home():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('main.html', heading="Discover new games")
+        genres = repo.repo_instance.get_genres()
+        print(genres)
+        return render_template('main.html', all_genres = genres, heading="Discover new games")
+
 
     return app

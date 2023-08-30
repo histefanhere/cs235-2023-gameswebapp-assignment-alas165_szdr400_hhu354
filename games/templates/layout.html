@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='javascript/scripts.js') }}"></script>
   {% endblock %}
 </head>
 
@@ -29,55 +30,46 @@
               <i class="fas fa-gamepad"></i>
               <span class="nav-item">Games</span>
             </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fas fa-star"></i>
-              <span class="nav-item">Reviews</span>
-            </a>
-          </li>
-          <li class="genre-li">
-            <a href="#">
-              <i class="fas fa-music"></i>
-              <span class="nav-item">Genres</span>
-            </a>
-            <div class="mega-menu">
-              <div class="genre-column">
-                <h3>Popular Genres</h3>
-                <a href="#">Action</a>
-                <a href="#">Adventure</a>
-                <a href="#">Casual</a>
-                <a href="#">Indie</a>
-                <a href="#">Simulation</a>
+            <li class="dropdown">
+              <div class="dropdown-box">
+                <a href="#" class="dropdown-btn">
+                  <i class="fas fa-tags"></i>
+                  <span class="nav-item">Genres</span>
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                  {% for genre in all_genres %}
+                  <a href="{{ url_for('games_bp.browse_games', genre=genre) }}">{{ genre }}</a>
+                  {% endfor %}
+                </div>
               </div>
-              <div class="genre-column">
-                <h3>Classical Genres</h3>
-                <a href="#">Racing</a>
-                <a href="#">RPG</a>
-                <a href="#">Strategy</a>
-                <a href="#">Utilities</a>
-                <a href="#">More</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fas fa-users"></i>
-              <span class="nav-item">Our Team</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fas fa-question-circle"></i>
-              <span class="nav-item">Help</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="logout">
-              <i class="fas fa-sign-out-alt"></i>
-              <span class="nav-item">Log out</span>
-            </a>
-          </li>
+            </li>             
+          <div class="nav-items"> <!-- Wrap the items you want to move down here -->
+            <li>
+              <a href="#">
+                <i class="fas fa-star"></i>
+                <span class="nav-item">Reviews</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-users"></i>
+                <span class="nav-item">Our Team</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-question-circle"></i>
+                <span class="nav-item">Help</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Log out</span>
+              </a>
+            </li>
+          </div> 
         </ul>
       </div>
     </nav>
