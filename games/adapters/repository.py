@@ -48,10 +48,10 @@ class AbstractRepository(abc.ABC):
     #     """ Returns a list of n random tags. """
     #     raise NotImplementedError
     
-    @abc.abstractmethod
-    def get_games_with_tags(self, tags: list[str]) -> list[Game]:
-        """ Returns the list of games that have all the given tags. """
-        raise NotImplementedError
+    # @abc.abstractmethod
+    # def get_games_with_tags(self, tags: list[str]) -> list[Game]:
+    #     """ Returns the list of games that have all the given tags. """
+    #     raise NotImplementedError
 
     @abc.abstractmethod
     def search_games(self, price: float = float('inf'),

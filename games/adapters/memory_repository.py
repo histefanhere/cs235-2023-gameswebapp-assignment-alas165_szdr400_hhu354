@@ -58,12 +58,12 @@ class MemoryRepository(AbstractRepository):
     #     import random
     #     return random.sample(self.__tags, n)
     
-    def get_games_with_tags(self, tags: list[str]) -> List[Game]:
-        games = []
-        for game in self.__games:
-            if all(tag in game.tags for tag in tags):
-                games.append(game)
-        return games
+    # def get_games_with_tags(self, tags: list[str]) -> List[Game]:
+    #     games = []
+    #     for game in self.__games:
+    #         if all(tag in game.tags for tag in tags):
+    #             games.append(game)
+    #     return games
     
     def search_games(self, title: str = None,
                     price: float = float('inf'),
