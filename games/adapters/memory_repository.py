@@ -69,7 +69,7 @@ class MemoryRepository(AbstractRepository):
                     #  release_date: (int, str idk),
                     tags: list[str] = None,
                     genre: [Genre, str] = None,
-                    popularity: int = 0) -> list[Game]:
+                    recommendations: int = 0) -> list[Game]:
         title = title.lower() if title is not None else None
         genre_name = None
         if isinstance(genre, Genre):
@@ -78,7 +78,7 @@ class MemoryRepository(AbstractRepository):
             genre_name = genre.lower()
         games = []
         for game in self.__games:
-            if ((game.price <= price and game.popularity >= popularity) and
+            if ((game.price <= price and game.recommendations >= recommendations) and
                 (tags is None or all(tag in game.tags for tag in tags)) and
                 (genre_name is None or genre_name in [g.genre_name.lower() for g in game.genres]) and
                 (title is None or title in game.title.lower()) ):

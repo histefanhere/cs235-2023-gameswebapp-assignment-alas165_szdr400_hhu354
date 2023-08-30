@@ -26,7 +26,7 @@ def sort_games(games: list[Game], sort: str):
     if sort == 'title':
         games.sort(key=lambda x: x.title)
     elif sort == 'popular':
-        games.sort(key=lambda x: x.popularity, reverse=True)
+        games.sort(key=lambda x: x.recommendations, reverse=True)
     elif sort == 'price':
         games.sort(key=lambda x: x.price)
     elif sort == 'recent':

@@ -62,6 +62,16 @@ class Genre:
 
     def __hash__(self):
         return hash(self.__genre_name)
+    
+
+class Recommendations(int):
+    def __str__(self):
+        if self >= 20_000:
+            return f'{self / 1000:.0f}k'
+        elif self >= 1_000:
+            return f'{self / 1000:.1f}k'
+        else:
+            return super().__str__()
 
 
 class Game:
@@ -84,7 +94,7 @@ class Game:
         self.__reviews: list = []
         self.__publisher = None
         self.__tags: list = []
-        self.__popularity = 0
+        self.__recommendations = Recommendations(0)
         self.__languages: list = []
         self.__windows: bool = False
         self.__mac: bool = False
@@ -222,13 +232,13 @@ class Game:
             pass
     
     @property
-    def rating(self) -> float:
-        return self.__popularity
+    def recommendations(self) -> float:
+        return self.__recommendations
     
-    @rating.setter
-    def rating(self, popularity: float):
-        if isinstance(popularity, float) and 0 <= popularity:
-            self.__popularity = popularity
+    @recommendations.setter
+    def recommendations(self, recommendations: int):
+        if type(recommendations) is int and recommendations >= 0:
+            self.__recommendations = Recommendations(recommendations)
 
     @property
     def languages(self) -> list:
