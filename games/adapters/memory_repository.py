@@ -77,6 +77,7 @@ class MemoryRepository(AbstractRepository):
         elif isinstance(genre, str):
             genre_name = genre.lower()
         games = []
+        # print(f"searching for - title: {title}, price: {price}, tags: {tags}, genre: {genre_name}, recommendations: {recommendations}")
         for game in self.__games:
             if ((game.price <= price and game.recommendations >= recommendations) and
                 (tags is None or all(tag in game.tags for tag in tags)) and

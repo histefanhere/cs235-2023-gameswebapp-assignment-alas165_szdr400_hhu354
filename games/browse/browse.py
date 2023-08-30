@@ -12,26 +12,27 @@ browse_blueprint = Blueprint(
 
 @browse_blueprint.route('/browse', methods=['GET', 'POST'])
 def browse_games():
+    print(1)
     search_string = request.args.get('search', None, type=str)
-    genre = request.args.get('genre', None, type=str)
+    genre = services.get_genre_from_request(request)
     page = request.args.get('page', 1, type=int)
     games, num_games = services.search_games(repo.repo_instance, page=page, title=search_string, genre=genre)
+    print(f"search_string: {search_string}, genre: {genre}, page: {page}, games: {games}, num_games: {num_games}")
     return _browse_games_render(games=games, cur_search=search_string, cur_genre=genre, num_games=num_games, page=page)
 
 @browse_blueprint.route('/browse/', methods=['GET', 'POST'])
 def browse_games_with_slash():
-
     search_string = request.args.get('search', None, type=str)
     if not search_string:
         search_string = request.form.get('search', None, type=str)
-    genre = request.args.get('genre', None, type=str)
+    genre = services.get_genre_from_request(request)
     page = request.args.get('page', 1, type=int)
     return redirect(url_for('games_bp.browse_games', search=search_string, genre=genre, page=page))
 
 @browse_blueprint.route('/browse/<path:subpath>', methods=['GET', 'POST'])
 def browse_games_with_options(subpath: str):
+    print(2)
 
-    print('3')
     print('args')
     for key, value in request.args.items():
         print(f'{key}: {value}')
@@ -48,13 +49,16 @@ def browse_games_with_options(subpath: str):
         if search_string:
             from_form = True # This is a little bit hacky.
         # The problem is that if the form sends a GET request then the form data replaces the query string. We need both the query string and the form data, so this is what we got.
-    genre = request.args.get('genre', None, type=str)
+    genre = services.get_genre_from_request(request)
     page = request.args.get('page', 1, type=int)
 
     if bad_url or from_form: # Redirect to correct url
         return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, genre=genre, page=page))
 
+    print(f"search_string: {search_string}, genre: {genre}, page: {page}, games: {games}, num_games: {num_games}")
+
     games, num_games = services.search_games(repo.repo_instance, title=search_string, tags=tags, genre=genre, page=page, sort=sort)
+    print(f'games: {games}')
 
     return _browse_games_render(
             cur_sort = sort,
@@ -114,9 +118,6 @@ def _browse_games_render(
 
 @browse_blueprint.route('/add_tags', methods=['POST'])
 def add_tags():
-    
-    print('2')
-
     # Read form data
     form_tags = []
     for key, value in request.form.items():
@@ -131,14 +132,13 @@ def add_tags():
 
     search_string = request.args.get('search', None, type=str)
     page = request.args.get('page', 1, type=int)
-    genre = request.args.get('genre', None, type=str)
+    genre = services.get_genre_from_request(request)
 
     return redirect(url_for('games_bp.browse_games_with_options', subpath=subpath, search=search_string, page=page, genre=genre))
 
 @browse_blueprint.route('/set_genre', methods=['GET'])
 def set_genre():
-    genre = request.args.get('genre', None, type=str)
-    genre = None if genre == 'null-selection' else genre
+    genre = services.get_genre_from_request(request)
     search_string = request.args.get('search', None, type=str)
     page = request.args.get('page', None, type=int)
     subpath = request.args.get('subpath', '', type=str)
