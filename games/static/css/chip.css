@@ -1,16 +1,39 @@
-:root {
-    --col-info-chip: #17a7fa;
-    --col-info-chip-text: #ffffff;
-    --col-info-chip-border: #006caa;
-}
-
-.info-chip {
+.chip {
     display: inline-block;
     padding: 0.1em 1em 0.1em 1em;
-    border: 2px solid var(--col-info-chip-border);
+    border: 1px solid;
     border-radius: 1em;
     margin: 4px;
-    color: var(--col-info-chip-text);
     box-shadow: 2px 2px 1px 0px var(--col-shadow);
-    background-color: var(--col-info-chip);
+}
+
+.chip i {
+    margin-right: 0.3em;
+}
+
+/* General information chip */
+.info-chip {
+    background-color: #17a7fa;
+    border-color: #006caa;
+    color: #ffffff;
+}
+
+/* Chip showing the price of games, has a dollar sign icon */
+.price-chip {
+    background-color: #33af45;
+    border-color: #2c943b;
+    color: #effded;
+}
+.price-chip i {
+    color: #1f7a2f;
+}
+
+/* Chip showing the popularity of games, has a thumbs up icon */
+.recommendation-chip {
+    background-color: #e6a225;
+    border-color: #cc8d27;
+    color: #fdf6eb;
+}
+.recommendation-chip i {
+    color: #af7f05;
 }

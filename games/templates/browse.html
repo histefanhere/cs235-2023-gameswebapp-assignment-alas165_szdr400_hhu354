@@ -20,7 +20,7 @@
     {% include "search.html" %}
 
     {% if cur_search %}
-        Current search: <div class="info-chip">{{ cur_search }}</div>
+        Current search: <div class="chip info-chip">{{ cur_search }}</div>
         <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, genre=cur_genre) }}"><div class="button clear">Clear search</div></a><br>
     {% endif %}
 </div>
@@ -33,7 +33,7 @@
     <a href="{{ url_for('games_bp.browse_games_with_options', subpath='recent/'+cur_tag_path, search=cur_search, genre=cur_genre) }}"><div class="button">Recent</div></a><br>
 
     {% if cur_sort %}
-        Current sort: <div class="info-chip">{{ cur_sort }}</div>
+        Current sort: <div class="chip info-chip">{{ cur_sort }}</div>
         <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_tag_path, search=cur_search, genre=cur_genre) }}"><div class="button clear">Clear sort</div></a><br>
     {% endif %}
 </div>
@@ -60,7 +60,7 @@
     {% if cur_tags %}
         Current tags: 
         {% for tag in cur_tags %}
-            <div class="info-chip">{{ tag }}</div>
+            <div class="chip info-chip">{{ tag }}</div>
         {% endfor %}
         <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_sort, search=cur_search, genre=cur_genre) }}"><div class="button clear">Clear selected tags</div></a><br>
     {% endif %}
@@ -86,7 +86,7 @@
     {{cur_search}}
 
     {% if cur_genre %}
-        Current genre: <div class="info-chip">{{cur_genre}}</div>
+        Current genre: <div class="chip info-chip">{{cur_genre}}</div>
         <a href="{{ url_for('games_bp.browse_games_with_options', subpath=cur_subpath, search=cur_search) }}"><div class="button clear">Browse all</div></a>
     {% endif %}
 </div>
