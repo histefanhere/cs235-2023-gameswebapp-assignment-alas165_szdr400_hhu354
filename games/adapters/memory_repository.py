@@ -5,7 +5,7 @@ from typing import List
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre
+from games.domainmodel.model import Game, Genre, User
 
 
 class MemoryRepository(AbstractRepository):
@@ -94,6 +94,10 @@ class MemoryRepository(AbstractRepository):
             if user.username == username:
                 return user
         return None
+    
+    def add_user(self, user):
+        if user not in self.__users:
+            self.__users.append(user)
 
 
 def populate(data_path: Path, repo: AbstractRepository):

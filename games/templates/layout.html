@@ -19,6 +19,15 @@
           <h1>Team Socks</h1>
         </div>
         <ul>
+          {% if 'username' in session %}
+            <h3>Welcome, {{ session['username'] }}</h3>
+            <li>
+              <a href="#">
+                <!-- icon here -->
+                <span class="nav-item">Profile</span>
+              </a>
+            </li>
+          {% endif %}
           <li>
             <a href="{{ url_for('home') }}">
               <i class="fas fa-home"></i>
@@ -63,12 +72,22 @@
                 <span class="nav-item">Help</span>
               </a>
             </li>
-            <li>
+            <li> <!-- This should only exist if we're already signed in -->
               <a href="#" class="logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="nav-item">Log out</span>
               </a>
             </li>
+            <li>
+              <!-- And these should only exist if we're not already signed in -->
+              <a href="{{ url_for('auth_bp.login') }}" class="login">
+                <!-- Someone else can add these icons -->
+                <span class="nav-item">Log in</span>
+            </li>
+            <li>
+              <a href="{{ url_for('auth_bp.register') }}" class="signup">
+                <span class="nav-item">Sign up</span>
+              </a>
           </div> 
         </ul>
       </div>
