@@ -61,3 +61,8 @@ class AbstractRepository(abc.ABC):
                     genre: Genre = None ) -> list[Game]:
         """ Returns the list of games that match the given criteria. """
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def add_user(self, user):
+        """ Adds a user to the repository. """
+        raise NotImplementedError

@@ -13,6 +13,7 @@ class MemoryRepository(AbstractRepository):
         self.__games = list()
         self.__tags = list()
         self.__genres = list()
+        self.__users = list()
 
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -87,6 +88,12 @@ class MemoryRepository(AbstractRepository):
                     
                     games.append(game)
         return games
+    
+    def get_user(self, username: str):
+        for user in self.__users:
+            if user.username == username:
+                return user
+        return None
 
 
 def populate(data_path: Path, repo: AbstractRepository):
