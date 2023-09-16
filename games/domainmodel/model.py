@@ -194,6 +194,16 @@ class Game:
     @property
     def reviews(self) -> list:
         return self.__reviews
+    
+    def add_review(self, new_review):
+        if not isinstance(new_review, Review) or new_review in self.__reviews:
+            return
+        self.__reviews.append(new_review)
+
+    def remove_review(self, review):
+        if not isinstance(review, Review) or review not in self.__reviews:
+            return
+        self.__reviews.remove(review)
 
     @property
     def genres(self) -> list:

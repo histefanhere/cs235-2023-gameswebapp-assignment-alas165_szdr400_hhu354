@@ -5,7 +5,7 @@ from typing import List
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, User
+from games.domainmodel.model import Game, Genre, Review, User
 
 
 class MemoryRepository(AbstractRepository):
@@ -14,6 +14,7 @@ class MemoryRepository(AbstractRepository):
         self.__tags = list()
         self.__genres = list()
         self.__users = list()
+        self.__reviews = list()
 
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -99,6 +100,10 @@ class MemoryRepository(AbstractRepository):
         if user not in self.__users:
             self.__users.append(user)
 
+    def add_review(self, review: Review):
+        if review not in self.__reviews:
+            self.__reviews.append(review)
+
 
 def populate(data_path: Path, repo: AbstractRepository):
     # dir_name = os.path.dirname(os.path.abspath(__file__))
@@ -123,3 +128,34 @@ def populate(data_path: Path, repo: AbstractRepository):
     # Add genres to the repo:
     for genre in genres:
         repo.add_genre(genre)
+
+    # TESTING: Add a bunch of random users to the repo
+    from games.authentication.services import add_user
+    add_user('test', 'test', repo)
+    add_user('bob', 'Bob123', repo)
+    add_user('alice', 'Alice123', repo)
+    add_user('david', 'David123', repo)
+
+    # # TESTING: Add a bunch of random reviews to each game
+    import random
+    rand_reviews = [
+        "This game is okay, with good visuals but bad gameplay. Something to play if you want to show others your powerful PC.",
+        "Best game I've ever played! I've spent over 1000 hours on this game and I'm still not bored of it.",
+        "This game is terrible. I can't believe I wasted my money on this.",
+        "I don't know why this game is so popular. It's just a generic shooter.",
+        "This game is great, but it's a little short.",
+        "This game is great, but it's a little long.",
+        "It's very similar to Minecraft, but it's still a good game.",
+        "This game is amazing! I love the story and the characters.",
+        "This game is amazing! I love the gameplay and the graphics.",
+    ]
+    rand_users = [
+        repo.get_user('bob'),
+        repo.get_user('alice'),
+        repo.get_user('david'),
+    ]
+    for game in repo.get_games():
+        for i in range(random.randint(1, 3)):
+            rev = Review(rand_users[i], game, random.randint(0, 5), rand_reviews[random.randint(0, len(rand_reviews)-1)])
+            rand_users[i].add_review(rev)
+            game.add_review(rev)

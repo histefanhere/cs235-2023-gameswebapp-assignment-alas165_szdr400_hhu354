@@ -3,6 +3,10 @@ from flask import abort, render_template, Blueprint
 import games.adapters.repository as repo
 from games.game import services
 
+import math
+
+from games.authentication.authentication import login_required
+
 
 game_blueprint = Blueprint(
     'game_bp', __name__
@@ -45,3 +49,20 @@ def game_view(game_id):
         cloud_support = cloud_support,
         all_genres = [g.genre_name for g in all_genres]
     )
+
+@game_blueprint.context_processor
+def generate_star_rating():
+    def star_rating(rating):
+        # There's no half star unicode character :(
+        # return 'star ' * math.floor(rating) + 'star-half ' * (math.floor(rating) != math.ceil(rating)) + 'star-empty ' * (5 - math.ceil(rating))
+        return '★' * int(rating + 0.5) + '☆' * (5 - int(rating + 0.5))
+    return dict(star_rating=star_rating)
+
+# @game_blueprint.route('/game/<int:game_id>/new_review', methods=['GET', 'POST'])
+# def new_review(game_id):
+#     game_data = services.get_game_data(repo.repo_instance, game_id)
+
+#     if game_data is None:
+#         abort(404)
+
+#     form = ReviewForm()

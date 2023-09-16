@@ -6,6 +6,8 @@ from wtforms.validators import DataRequired, Length, ValidationError
 
 from password_validator import PasswordValidator
 
+from functools import wraps
+
 import games.adapters.repository as repo
 import games.authentication.services as services
 
@@ -91,3 +93,11 @@ def login():
         form_url=url_for('auth_bp.login')
     )
 
+
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if session.get('username') is None:
+            return redirect(url_for('auth_bp.login'))
+        return view(**kwargs)
+    return wrapped_view

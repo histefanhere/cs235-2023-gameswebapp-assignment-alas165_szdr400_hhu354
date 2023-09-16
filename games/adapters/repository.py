@@ -66,3 +66,8 @@ class AbstractRepository(abc.ABC):
     def add_user(self, user):
         """ Adds a user to the repository. """
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def add_review(self, review):
+        """ Adds a review to the repository. """
+        raise NotImplementedError
