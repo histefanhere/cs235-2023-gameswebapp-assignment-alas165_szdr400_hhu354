@@ -161,3 +161,7 @@ def populate(data_path: Path, repo: AbstractRepository):
             rev = Review(rand_users[i], game, random.randint(0, 5), rand_reviews[random.randint(0, len(rand_reviews)-1)], rand_date)
             rand_users[i].add_review(rev)
             game.add_review(rev)
+
+        for user in rand_users:
+            if random.random() > 0.9:
+                user.add_to_wishlist(game)

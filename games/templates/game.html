@@ -15,6 +15,9 @@
 
 {% block content %}
 
+<!-- Move me somewhere appropriate -->
+<a href="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}">Add to wishlist</a>
+
 <div id="game-header">
     <img src="{{ game.image_url }}" alt="Header image of game" class="game-image">
     <div id="game-info">
@@ -23,6 +26,7 @@
         <!-- info chips -->
         <div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
         <div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.recommendations }} Recommend This</div>
+        <a href="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}"><div class="chip button">Add to wishlist</div></a>
 
         <!-- <br/> -->
 

@@ -1,4 +1,4 @@
-from flask import abort, render_template, Blueprint
+from flask import abort, render_template, Blueprint, redirect, url_for, request, session
 
 import games.adapters.repository as repo
 from games.game import services
@@ -44,6 +44,7 @@ def game_view(game_id):
         title=f"My Title",
         heading="My Heading",
         game = game_data,
+        game_id = game_id,
         controller_support = controller_support,
         platform_support = platform_support,
         cloud_support = cloud_support,
@@ -66,3 +67,14 @@ def generate_star_rating():
 #         abort(404)
 
 #     form = ReviewForm()
+
+@game_blueprint.route('/game/add_to_wishlist', methods=['GET'])
+@login_required
+def add_to_wishlist():
+    # Something should actually happen to let the user know that the item has been added to their wishlist
+    game_id = int(request.args['game_id'])
+    user = repo.repo_instance.get_user(session['username'])
+    game = repo.repo_instance.get_game(game_id)
+    user.wishlist.add_game(game)
+    repo.repo_instance.add_user(user)
+    return redirect(url_for('game_bp.game_view', game_id=game_id))

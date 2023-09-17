@@ -1,6 +1,9 @@
 import datetime
 
 
+class Wishlist:
+    pass
+
 class Publisher:
     def __init__(self, publisher_name: str):
         if publisher_name == "" or type(publisher_name) is not str:
@@ -363,7 +366,7 @@ class User:
             raise ValueError('Password not valid!')
 
         self.__reviews: list[Review] = []
-        self.__favourite_games: list[Game] = []
+        self.__wishlist: Wishlist = Wishlist(self)
 
     @property
     def username(self):
@@ -388,18 +391,18 @@ class User:
         self.__reviews.remove(review)
 
     @property
-    def favourite_games(self) -> list:
-        return self.__favourite_games
+    def wishlist(self) -> Wishlist:
+        return self.__wishlist
 
-    def add_favourite_game(self, game):
-        if not isinstance(game, Game) or game in self.__favourite_games:
+    def add_to_wishlist(self, game):
+        if not isinstance(game, Game) or game in self.__wishlist:
             return
-        self.__favourite_games.append(game)
+        self.wishlist.add_game(game)
 
-    def remove_favourite_game(self, game):
-        if not isinstance(game, Game) or game not in self.__favourite_games:
+    def remove_from_wishlist(self, game):
+        if not isinstance(game, Game) or game not in self.__wishlist:
             return
-        self.__favourite_games.remove(game)
+        self.__wishlist.remove_game(game)
 
     def __repr__(self):
         return f"<User {self.__username}>"
@@ -490,7 +493,6 @@ class Wishlist:
         if not isinstance(user, User):
             raise ValueError("User must be an instance of User class")
         self.__user = user
-
         self.__list_of_games = []
 
     def list_of_games(self):

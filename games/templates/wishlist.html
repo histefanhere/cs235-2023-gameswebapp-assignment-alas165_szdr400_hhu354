@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>Browse Games</title>
+
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wishlist.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chip.css')}}" />
+{% endblock %}
+
+{% block content %}
+
+<h2>Placeholder header</h2>
+
+<div style="text-align: center;">
+    <h2>Showing {{games|length}} out of {{num_games}}</h2>
+
+    {% for game in games %}
+        <div style="width: 100%">
+            <a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">
+                <div class="game-card">
+                    <img src="{{ game.image_url }}" alt="Game Cover">
+                    <div class="game-card-info">
+                        <h3>{{ game.title }}</h3>
+                        <b>Price: </b> ${{ game.price }}<br>
+                        <b>Release Date: </b> {{ game.release_date }}<br>
+                        <b>popularity: </b> {{ game.recommendations }}<br>
+                    </div>
+                </div>
+            </a><br>
+            <a href="{{ url_for('wishlist_bp.remove_from_wishlist', game_id=game.game_id, page=page) }}"><div class="remove_from_wishlist">Remove from wishlist</div></a>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('wishlist_bp.wishlist', page=page-1) }}"><div class="button">Previous Page</div></a>
+        {% else %}
+            <div class="inactive-button">Previous Page</div>
+        {% endif %}
+
+        <b>Page: {{ page }} of: {{ max_page }}</b>
+
+        {% if page < max_page %}
+            <a href="{{ url_for('wishlist_bp.wishlist', page=page+1) }}"><div class="button">Next Page</div></a>
+        {% else %}
+            <div class="inactive-button">Next Page</div>
+        {% endif %}
+    </div>
+
+{% endblock %}

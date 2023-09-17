@@ -38,6 +38,9 @@ def create_app(test_config=None):
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 
+        from .wishlist import wishlist
+        app.register_blueprint(wishlist.wishlist_blueprint)
+
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
