@@ -67,12 +67,12 @@
     </div>
 </div>
 <ul id="game-reviews">
-    {% for review in game.reviews %}
+    {% for review in game.reviews|sort(attribute="date", reverse=true) %}
         <li class="review">
             <div class="review-header">
                 <span>{{ review.user.username }}</span>
                 <span class="stars">{{ star_rating(review.rating) }}</span>
-                <!-- <div class="review-date">{{ review.date }}</div> -->
+                <span>{{ review.date.strftime('%B %d, %Y')}}</span>
             </div>
             <div class="review-body">{{ review.comment }}</div>
         </li>

@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 
 
 class Publisher:
@@ -151,7 +151,7 @@ class Game:
         if isinstance(release_date, str):
             try:
                 # Check if the release_date string is in the correct date format (e.g., "Oct 21, 2008")
-                datetime.strptime(release_date, "%b %d, %Y")
+                datetime.datetime.strptime(release_date, "%b %d, %Y")
                 self.__release_date = release_date
             except ValueError:
                 raise ValueError("Release date must be in 'Oct 21, 2008' format!")
@@ -419,7 +419,7 @@ class User:
 
 
 class Review:
-    def __init__(self, user: User, game: Game, rating: int, comment: str):
+    def __init__(self, user: User, game: Game, rating: int, comment: str, date: datetime.date):
 
         if not isinstance(user, User):
             raise ValueError("User must be an instance of User class")
@@ -437,6 +437,10 @@ class Review:
             raise ValueError("Comment must be a string")
         self.__comment = comment.strip()
 
+        if not isinstance(date, datetime.date):
+            raise ValueError("Date must be a datetime date object")
+        self.__date = date
+
     @property
     def game(self) -> Game:
         return self.__game
@@ -452,6 +456,10 @@ class Review:
     @property
     def user(self) -> User:
         return self.__user
+    
+    @property
+    def date(self) -> datetime.date:
+        return self.__date
 
     @comment.setter
     def comment(self, new_text):

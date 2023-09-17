@@ -90,5 +90,12 @@
 .review .review-header span:nth-child(1) {
     font-size: 1.2em;
     font-weight: 600;
-    margin-right: 0.3em;
+    margin-right: 0.5em;
+}
+
+/* Review date */
+.review .review-header span:nth-child(3) {
+    margin-left: 0.3em;
+    font-size: 0.9em;
+    color: rgb(99, 95, 95);
 }
