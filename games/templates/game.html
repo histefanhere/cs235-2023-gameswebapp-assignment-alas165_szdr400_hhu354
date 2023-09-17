@@ -59,20 +59,25 @@
 <!-- reviews -->
 <h2><i class="fas fa-star header-icon"></i>Reviews</h2>
 {% set avg_rating = game.reviews|sum(attribute='rating') / game.reviews|length %}
-<div class="avg-rating">average rating: {{ star_rating(avg_rating) }} {{ avg_rating|round(1) }} stars</div>
-<div id="game-reviews">
+<div id="avg-ratings">
+    <div id="average-rating-container">
+        <h2>{{ avg_rating|round(1) }}</h2>
+        <span class="stars">{{ star_rating(avg_rating) }}</span>
+        <span>{{ game.reviews|length }} reviews</span>
+    </div>
+</div>
+<ul id="game-reviews">
     {% for review in game.reviews %}
-        <div class="review">
+        <li class="review">
             <div class="review-header">
-                <div class="reviewer-name">{{ review.user }}</div>
-                <div class="reviewer-rating">{{ review.rating }} stars</div>
-                <div class="reviewer-rating">{{ star_rating(review.rating) }}</div>
+                <span>{{ review.user.username }}</span>
+                <span class="stars">{{ star_rating(review.rating) }}</span>
                 <!-- <div class="review-date">{{ review.date }}</div> -->
             </div>
             <div class="review-body">{{ review.comment }}</div>
-        </div>
+        </li>
     {% endfor %}
-</div>
+</ul>
 
 <!-- categories -->
 <h2><i class="fas fa-shapes header-icon"></i>Categories</h2>

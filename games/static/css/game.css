@@ -44,3 +44,51 @@
 .header-icon {
     margin-right: 0.5em;
 }
+
+#avg-ratings {
+    /* background-color: #fff; */
+    margin: 0 auto;
+    /* display: inline-block; */
+}
+
+#average-rating-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#average-rating-container h2 {
+    margin: 0;
+    margin-bottom: -0.25em;
+    font-size: 2.7em;
+    font-weight: 400;
+}
+
+#average-rating-container .stars {
+    font-size: 1.2em;
+}
+
+.stars {
+    color: rgb(187, 121, 0);
+}
+
+/* Total review count */
+#average-rating-container span:nth-child(3) {
+    font-size: 0.9em;
+}
+
+/* Review list */
+#game-reviews {
+    list-style: none;
+}
+
+#game-reviews li {
+    margin-bottom: 0.7em;
+}
+
+/* Review username */
+.review .review-header span:nth-child(1) {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-right: 0.3em;
+}
