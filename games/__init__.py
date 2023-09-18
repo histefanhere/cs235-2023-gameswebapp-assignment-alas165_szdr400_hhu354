@@ -41,6 +41,13 @@ def create_app(test_config=None):
         from .wishlist import wishlist
         app.register_blueprint(wishlist.wishlist_blueprint)
 
+    @app.route('/profile')
+    def profile():
+        user_data = {
+            'username': 'Hamsu Test',
+        }
+        return render_template('profile.html', session=user_data)
+
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
