@@ -69,7 +69,7 @@
 }
 
 .stars {
-    color: rgb(187, 121, 0);
+    color: rgb(209, 136, 1);
 }
 
 /* Total review count */
@@ -98,4 +98,100 @@
     margin-left: 0.3em;
     font-size: 0.9em;
     color: rgb(99, 95, 95);
+}
+
+#review-button {
+    margin: 0.3em;
+    /* padding: 0.5em;
+    border-radius: 5px;
+    background-color: rgb(25, 207, 1);
+
+    cursor: pointer; */
+}
+
+.hidden {
+    display: none !important;
+}
+
+#review-modal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    
+    width: 100%;
+    height: 100%;
+}
+
+#review-box {
+    /* display: inline-flex; */
+    width: min-content;
+    
+    padding: 1.3rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+}
+
+/* form {
+    text-align: center;
+} */
+
+
+#review-box .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#review-box .flex span {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+#review-box .btn-close {
+    transform: translate(5px, -5px);
+    background: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 0.5rem 0.9rem;
+    border-radius: 50%;
+}
+
+#review-box .btn-close:hover {
+    background: #eee;
+}
+
+#rating-interactive-stars-container {
+    width: 100%;
+    text-align: center;
+}
+
+#rating-interactive-stars {
+    display: inline-block;
+
+    font-size: 4em;
+    padding: 0 0.5em;
+    margin: 0 auto;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+#review-box #review-submit {
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    background-color: rgb(100, 216, 85);
+
+    cursor: pointer;
 }

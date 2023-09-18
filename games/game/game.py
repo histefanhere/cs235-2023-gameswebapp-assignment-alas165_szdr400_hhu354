@@ -1,5 +1,9 @@
 from flask import abort, render_template, Blueprint, redirect, url_for, request, session
 
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, HiddenField, SubmitField
+from wtforms.validators import DataRequired, Length
+
 import games.adapters.repository as repo
 from games.game import services
 
@@ -12,12 +16,15 @@ game_blueprint = Blueprint(
     'game_bp', __name__
 )
 
+
 @game_blueprint.route('/game/<int:game_id>', methods=['GET'])
 def game_view(game_id):
     game_data = services.get_game_data(repo.repo_instance, game_id)
 
     if game_data is None:
         abort(404)
+
+    form = ReviewForm()
 
     platform_support = []
     if game_data.windows: platform_support.append('Windows')
@@ -45,11 +52,13 @@ def game_view(game_id):
         heading="My Heading",
         game = game_data,
         game_id = game_id,
+        form=form,
         controller_support = controller_support,
         platform_support = platform_support,
         cloud_support = cloud_support,
         all_genres = [g.genre_name for g in all_genres]
     )
+
 
 @game_blueprint.context_processor
 def generate_star_rating():
@@ -59,14 +68,36 @@ def generate_star_rating():
         return '★' * int(rating + 0.5) + '☆' * (5 - int(rating + 0.5))
     return dict(star_rating=star_rating)
 
-# @game_blueprint.route('/game/<int:game_id>/new_review', methods=['GET', 'POST'])
-# def new_review(game_id):
-#     game_data = services.get_game_data(repo.repo_instance, game_id)
 
-#     if game_data is None:
-#         abort(404)
+@game_blueprint.route('/game/<int:game_id>/review', methods=['POST'])
+@login_required
+def new_review(game_id):
+    form = ReviewForm()
+    game_data = services.get_game_data(repo.repo_instance, game_id)
 
-#     form = ReviewForm()
+    if game_data is None:
+        abort(404)
+
+    if form.validate_on_submit():
+        rating = int(form.rating.data)
+        comment = form.comment.data
+        services.add_review(repo.repo_instance, game_id, rating, comment)
+
+    return redirect(url_for('game_bp.game_view', game_id=game_id))
+
+
+class ReviewForm(FlaskForm):
+    game_id = HiddenField('Game ID')
+    rating = HiddenField('Rating', [
+        DataRequired(message='Rating required'),
+    ])
+    comment = TextAreaField('Comment about the game', [
+        DataRequired(),
+        Length(min=4, message='Your comment is too short'),
+        # ProfanityFree(message='Your comment must not contain profanity')
+    ])
+    submit = SubmitField('Submit review')
+
 
 @game_blueprint.route('/game/add_to_wishlist', methods=['GET'])
 @login_required
