@@ -23,6 +23,7 @@ def wishlist():
         page = page,
         max_page = max_page,
         num_games = len(wishlist.list_of_games()),
+        username = user.username
     )
 
 @wishlist_blueprint.route('/wishlist/remove/<int:game_id>', methods=['GET'])
