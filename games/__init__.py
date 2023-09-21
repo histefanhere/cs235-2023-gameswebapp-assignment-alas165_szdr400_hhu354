@@ -51,13 +51,15 @@ def create_app(test_config=None):
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
+    
+    @app.context_processor
+    def inject_genres():
+        genres = repo.repo_instance.get_genres()
+        return dict(all_genres = [g.genre_name for g in genres])
 
     @app.route('/')
     def home():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        genres = repo.repo_instance.get_genres()
-        print(genres)
-        return render_template('main.html', all_genres = [g.genre_name for g in genres], heading="Discover new games")
-
+        return render_template('main.html', heading="Discover new games")
 
     return app
