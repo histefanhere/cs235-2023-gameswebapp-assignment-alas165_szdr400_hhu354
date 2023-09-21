@@ -1,29 +1,28 @@
 #game-header {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    text-align: center;
 }
 
 .game-image {
-    flex: 3;
+    width: 100%;
+    max-width: 800px;
     height: auto;
-    border-radius: 30px 8px 8px 30px;
+    border-radius: 30px 30px 30px 30px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 #game-info {
-    flex: 2;
-    height: 100%;
     padding: 1em;
-    border-radius: 8px 30px 30px 8px;
+    margin: 0.4em auto;
+    border-radius: 30px 30px 30px 30px;
     background-color: #FFF;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 #game-info h1 {
-    font-size: 2.5em;
+    font-size: 2.1em;
+    margin: 0.3em 0;
 }
 
 #game-details {

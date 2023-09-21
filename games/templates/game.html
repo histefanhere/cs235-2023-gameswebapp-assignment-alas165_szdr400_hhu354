@@ -50,25 +50,16 @@
 
 <div id="game-header">
     <img src="{{ game.image_url }}" alt="Header image of game" class="game-image">
-    <div id="game-info">
-        <h1>{{ game.title }}</h1>
-
-        <!-- info chips -->
-        <div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
-        <div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.recommendations }} Recommend This</div>
-        <a href="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}"><div class="chip button">Add to wishlist</div></a>
-
-        <!-- <br/> -->
-
-        <!-- <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque sit illum, dolore porro nemo doloremque repellat iste dignissimos, natus repudiandae dolores est repellendus nobis? Error quam deleniti aperiam voluptatum quod...
-        </p> -->
-
-        <!-- <i class="fas fa-calendar"></i><strong>Release Date:</strong> {{ game.release_date }} -->
-    </div>
-
 </div>
 
+<div id="game-info">
+    <h1>{{ game.title }}</h1>
+
+    <!-- info chips -->
+    <div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
+    <div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.recommendations }} Recommend This</div>
+    <a href="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}"><div class="chip button">Add to wishlist</div></a>
+</div>
 
 <!-- description -->
 <h2><i class="fas fa-info-circle header-icon"></i>About</h2>
@@ -97,26 +88,30 @@
 {% else %}
     <a class="chip button" id="review-button" href="{{ url_for('auth_bp.login') }}">Write a review</a>
 {% endif %}
-{% set avg_rating = game.reviews|sum(attribute='rating') / game.reviews|length %}
-<div id="avg-ratings">
-    <div id="average-rating-container">
-        <h2>{{ avg_rating|round(1) }}</h2>
-        <span class="stars">{{ star_rating(avg_rating) }}</span>
-        <span>{{ game.reviews|length }} reviews</span>
+{% if game.reviews|length == 0 %}
+    <p>No reviews yet. Be the first to write one!</p>
+{% else %}
+    {% set avg_rating = game.reviews|sum(attribute='rating') / game.reviews|length %}
+    <div id="avg-ratings">
+        <div id="average-rating-container">
+            <h2>{{ avg_rating|round(1) }}</h2>
+            <span class="stars">{{ star_rating(avg_rating) }}</span>
+            <span>{{ game.reviews|length }} review{{ 's' if game.reviews|length > 1 else '' }}</span>
+        </div>
     </div>
-</div>
-<ul id="game-reviews">
-    {% for review in game.reviews|sort(attribute="date", reverse=true) %}
-        <li class="review">
-            <div class="review-header">
-                <span>{{ review.user.username }}</span>
-                <span class="stars">{{ star_rating(review.rating) }}</span>
-                <span>{{ review.date.strftime('%B %d, %Y')}}</span>
-            </div>
-            <div class="review-body">{{ review.comment }}</div>
-        </li>
-    {% endfor %}
-</ul>
+    <ul id="game-reviews">
+        {% for review in game.reviews|sort(attribute="date", reverse=true) %}
+            <li class="review">
+                <div class="review-header">
+                    <span>{{ review.user.username }}</span>
+                    <span class="stars">{{ star_rating(review.rating) }}</span>
+                    <span>{{ review.date.strftime('%B %d, %Y')}}</span>
+                </div>
+                <div class="review-body">{{ review.comment }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 <!-- categories -->
 <h2><i class="fas fa-shapes header-icon"></i>Categories</h2>

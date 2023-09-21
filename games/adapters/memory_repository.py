@@ -156,7 +156,7 @@ def populate(data_path: Path, repo: AbstractRepository):
         repo.get_user('david'),
     ]
     for game in repo.get_games():
-        for i in range(random.randint(1, 3)):
+        for i in range(random.randint(0, 3)):
             rand_date = datetime.date(random.randint(2010, 2023), random.randint(1, 12), random.randint(1, 28))
             rev = Review(rand_users[i], game, random.randint(0, 5), rand_reviews[random.randint(0, len(rand_reviews)-1)], rand_date)
             rand_users[i].add_review(rev)
