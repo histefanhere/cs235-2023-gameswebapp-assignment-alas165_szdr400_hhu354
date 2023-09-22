@@ -13,7 +13,7 @@ import games.authentication.services as services
 
 authentication_blueprint = Blueprint('auth_bp', __name__, url_prefix='/authentication')
 
-class PasswordValid():
+class PasswordValid(): # I feel like a lot of this stuff should be in services, but It's here in the covid app, so I guess this is where it should be.
     def __init__(self, message=None):
         if not message:
             message = 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one digit.'
@@ -92,6 +92,11 @@ def login():
         form=form,
         form_url=url_for('auth_bp.login')
     )
+
+@authentication_blueprint.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
 
 
 def login_required(view):

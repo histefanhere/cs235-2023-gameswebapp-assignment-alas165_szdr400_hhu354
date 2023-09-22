@@ -72,22 +72,26 @@
                 <span class="nav-item">Help</span>
               </a>
             </li>
-            <li> <!-- This should only exist if we're already signed in -->
-              <a href="#" class="logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="nav-item">Log out</span>
-              </a>
-            </li>
-            <li>
-              <!-- And these should only exist if we're not already signed in -->
-              <a href="{{ url_for('auth_bp.login') }}" class="login">
-                <!-- Someone else can add these icons -->
-                <span class="nav-item">Log in</span>
-            </li>
-            <li>
-              <a href="{{ url_for('auth_bp.register') }}" class="signup">
-                <span class="nav-item">Sign up</span>
-              </a>
+            {% if 'username' in session %}
+              <li>
+                <a href="{{ url_for('auth_bp.logout') }}" class="logout">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span class="nav-item">Log out</span>
+                </a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{{ url_for('auth_bp.login') }}" class="login">
+                  <i class="fas fa-sign-in-alt"></i>
+                  <span class="nav-item">Log in</span>
+              </li>
+              <li>
+                <a href="{{ url_for('auth_bp.register') }}" class="signup">
+                  <i class="fas fa-user-plus"></i>
+                  <span class="nav-item">Sign up</span>
+                </a>
+              </li>
+            {% endif %}
           </div> 
         </ul>
       </div>
