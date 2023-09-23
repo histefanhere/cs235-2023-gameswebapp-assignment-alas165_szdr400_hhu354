@@ -1,15 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block head %}
-    <!-- Will change the title here for login and sign up page -->
-    <title>Authenticate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css')}}" />
+    <title>{{ title }}</title>
 
     {{ super() }}
 
 {% endblock %}
 
 {% block content %}
-    <h2>Authenticate</h2>
+    <h2>{{ title }}</h2>
 
     <form action="{{ form_url }}" method="POST">
         {{ form.csrf_token }} <!-- Magic security token -->
