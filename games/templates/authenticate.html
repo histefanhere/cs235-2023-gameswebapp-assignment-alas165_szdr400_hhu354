@@ -1,39 +1,43 @@
 {% extends 'layout.html' %}
 
 {% block head %}
-    <!-- Will change the title here for login and sign up page -->
-    <title>Authenticate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css')}}"/>
+    <title>{{ title }}</title>
 
     {{ super() }}
 
 {% endblock %}
 
 {% block content %}
-    <h2>Authenticate</h2>
+
+<img class="background-wallpaper" src="{{ url_for('static', filename='img/wallpaper.jpg') }}" alt="Game themed wallpaper">
+<div class="auth-box">
+    <h2>{{ title }}</h2>
 
     <form action="{{ form_url }}" method="POST">
         {{ form.csrf_token }} <!-- Magic security token -->
 
         <div class="form-field">
-            <div class="error">
-                {% for error in form.username.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
             {{ form.username.label}}
             {{ form.username }}
+            <div class="error">
+                {% for error in form.username.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
         </div>
 
         <div class="form-field">
-            <div class="error">
-                {% for error in form.password.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
             {{ form.password.label}}
             {{ form.password }}
+            <div class="error">
+                {% for error in form.password.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
         </div>
 
         {{ form.submit }}
     </form>
+</div>
 {% endblock %}
