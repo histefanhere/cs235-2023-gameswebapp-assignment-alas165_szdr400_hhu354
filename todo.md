@@ -9,3 +9,9 @@
   - [ ] profile
   - [ ] browse
   - [ ] game page
+  - [ ] footer
+- [ ] Replace popularity with review score on browse page
+- [ ] Swap out add to wishlist with remove from wishlist on game page when game is in users wishlist.
+- [ ] Put the game info into chip form on browse page.
+- [ ] Profile specific styling should be in its own file.
+- [ ] Banner on profile page needs to be saved or there shouldn't be a banner at all.
