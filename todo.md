@@ -1,0 +1,11 @@
+# Todo List
+- [ ] Move profile stuff to it's own blueprint
+- [ ] Link profile nav item to profile page
+- [ ] Link wishlist page to profile page
+- [ ] Style authentication page
+- [ ] Remove or implement unimplemented content
+  - [x] navbar
+  - [ ] homepage
+  - [ ] profile
+  - [ ] browse
+  - [ ] game page
