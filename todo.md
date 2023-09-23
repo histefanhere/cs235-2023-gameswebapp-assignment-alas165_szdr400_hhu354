@@ -2,14 +2,14 @@
 - [ ] Move profile stuff to it's own blueprint
 - [ ] Link profile nav item to profile page
 - [ ] Link wishlist page to profile page
-- [ ] Style authentication page
+- [x] Style authentication page
 - [ ] Remove or implement unimplemented content
   - [x] navbar
-  - [ ] homepage
+  - [x] homepage
   - [ ] profile
   - [ ] browse
   - [ ] game page
-  - [ ] footer
+  - [x] footer
 - [ ] Replace popularity with review score on browse page
 - [ ] Swap out add to wishlist with remove from wishlist on game page when game is in users wishlist.
 - [ ] Put the game info into chip form on browse page.

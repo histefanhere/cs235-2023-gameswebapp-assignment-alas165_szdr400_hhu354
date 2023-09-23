@@ -303,6 +303,11 @@ footer {
   flex-wrap: wrap;
 }
 
+span.spacer{
+  flex: 100%;
+  height: 0;
+}
+
 .footer-logo {
   display: flex;
   align-items: center;
@@ -316,6 +321,7 @@ footer {
 .footer-links {
   display: flex;
   gap: 15px;
+  margin: auto;
 }
 
 .footer-links > a {
