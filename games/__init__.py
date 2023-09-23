@@ -43,8 +43,14 @@ def create_app(test_config=None):
 
     @app.route('/profile')
     def profile():
+        # Sample user data (replace with actual user data)
         user_data = {
             'username': 'Hamsu Test',
+            'wishlist': [
+                {'title': 'Game Title 1', 'added_by': 'User1'},
+                {'title': 'Game Title 2', 'added_by': 'User2'},
+                {'title': 'Game Title 3', 'added_by': 'User3'}
+            ]
         }
         return render_template('profile.html', session=user_data)
 

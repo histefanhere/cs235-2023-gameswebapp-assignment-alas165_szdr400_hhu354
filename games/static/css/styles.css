@@ -430,3 +430,131 @@ footer {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.edit-bio-button {
+  position: absolute;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* Adjust margin as needed */
+}
+
+
+.edit-bio-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#bio-editor {
+  width: 100%;
+  height: 100px; /* Adjust height as needed */
+  padding: 10px;
+  border: 1px solid var(--col-border);
+  border-radius: 5px;
+  resize: vertical;
+}
+
+#save-bio-button {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#save-bio-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.bio-content-container {
+  display: flex;
+  align-items: center;
+}
+
+#bio-content p {
+  margin: 0; /* Remove default margin for p */
+}
+
+.bio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.main-h1 {
+  margin: 0; /* Reset margin */
+}
+
+.wishlist-items {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.wishlist-item {
+  width: calc(33.33% - 20px); /* Adjust width and margin as needed */
+  margin: 0 10px 20px 0;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #fff;
+  border: 2px solid rgb(190, 190, 190);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.wishlist-item .wishlist-details {
+  display: flex;
+}
+
+.wishlist-item .img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wishlist-item .img i {
+  width: 70px;
+  font-size: 3rem;
+  margin-left: 1rem;
+  padding: 10px;
+  color: rgb(82, 22, 138);
+  background: rgb(216, 205, 226);
+}
+
+.wishlist-item .text {
+  margin-left: 2.3rem;
+}
+
+.wishlist-item .text h2 {
+  margin: 0;
+}
+
+.wishlist-item .text span {
+  color: rgb(116, 112, 112);
+}
+
+.wishlist-item .wishlist-score {
+  margin-top: auto;
+  text-align: right;
+}
+
+.wishlist-item .remove-button {
+  padding: 8px 15px;
+  background-color: rgba(220, 53, 69, 0.8);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.wishlist-item .remove-button:hover {
+  background-color: rgba(220, 53, 69, 1);
+}
