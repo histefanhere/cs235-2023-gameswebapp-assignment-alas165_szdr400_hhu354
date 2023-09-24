@@ -1,42 +1,49 @@
 import pytest
-from your_app import create_app
-from your_app.games.domainmodel.model import User
-from your_app.games.adapters.memory_repository import MemoryRepository
-from your_app.profile import services as profile_services
+from games.authentication import services as auth_services
+from games.domainmodel.model import Publisher, Genre, Game, Review, User, Wishlist
 
+# Fixture to create a sample user for testing
 @pytest.fixture
-def app():
-    app = create_app({'TESTING': True})
-    return app
+def sample_user():
+    return User("testuser", "Test123Password")
 
-@pytest.fixture
-def client(app):
-    return app.test_client()
+# Test user registration
+def test_register_user(sample_user):
+    user = sample_user
+    result = auth_services.register_user(user)
+    assert result == "Registration successful"
 
-@pytest.fixture
-def repo():
-    return MemoryRepository()
+# Test user registration with an existing username
+def test_register_existing_user(sample_user):
+    user = sample_user
+    # Register the user once
+    auth_services.register_user(user)
+    # Attempt to register the same user again
+    result = auth_services.register_user(user)
+    assert result == "Username already exists"
 
-@pytest.fixture
-def logged_in_user(client, repo):
-    # Create and log in a test user for the profile page tests
-    user = User('testuser', 'password')
-    repo.add_user(user)
-    with client.session_transaction() as session:
-        session['username'] = 'testuser'
-    return user
+# Test user login with valid credentials
+def test_login_valid_user(sample_user):
+    user = sample_user
+    # Register the user
+    auth_services.register_user(user)
+    # Attempt to log in with the correct username and password
+    result = auth_services.login_user(user.username, user.password)
+    assert result == "Login successful"
 
-def test_profile_page_access(client, logged_in_user):
-    # Test accessing the profile page when logged in
-    response = client.get('/profile')
-    assert response.status_code == 200  # Check if the page loads successfully
+# Test user login with invalid credentials
+def test_login_invalid_user(sample_user):
+    user = sample_user
+    # Attempt to log in with incorrect password
+    result = auth_services.login_user(user.username, "IncorrectPassword")
+    assert result == "Invalid username or password"
 
-def test_profile_page_access_when_not_logged_in(client):
-    # Test accessing the profile page when not logged in
-    response = client.get('/profile')
-    assert response.status_code == 302  # Check if the page redirects (to login)
-
-def test_profile_page_content(client, logged_in_user):
-    # Test if the profile page displays the username
-    response = client.get('/profile')
-    assert b'Welcome testuser' in response.data  # Check if 'Welcome testuser' is in the page content
+# Test user logout
+def test_logout_user(sample_user):
+    user = sample_user
+    # Register and log in the user
+    auth_services.register_user(user)
+    auth_services.login_user(user.username, user.password)
+    # Attempt to log out the user
+    result = auth_services.logout_user(user.username)
+    assert result == "Logout successful"
