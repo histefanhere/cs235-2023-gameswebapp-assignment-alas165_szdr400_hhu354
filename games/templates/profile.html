@@ -65,7 +65,7 @@
             </div>
             <div class="game_score">
                 <h4>{{ review.rating }}/5</h4>
-                <span>{{ review.date }}</span>
+                <span>{{ review.date.strftime('%B %d, %Y')}}</span>
             </div>
         </div>
     {% endfor %}
