@@ -75,5 +75,6 @@ def create_app(test_config=None):
     def home():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
         return render_template('main.html', heading="Discover new games")
+    
 
     return app
