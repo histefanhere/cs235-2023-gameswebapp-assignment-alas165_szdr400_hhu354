@@ -23,3 +23,25 @@ def client():
     })
 
     return my_app.test_client()
+
+
+# Class for managing authentication in tests
+# Just simplifies some of the code needed to log in and out
+class AuthenticationManager:
+    def __init__(self, client):
+        self._client = client
+
+    def login(self, username='test', password='test'):
+        return self._client.post(
+            'authentication/login',
+            data={'username': username, 'password': password}
+        )
+    
+    def logout(self):
+        return self._client.get('/authentication/logout')
+
+
+# Gives us access to the auth class in tests
+@pytest.fixture
+def auth(client):
+    return AuthenticationManager(client)

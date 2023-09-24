@@ -15,7 +15,12 @@
 
 {% block content %}
 
+<!-- If there are any errors in the form, it should be shown be default -->
+{% if form.errors %}
+<section id="review-modal">
+{% else %}
 <section class="hidden" id="review-modal">
+{% endif %}
     <div id="review-box">
         <div class="flex">
             <span>{{ game.title }}</span>
@@ -23,12 +28,19 @@
         </div>
         <p>Please keep in mind that your review will be public, and everyone will be able to see your username, rating, and the comment associated with your review.</p>
         <div class="form-wrapper">
-            <form action="{{ url_for('game_bp.new_review', game_id=game_id) }}" method="POST">
+            <form method="POST">
                 {{form.csrf_token}}
                 <div id="rating-interactive-stars-container">
                     <span class="stars" id="rating-interactive-stars">☆ ☆ ☆ ☆ ☆ </span>
                 </div>
-                <input type="hidden" name="rating" id="rating-value">
+                <input type="hidden" name="rating" id="rating-value" value="0">
+                {% if form.rating.errors %}
+                    <ul class="errors">
+        	            {% for error in form.rating.errors %}
+        		            <li>{{error}}</li>
+                        {% endfor %}
+                        </ul>
+                {% endif %}
                 <br>
                 <div class="form-field">
                     {{form.comment.label}}

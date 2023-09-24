@@ -5,7 +5,7 @@ from games.authentication.authentication import login_required
 profile_bp = Blueprint('profile_bp', __name__)
 
 @profile_bp.route('/profile')
-@login_required
+# @login_required
 def profile():
     print(services.get_short_wishlist())
     return render_template(

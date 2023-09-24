@@ -1,8 +1,8 @@
 from flask import abort, render_template, Blueprint, redirect, url_for, request, session
 
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, HiddenField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import TextAreaField, HiddenField, SubmitField, IntegerField
+from wtforms.validators import DataRequired, Length, NumberRange
 
 import games.adapters.repository as repo
 from games.game import services
@@ -17,7 +17,7 @@ game_blueprint = Blueprint(
 )
 
 
-@game_blueprint.route('/game/<int:game_id>', methods=['GET'])
+@game_blueprint.route('/game/<int:game_id>', methods=['GET', 'POST'])
 def game_view(game_id):
     game_data = services.get_game_data(repo.repo_instance, game_id)
 
@@ -25,6 +25,19 @@ def game_view(game_id):
         abort(404)
 
     form = ReviewForm()
+
+    if request.method == 'POST':
+        # User needs to be logged in to post a review
+        if 'username' not in session:
+            return redirect(url_for('auth_bp.login'))
+        
+        if form.validate_on_submit():
+            rating = int(form.rating.data)
+            comment = form.comment.data
+            services.add_review(repo.repo_instance, game_id, rating, comment)
+        # Form validation failed - this should handle itself automatically and show the invalid error messages
+        # else:
+        #     print('failed', form.errors)
 
     platform_support = []
     if game_data.windows: platform_support.append('Windows')
@@ -67,32 +80,14 @@ def generate_star_rating():
     return dict(star_rating=star_rating)
 
 
-@game_blueprint.route('/game/<int:game_id>/review', methods=['POST'])
-@login_required
-def new_review(game_id):
-    form = ReviewForm()
-    game_data = services.get_game_data(repo.repo_instance, game_id)
-
-    if game_data is None:
-        abort(404)
-
-    if form.validate_on_submit():
-        rating = int(form.rating.data)
-        comment = form.comment.data
-        services.add_review(repo.repo_instance, game_id, rating, comment)
-
-    return redirect(url_for('game_bp.game_view', game_id=game_id))
-
-
 class ReviewForm(FlaskForm):
-    game_id = HiddenField('Game ID')
-    rating = HiddenField('Rating', [
+    rating = IntegerField('Rating', [
         DataRequired(message='Rating required'),
+        NumberRange(min=1, max=5, message='Rating must be between 1 and 5')
     ])
     comment = TextAreaField('Comment about the game', [
         DataRequired(),
-        Length(min=4, message='Your comment is too short'),
-        # ProfanityFree(message='Your comment must not contain profanity')
+        Length(min=4, message='The review is too short! Please try to be more descriptive'),
     ])
     submit = SubmitField('Submit review')
 

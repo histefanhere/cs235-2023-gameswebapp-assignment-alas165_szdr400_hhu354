@@ -7,30 +7,21 @@
     <title>CS235</title>
 {% endblock %}
 
-{% block heading %}
-    <section class="profile-banner">
-        <img id="banner-image" src="{{ url_for('static', filename='img/placeholderbanner.jpg') }}" alt="Profile Banner">
-        <button class="edit-banner-button" onclick="openImageUpload()">Edit Banner</button>
-        <input type="file" id="image-upload" style="display: none;" accept="image/*" onchange="displayImage(this)">
-    </section>
-{% endblock %}
-
-
 {% block content %}
-    <div class="bio-header">
+    <!-- <div class="bio-header">
         <h1 class="main-h1">Bio</h1>
-        <button class="edit-bio-button" onclick="openBioEditor()">Edit Bio</button>
+        <div id="bio-content" contenteditable="true">{{ user.bio }}</div>
+        <button class="edit-bio-button" onclick="saveBio()">Edit Bio</button>
     </div>
 
-    <!-- Container for bio content -->
     <div class="bio-content-container">
         <div id="bio-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni tempore dolores, ullam beatae est suscipit. Doloribus deleniti ad ipsum nihil? Magnam sint cum commodi quae quidem vitae itaque expedita aliquid.</p>
+            <p>{{ user.bio }}</p>
         </div>
     </div>
 
-    <textarea id="bio-editor" style="display: none;"></textarea>
-
+    <textarea id="bio-editor" style="display: none;"></textarea> -->
+    <h1 style="text-align: center; font-size: x-large;">Welcome {{ user.username }}!</h1>
     <button id="save-bio-button" style="display: none;" onclick="saveBio()">Save Bio</button>
 
     <h1 class="main-h1" style="margin-top: 20px;">My Wishlist</h1>
@@ -61,57 +52,21 @@
     {% endif %}
 
     <h1 class="main-h1">My Game Reviews</h1>
-
-    <div class="row">
-        <p>There are more than <span>150</span> Game Reviews</p>
-        <a href="#">See all</a>
-    </div>
-
-    <div class="game_card">
-        <div class="game_details">
-            <div class="img">
-                <i class="fab fa-steam"></i>
+    {% for review in user.game_reviews %}
+        <div class="game_card">
+            <div class="game_details">
+                <div class="img">
+                    <i class="fab fa-steam"></i>
+                </div>
+                <div class="text">
+                    <h2>{{ review.title }}</h2>
+                    <span>Review by <strong>{{ review.reviewer }}</strong></span>
+                </div>
             </div>
-            <div class="text">
-                <h2>Game Title Here</h2>
-                <span>Review by <strong>Reviewer Name</strong></span>
-            </div>
-        </div>
-        <div class="game_score">
-            <h4>8.5/10</h4>
-            <span>2 days ago</span>
-        </div>
-    </div>
-
-    <div class="game_card">
-        <div class="game_details">
-            <div class="img">
-                <i class="fab fa-steam"></i>
-            </div>
-            <div class="text">
-                <h2>Game Title Here</h2>
-                <span>Review by <strong>Reviewer Name</strong></span>
+            <div class="game_score">
+                <h4>{{ review.score }}/10</h4>
+                <span>{{ review.date }}</span>
             </div>
         </div>
-        <div class="game_score">
-            <h4>8.5/10</h4>
-            <span>2 days ago</span>
-        </div>
-    </div>
-
-    <div class="game_card">
-        <div class="game_details">
-            <div class="img">
-                <i class="fab fa-steam"></i>
-            </div>
-            <div class="text">
-                <h2>Game Title Here</h2>
-                <span>Review by <strong>Reviewer Name</strong></span>
-            </div>
-        </div>
-        <div class="game_score">
-            <h4>8.5/10</h4>
-            <span>2 days ago</span>
-        </div>
-    </div>
+    {% endfor %}
 {% endblock %}
