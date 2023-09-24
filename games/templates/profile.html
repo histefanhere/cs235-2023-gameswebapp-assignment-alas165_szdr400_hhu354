@@ -34,25 +34,29 @@
     <button id="save-bio-button" style="display: none;" onclick="saveBio()">Save Bio</button>
 
     <h1 class="main-h1" style="margin-top: 20px;">My Wishlist</h1>
-
-    <div class="wishlist-items">
-        {% for item in session.wishlist %}
-            <div class="wishlist-item">
-                <div class="wishlist-details">
-                    <div class="img">
-                        <i class="fab fa-steam"></i>
+    {% if empty_wishlist %}
+        <p style="text-align: center; margin-top: 20px;">Your wishlist is empty!<br>Go check out some games on our <a href="{{ url_for('games_bp.browse_games') }}">browse</a> page to add games to your wishlist. </p>
+    {% else %}
+        {% for game in short_wishlist %}
+            <div class="wishlist-items">
+                <div class="wishlist-item">
+                    <div class="wishlist-details">
+                        <div class="img">
+                            <i class="fab fa-steam"></i>
+                        </div>
+                        <div class="text">
+                            <h2>{{ game.title }}</h2>
+                            <span>Added by <strong></strong></span>
+                        </div>
                     </div>
-                    <div class="text">
-                        <h2>{{ item.title }}</h2>
-                        <span>Added by <strong>{{ item.added_by }}</strong></span>
+                    <div class="wishlist-score">
+                        <a href="{{ url_for('wishlist_bp.remove_from_wishlist', game_id = game.game_id) }}" class="remove-button">Remove</a>
                     </div>
-                </div>
-                <div class="wishlist-score">
-                    <button class="remove-button" onclick="removeFromWishlist('{{ item.title }}')">Remove</button>
                 </div>
             </div>
         {% endfor %}
-    </div>
+        <p style="text-align: center; margin-top: 20px;"><a href="{{ url_for('wishlist_bp.wishlist')}}">Click here</a> to view your full wishlist!</p>
+    {% endif %}
 
     <h1 class="main-h1">My Game Reviews</h1>
 
