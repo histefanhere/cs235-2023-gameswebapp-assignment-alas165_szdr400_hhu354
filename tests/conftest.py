@@ -30,8 +30,12 @@ def client():
 class AuthenticationManager:
     def __init__(self, client):
         self._client = client
+        self.username = None
+        self.password = None
 
     def login(self, username='test', password='test'):
+        self.username = username
+        self.password = password
         return self._client.post(
             'authentication/login',
             data={'username': username, 'password': password}
