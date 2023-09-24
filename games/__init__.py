@@ -1,15 +1,29 @@
 """Initialize Flask app."""
 
 from pathlib import Path
-
 from flask import Flask, render_template
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
+import os
+from werkzeug.security import generate_password_hash
+from games.domainmodel.model import User
+from games.adapters.repository import AbstractRepository
+
+def initialize_admin_account(repo: AbstractRepository):
+    admin_username = "Sam"
+    admin_password = "Test12345"
+
+    if not repo.get_user(admin_username):
+        password_hash = generate_password_hash(admin_password)
+        admin_user = User(admin_username, password_hash)
+        repo.add_user(admin_user)
+        print("Admin account created successfully.")
+
 
 def create_app(test_config=None):
     """Construct the core application."""
-
+    print("Creating the Flask app...")
     # Create the Flask app object.
     app = Flask(__name__)
 
@@ -24,11 +38,15 @@ def create_app(test_config=None):
     
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
+
     # fill the repository from the provided csv file.
     populate(data_path, repo.repo_instance)
 
+    # Initialize the admin account
+    initialize_admin_account(repo.repo_instance)
+
     with app.app_context():
-        # Register the browse blueprint to the app instance.
+        # Register the blueprints to the app instance.
         from .browse import browse
         app.register_blueprint(browse.browse_blueprint)
 
@@ -41,18 +59,8 @@ def create_app(test_config=None):
         from .wishlist import wishlist
         app.register_blueprint(wishlist.wishlist_blueprint)
 
-    @app.route('/profile')
-    def profile():
-        # Sample user data (replace with actual user data)
-        user_data = {
-            'username': 'Hamsu Test',
-            'wishlist': [
-                {'title': 'Game Title 1', 'added_by': 'User1'},
-                {'title': 'Game Title 2', 'added_by': 'User2'},
-                {'title': 'Game Title 3', 'added_by': 'User3'}
-            ]
-        }
-        return render_template('profile.html', session=user_data)
+        from games.profile.profile import profile_bp
+        app.register_blueprint(profile_bp)
 
     @app.errorhandler(404)
     def page_not_found(e):

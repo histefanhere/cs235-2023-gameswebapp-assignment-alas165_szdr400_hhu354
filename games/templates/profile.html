@@ -13,6 +13,14 @@
         <button class="edit-banner-button" onclick="openImageUpload()">Edit Banner</button>
         <input type="file" id="image-upload" style="display: none;" accept="image/*" onchange="displayImage(this)">
     </section>
+
+    <div class="login-or-username">
+        {% if session.get('username') %}
+            Welcome, {{ session.get('username') }}
+        {% else %}
+            <a href="{{ url_for('auth_bp.register') }}">Sign Up</a>
+        {% endif %}
+    </div>
 {% endblock %}
 
 
