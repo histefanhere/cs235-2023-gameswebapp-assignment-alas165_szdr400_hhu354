@@ -79,7 +79,7 @@ def login():
             services.authenticate_user(form.username.data, form.password.data, repo.repo_instance)
             session.clear()
             session['username'] = form.username.data
-            return redirect(url_for('home'))
+            return redirect(url_for('profile_bp.profile'))
         except services.UnknownUserException:
             form.username.errors.append('Unknown username')
         except services.AuthenticationException:
