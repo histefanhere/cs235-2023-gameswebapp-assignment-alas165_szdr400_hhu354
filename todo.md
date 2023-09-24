@@ -1,18 +1,18 @@
 # Todo List
 
 ## High priority
-- [ ] Move profile stuff to it's own blueprint
-- [ ] Link profile nav item to profile page
-- [ ] Link wishlist page to profile page
+- [x] Move profile stuff to it's own blueprint
+- [x] Link profile nav item to profile page
+- [x] Link wishlist page to profile page
 - [x] Style authentication page
-- [ ] Remove or implement unimplemented content
+- [x] Remove or implement unimplemented content
   - [x] navbar
   - [x] homepage
-  - [ ] profile
-  - [ ] browse
-  - [ ] game page
+  - [x] profile
+  - [x] browse
+  - [x] game page
   - [x] footer
-- [ ] Banner on profile page needs to be saved or there shouldn't be a banner at all.
+- [x] Banner on profile page needs to be saved or there shouldn't be a banner at all.
 
 ## Low priority
 - [ ] Replace popularity with review score on browse page

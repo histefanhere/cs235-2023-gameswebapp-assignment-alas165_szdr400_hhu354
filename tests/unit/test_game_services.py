@@ -21,3 +21,29 @@ def test_game_service_getting_vaild_game_data(repo):
     game_data = game_services.get_game_data(repo, 40800)
     assert game_data.title == "Super Meat Boy"
     assert game_data.developer == "Team Meat"
+
+
+# def test_game_service_adding_review(repo):
+#     # Test that a review can be added to a game.
+#     game_services.add_review(repo, 457140, 5, "This game is great!")
+#     game_data = game_services.get_game_data(repo, 457140)
+#     assert len(game_data.reviews) == 1
+#     assert game_data.reviews[0].comment == "This game is great!"
+
+#     game_services.add_review(repo, 457140, 1, "This game is terrible!")
+#     game_data = game_services.get_game_data(repo, 457140)
+#     assert len(game_data.reviews) == 2
+#     assert game_data.reviews[1].comment == "This game is terrible!"
+
+
+# def test_game_service_check_if_reviewed(repo):
+#     # Test that the service can check if a user has already reviewed a game.
+#     game_services.add_review(repo, 457140, 5, "This game is great!")
+#     assert game_services.check_if_reviewed(repo, 457140, "thorke") is True
+#     assert game_services.check_if_reviewed(repo, 457140, "fmercury") is False
+#     assert game_services.check_if_reviewed(repo, 457140, "pmccartney") is False
+
+#     game_services.add_review(repo, 457140, 1, "This game is terrible!")
+#     assert game_services.check_if_reviewed(repo, 457140, "thorke") is True
+#     assert game_services.check_if_reviewed(repo, 457140, "fmercury") is False
+#     assert game_services.check_if_reviewed(repo, 457140, "pmccartney") is False

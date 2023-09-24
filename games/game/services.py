@@ -13,7 +13,21 @@ def add_review(repo: AbstractRepository, game_id: int, rating: int, comment: str
     user = repo.get_user(session['username'])
     game = repo.get_game(game_id)
 
+    if check_if_reviewed(repo, game_id, user.username):
+        raise ValueError
+
     rev = Review(user, game, rating, comment, datetime.date.today())
     user.add_review(rev)
     game.add_review(rev)
     repo.add_review(rev)
+
+
+# Check if user has already reviewed this game
+def check_if_reviewed(repo: AbstractRepository, game_id: int, username: str):
+    user = repo.get_user(username)
+
+    for rev in user.reviews:
+        if rev.game.game_id == game_id:
+            return True
+
+    return False

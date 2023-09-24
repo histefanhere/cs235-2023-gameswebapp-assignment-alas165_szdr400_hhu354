@@ -52,21 +52,25 @@
     {% endif %}
 
     <h1 class="main-h1">My Game Reviews</h1>
-    {% for review in user.reviews %}
-        <div class="game_card">
-            <div class="game_details">
-                <div class="img">
-                    <img src="{{review.game.image_url}}" alt="Game Image">
+    {% if user.reviews|length == 0 %}
+        <p style="text-align: center; margin-top: 20px;">You have no reviews!<br>Go review some games on our <a href="{{ url_for('games_bp.browse_games') }}">browse</a> page and they will appear here.</p>
+    {% else %}
+        {% for review in user.reviews %}
+            <div class="game_card">
+                <div class="game_details">
+                    <div class="img">
+                        <img src="{{review.game.image_url}}" alt="Game Image">
+                    </div>
+                    <div class="text">
+                        <h2>{{ review.game.title }}</h2>
+                        <span>{{ review.comment }}</span>
+                    </div>
                 </div>
-                <div class="text">
-                    <h2>{{ review.game.title }}</h2>
-                    <span>{{ review.comment }}</span>
+                <div class="game_score">
+                    <span>{{ star_rating(review.rating) }}</span><br>
+                    <span>{{ review.date.strftime('%B %d, %Y')}}</span>
                 </div>
             </div>
-            <div class="game_score">
-                <span>{{ star_rating(review.rating) }}</span><br>
-                <span>{{ review.date.strftime('%B %d, %Y')}}</span>
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

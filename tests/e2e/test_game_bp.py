@@ -52,3 +52,17 @@ def test_review_abnormal_inputs(client, auth, comment, rating, message):
 
     response = client.post('/game/457140', data={'comment': comment, 'rating': rating})
     assert message in response.data
+
+
+def test_multiple_reviews(client, auth):
+    auth.login()
+
+    response = client.post('/game/457140', data={'comment': 'My first review', 'rating': 5})
+    assert b'My first review' in response.data
+    assert b'You have already reviewed this game' in response.data
+
+    response = client.post('/game/457140', data={'comment': 'My second review', 'rating': 5})
+    assert b'My first review' in response.data
+
+    response = client.get('/game/457140')
+    assert not (b'My second review' in response.data)

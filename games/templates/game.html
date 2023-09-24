@@ -96,7 +96,11 @@
 <!-- reviews -->
 <h2><i class="fas fa-star header-icon"></i>Reviews</h2>
 {% if 'username' in session %}
-    <a class="chip button" id="review-button" onclick="openModal()">Write a review</a>
+    {% if already_reviewed %}
+        <p>You have already reviewed this game</p>
+    {% else %}
+        <a class="chip button" id="review-button" onclick="openModal()">Write a review</a>
+    {% endif %}
 {% else %}
     <a class="chip button" id="review-button" href="{{ url_for('auth_bp.login') }}">Write a review</a>
 {% endif %}

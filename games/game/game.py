@@ -34,10 +34,11 @@ def game_view(game_id):
         if form.validate_on_submit():
             rating = int(form.rating.data)
             comment = form.comment.data
-            services.add_review(repo.repo_instance, game_id, rating, comment)
-        # Form validation failed - this should handle itself automatically and show the invalid error messages
-        # else:
-        #     print('failed', form.errors)
+            try:
+                services.add_review(repo.repo_instance, game_id, rating, comment)
+            except ValueError:
+                # User has already reviewed this game
+                pass
 
     platform_support = []
     if game_data.windows: platform_support.append('Windows')
@@ -45,7 +46,6 @@ def game_view(game_id):
     if game_data.linux: platform_support.append('Linux')
     platform_support = ', '.join(platform_support)
 
-    print(game_data.categories)
     if 'Full controller support' in game_data.categories:
         controller_support = 'Full Support'
     elif 'Partial Controller Support' in game_data.categories:
@@ -58,6 +58,10 @@ def game_view(game_id):
     else:
         cloud_support = 'Not Supported'
 
+    already_reviewed = False
+    if 'username' in session:
+        already_reviewed = services.check_if_reviewed(repo.repo_instance, game_id, session['username'])
+
     return render_template(
         'game.html',
         title=f"My Title",
@@ -67,7 +71,8 @@ def game_view(game_id):
         form=form,
         controller_support = controller_support,
         platform_support = platform_support,
-        cloud_support = cloud_support
+        cloud_support = cloud_support,
+        already_reviewed = already_reviewed,
     )
 
 class ReviewForm(FlaskForm):
