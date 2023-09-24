@@ -70,16 +70,6 @@ def game_view(game_id):
         cloud_support = cloud_support
     )
 
-
-@game_blueprint.context_processor
-def generate_star_rating():
-    def star_rating(rating):
-        # There's no half star unicode character :(
-        # return 'star ' * math.floor(rating) + 'star-half ' * (math.floor(rating) != math.ceil(rating)) + 'star-empty ' * (5 - math.ceil(rating))
-        return '★' * int(rating + 0.5) + '☆' * (5 - int(rating + 0.5))
-    return dict(star_rating=star_rating)
-
-
 class ReviewForm(FlaskForm):
     rating = IntegerField('Rating', [
         DataRequired(message='Rating required'),

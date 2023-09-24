@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="game_score">
-                <h4>{{ review.rating }}/5</h4>
+                <span>{{ star_rating(review.rating) }}</span><br>
                 <span>{{ review.date.strftime('%B %d, %Y')}}</span>
             </div>
         </div>

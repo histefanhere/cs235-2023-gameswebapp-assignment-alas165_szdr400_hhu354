@@ -67,6 +67,14 @@ def create_app(test_config=None):
         return render_template('404.html'), 404
     
     @app.context_processor
+    def generate_star_rating():
+        def star_rating(rating):
+            # There's no half star unicode character :(
+            # return 'star ' * math.floor(rating) + 'star-half ' * (math.floor(rating) != math.ceil(rating)) + 'star-empty ' * (5 - math.ceil(rating))
+            return '★' * int(rating + 0.5) + '☆' * (5 - int(rating + 0.5))
+        return dict(star_rating=star_rating)
+
+    @app.context_processor
     def inject_genres():
         genres = repo.repo_instance.get_genres()
         return dict(all_genres = [g.genre_name for g in genres])
