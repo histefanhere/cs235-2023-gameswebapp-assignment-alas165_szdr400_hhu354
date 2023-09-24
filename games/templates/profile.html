@@ -39,17 +39,19 @@
     {% else %}
         {% for game in short_wishlist %}
             <div class="wishlist-items">
-                <div class="wishlist-item">
-                    <div class="wishlist-details">
+                <div class="game_card">
+                    <div class="game_details">
                         <div class="img">
-                            <i class="fab fa-steam"></i>
+                            <img src="{{game.image_url}}" alt="Game Image">
                         </div>
                         <div class="text">
-                            <h2>{{ game.title }}</h2>
-                            <span>Added by <strong></strong></span>
+                            <a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}"><h2>{{ game.title }}</h2></a>
+                            <span>Released: {{ game.release_date }}</span><br>
+                            <span>Developer: {{ game.developer }}</span><br>
+                            <span>Price: ${{ game.price }}</span>
                         </div>
                     </div>
-                    <div class="wishlist-score">
+                    <div class="game_score">
                         <a href="{{ url_for('wishlist_bp.remove_from_wishlist', game_id = game.game_id) }}" class="remove-button">Remove</a>
                     </div>
                 </div>
