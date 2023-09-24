@@ -155,6 +155,7 @@ def populate(data_path: Path, repo: AbstractRepository):
         repo.get_user('alice'),
         repo.get_user('david'),
     ]
+
     for game in repo.get_games():
         for i in range(random.randint(0, 3)):
             rand_date = datetime.date(random.randint(2010, 2023), random.randint(1, 12), random.randint(1, 28))

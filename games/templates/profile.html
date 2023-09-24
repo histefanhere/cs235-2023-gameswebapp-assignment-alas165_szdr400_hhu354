@@ -24,26 +24,32 @@
     <h1 style="text-align: center; font-size: x-large;">Welcome {{ user.username }}!</h1>
     <button id="save-bio-button" style="display: none;" onclick="saveBio()">Save Bio</button>
 
-    <h1 class="main-h1" style="margin-top: 20px;">My Wishlist</h1>
-
-    <div class="wishlist-items">
-        {% for item in user.wishlist %}
-            <div class="wishlist-item">
-                <div class="wishlist-details">
-                    <div class="img">
-                        <i class="fab fa-steam"></i>
+    <!-- <h1 class="main-h1" style="margin-top: 20px;">My Wishlist</h1> -->
+    <!-- {% if empty_wishlist %}
+        <p style="text-align: center; margin-top: 20px;">Your wishlist is empty!<br>Go check out some games on our <a href="{{ url_for('games_bp.browse_games') }}">browse</a> page to add games to your wishlist. </p>
+    {% else %}
+        {% for game in short_wishlist %}
+            <div class="wishlist-items">
+                <div class="game_card">
+                    <div class="game_details">
+                        <div class="img">
+                            <img src="{{game.image_url}}" alt="Game Image">
+                        </div>
+                        <div class="text">
+                            <a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}"><h2>{{ game.title }}</h2></a>
+                            <span>Released: {{ game.release_date }}</span><br>
+                            <span>Developer: {{ game.developer }}</span><br>
+                            <span>Price: ${{ game.price }}</span>
+                        </div>
                     </div>
-                    <div class="text">
-                        <h2>{{ item.title }}</h2>
-                        <span>Added by <strong>{{ item.added_by }}</strong></span>
+                    <div class="game_score">
+                        <a href="{{ url_for('wishlist_bp.remove_from_wishlist', game_id = game.game_id) }}" class="remove-button">Remove</a>
                     </div>
-                </div>
-                <div class="wishlist-score">
-                    <button class="remove-button" onclick="removeFromWishlist('{{ item.title }}')">Remove</button>
                 </div>
             </div>
         {% endfor %}
-    </div>
+        <p style="text-align: center; margin-top: 20px;"><a href="{{ url_for('wishlist_bp.wishlist')}}">Click here</a> to view your full wishlist!</p>
+    {% endif %} -->
 
     <h1 class="main-h1">My Game Reviews</h1>
     {% for review in user.game_reviews %}

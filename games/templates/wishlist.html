@@ -15,7 +15,6 @@
 
 <div style="text-align: center;">
     <h2>Showing {{games|length}} out of {{num_games}}</h2>
-
     {% for game in games %}
         <div style="width: 100%">
             <a href="{{ url_for('game_bp.game_view', game_id=game.game_id) }}">
