@@ -24,8 +24,8 @@
     <h1 style="text-align: center; font-size: x-large;">Welcome {{ user.username }}!</h1>
     <button id="save-bio-button" style="display: none;" onclick="saveBio()">Save Bio</button>
 
-    <!-- <h1 class="main-h1" style="margin-top: 20px;">My Wishlist</h1> -->
-    <!-- {% if empty_wishlist %}
+    <h1 class="main-h1" style="margin-top: 20px;">My Wishlist</h1>
+    {% if empty_wishlist %}
         <p style="text-align: center; margin-top: 20px;">Your wishlist is empty!<br>Go check out some games on our <a href="{{ url_for('games_bp.browse_games') }}">browse</a> page to add games to your wishlist. </p>
     {% else %}
         {% for game in short_wishlist %}
@@ -49,7 +49,7 @@
             </div>
         {% endfor %}
         <p style="text-align: center; margin-top: 20px;"><a href="{{ url_for('wishlist_bp.wishlist')}}">Click here</a> to view your full wishlist!</p>
-    {% endif %} -->
+    {% endif %}
 
     <h1 class="main-h1">My Game Reviews</h1>
     {% for review in user.game_reviews %}
