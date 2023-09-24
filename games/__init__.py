@@ -41,18 +41,8 @@ def create_app(test_config=None):
         from .wishlist import wishlist
         app.register_blueprint(wishlist.wishlist_blueprint)
 
-    @app.route('/profile')
-    def profile():
-        # Sample user data (replace with actual user data)
-        user_data = {
-            'username': 'Hamsu Test',
-            'wishlist': [
-                {'title': 'Game Title 1', 'added_by': 'User1'},
-                {'title': 'Game Title 2', 'added_by': 'User2'},
-                {'title': 'Game Title 3', 'added_by': 'User3'}
-            ]
-        }
-        return render_template('profile.html', session=user_data)
+        from games.profile.profile import profile_bp
+        app.register_blueprint(profile_bp)
 
     @app.errorhandler(404)
     def page_not_found(e):
