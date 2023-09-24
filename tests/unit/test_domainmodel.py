@@ -1,5 +1,6 @@
 import pytest
 import os
+import datetime
 from games.domainmodel.model import Publisher, Genre, Game, Review, User, Wishlist
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
@@ -296,25 +297,26 @@ def test_user_add_remove_favourite_games():
     game1 = Game(1, "Domino Game")
     game2 = Game(2, "Deer Journey")
     game3 = Game(3, "Fat City")
-    user1.add_favourite_game(game1)
-    user1.add_favourite_game(game2)
-    user1.add_favourite_game(game3)
-    assert repr(user1.favourite_games) == "[<Game 1, Domino Game>, <Game 2, Deer Journey>, <Game 3, Fat City>]"
-    assert len(user1.favourite_games) == 3
+    user1.add_to_wishlist(game1)
+    user1.add_to_wishlist(game2)
+    user1.add_to_wishlist(game3)
+    assert repr(user1.wishlist) == "<Wishlist [<Game 1, Domino Game>, <Game 2, Deer Journey>, <Game 3, Fat City>]>"
+    assert len(user1.wishlist) == 3
     game4 = Game(1, "Domino Game")
-    user1.add_favourite_game(game4)
-    assert len(user1.favourite_games) == 3
-    user1.remove_favourite_game(game1)
-    user1.remove_favourite_game(game2)
-    assert repr(user1.favourite_games) == "[<Game 3, Fat City>]"
+    user1.add_to_wishlist(game4)
+    assert len(user1.wishlist) == 3
+    user1.remove_from_wishlist(game1)
+    user1.remove_from_wishlist(game2)
+    assert repr(user1.wishlist) == "<Wishlist [<Game 3, Fat City>]>"
 
 
 def test_user_add_remove_reviews():
     user = User("Shyamli", "pw12345")
     game = Game(1, "Domino Game")
-    review1 = Review(user, game, 3, "Great game!")
-    review2 = Review(user, game, 4, "Superb game!")
-    review3 = Review(user, game, 2, "Boring game!")
+    date = datetime.date(2020, 10, 10)
+    review1 = Review(user, game, 3, "Great game!", date)
+    review2 = Review(user, game, 4, "Superb game!", date)
+    review3 = Review(user, game, 2, "Boring game!", date)
     assert len(user.reviews) == 0
     user.add_review(review1)
     user.add_review(review2)
@@ -335,23 +337,30 @@ def test_user_add_remove_reviews():
 def test_review_initialization():
     user = User("Shyamli", "pw12345")
     game = Game(1, "Domino Game")
-    review = Review(user, game, 4, "Great game!")
+    date = datetime.date(2020, 10, 10)
+    review = Review(user, game, 4, "Great game!", date)
     assert review.user == user
     assert review.game == game
     assert review.rating == 4
     assert review.comment == "Great game!"
+    assert review.date == date
 
     with pytest.raises(ValueError):
-        review2 = Review(user, game, 6, "Great game!")
+        review2 = Review(user, game, 6, "Great game!", date)
+
+    # Object needs to be a date, not a datetime
+    with pytest.raises(ValueError):
+        review3 = Review(user, game, 6, "Great game!", datetime.datetime(2020, 10, 10, 10, 10, 10))
 
 
 def test_review_eq():
     user = User("Shyamli", "pw12345")
     game = Game(1, "Domino Game")
-    review1 = Review(user, game, 4, "Great game!")
-    review2 = Review(user, game, 4, "Superb game!")
-    review3 = Review(user, game, 5, "Boring game!")
-    review4 = Review(user, game, 2, "Classic game!")
+    date = datetime.date(2020, 10, 10)
+    review1 = Review(user, game, 4, "Great game!", date)
+    review2 = Review(user, game, 4, "Superb game!", date)
+    review3 = Review(user, game, 5, "Boring game!", date)
+    review4 = Review(user, game, 2, "Classic game!", date)
     assert review1 == review1
     assert review1 != review3
     assert review1 != review4

@@ -533,3 +533,9 @@ class Wishlist:
         else:
             self.__current += 1
             return self.__list_of_games[self.__current - 1]
+        
+    def __repr__(self):
+        return f"<Wishlist {self.__list_of_games}>"
+    
+    def __len__(self):
+        return len(self.__list_of_games)
