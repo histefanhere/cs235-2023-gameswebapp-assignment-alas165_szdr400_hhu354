@@ -2,9 +2,16 @@
 
 from pathlib import Path
 from flask import Flask, render_template
+
+from sqlalchemy import create_engine, inspect
+from sqlalchemy.orm import clear_mappers, sessionmaker
+from sqlalchemy.pool import NullPool
+
 import games.adapters.repository as repo
-from games.adapters.memory_repository import populate
-from games.adapters.memory_repository import MemoryRepository
+import games.adapters.memory_repository as memory_repository
+import games.adapters.database_repository as database_repository
+from games.adapters.orm import metadata, map_model_to_tables
+
 import os
 from werkzeug.security import generate_password_hash
 from games.domainmodel.model import User
@@ -35,12 +42,42 @@ def create_app(test_config=None):
         # Load test configuration, and override any configuration settings.
         app.config.from_mapping(test_config)
         data_path = app.config['TEST_DATA_PATH']
-    
-    # Create the MemoryRepository implementation for a memory-based repository.
-    repo.repo_instance = MemoryRepository()
 
-    # fill the repository from the provided csv file.
-    populate(data_path, repo.repo_instance)
+    # Switch the type of repository used depending on the env variables
+    if app.config['REPOSITORY'] == 'memory':    
+        # Create the MemoryRepository implementation for a memory-based repository.
+        repo.repo_instance = memory_repository.MemoryRepository()
+
+        # fill the repository from the provided csv file.
+        memory_repository.populate(data_path, repo.repo_instance)
+
+    elif app.config['REPOSITORY'] == 'database':
+        uri = app.config['SQLALCHEMY_DATABASE_URI']
+        echo = app.config['SQLALCHEMY_ECHO']
+
+        database_engine = create_engine(uri, echo=echo,
+            connect_args={"check_same_thread": False}, poolclass=NullPool
+        )
+
+        session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)
+        repo.repo_instance = database_repository.DatabaseRepository(session_factory)
+
+        if app.config['TESTING'] == 'True' or len(database_engine.table_names()) == 0:
+            # Initialize the database if needed
+            print("INFO: REPOPULATING DATABASE...")
+
+            clear_mappers()
+            metadata.create_all(database_engine)
+            for table in reversed(metadata.sorted_tables):
+                database_engine.execute(table.delete())
+
+            map_model_to_tables()
+
+            database_repository.populate(data_path, repo.repo_instance)
+            print("INFO: REPOPULATION COMPLETE")
+        else:
+            # Generate mappings
+            map_model_to_tables()
 
     # Initialize the admin account
     initialize_admin_account(repo.repo_instance)
