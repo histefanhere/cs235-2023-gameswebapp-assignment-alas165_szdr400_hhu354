@@ -25,6 +25,7 @@ def add_review(repo: AbstractRepository, game_id: int, rating: int, comment: str
 # Check if user has already reviewed this game
 def check_if_reviewed(repo: AbstractRepository, game_id: int, username: str):
     user = repo.get_user(username)
+    if user is None: return False
 
     for rev in user.reviews:
         if rev.game.game_id == game_id:

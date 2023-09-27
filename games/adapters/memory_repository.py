@@ -6,16 +6,21 @@ from typing import List
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, Review, User
+from games.domainmodel.model import Game, Genre, Review, User, Publisher
 
 
 class MemoryRepository(AbstractRepository):
     def __init__(self):
+        self.__publishers = list()
         self.__games = list()
         self.__tags = list()
         self.__genres = list()
         self.__users = list()
         self.__reviews = list()
+
+    def add_publisher(self, publisher: Publisher):
+        if isinstance(publisher, Publisher) and publisher not in self.__publishers:
+            self.__publishers.append(publisher)
 
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -114,9 +119,14 @@ def populate(data_path: Path, repo: AbstractRepository):
 
     reader.read_csv_file()
 
+    publishers = reader.dataset_of_publishers
     games = reader.dataset_of_games
     tags = reader.dataset_of_tags
     genres = reader.dataset_of_genres
+
+    # Add publishers to the repo:
+    for publisher in publishers:
+        repo.add_publisher(publisher)
 
     # Add games to the repo:
     for game in games:

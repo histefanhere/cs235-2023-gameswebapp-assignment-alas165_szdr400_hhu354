@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from games.domainmodel.model import Game, Genre
+from games.domainmodel.model import Game, Genre, Publisher
 
 
 repo_instance = None
@@ -13,6 +13,11 @@ class RepositoryException(Exception):
 
 
 class AbstractRepository(abc.ABC):
+    @abc.abstractmethod
+    def add_publisher(self, publisher: Publisher):
+        """ Adds a publisher to the repository. """
+        raise NotImplementedError
+
     @abc.abstractmethod
     def add_game(self, game: Game):
         """ Add a game to the repository list of games. """
