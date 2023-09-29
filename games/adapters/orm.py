@@ -18,13 +18,17 @@ games_table = Table(
     Column('game_title', Text, nullable=False),
     Column('price', Float, nullable=False),
     Column('release_date', String(50), nullable=False),
-    Column('description', String(255), nullable=False),
+    Column('description', String(255), nullable=True),
     Column('image_url', String(255), nullable=False),
-    Column('website_url', String(255), nullable=False),
+    Column('website_url', String(255), nullable=True),
     Column('windows', Boolean, nullable=False),
     Column('mac', Boolean, nullable=False),
     Column('linux', Boolean, nullable=False),
     Column('categories', PickleType, nullable=False),
+    Column('achievements', Integer, nullable=False),
+    Column('developer', String(255), nullable=False),
+    Column('screenshots', PickleType, nullable=False),
+    Column('movies', PickleType, nullable=False),
     Column('publisher_name', ForeignKey('publishers.name'))
 )
 
@@ -45,5 +49,9 @@ def map_model_to_tables():
         '_Game__mac': games_table.c.mac,
         '_Game__linux': games_table.c.linux,
         '_Game__categories': games_table.c.categories,
+        '_Game__achievements': games_table.c.achievements,
+        '_Game__developer': games_table.c.developer,
+        '_Game__screenshots': games_table.c.screenshots,
+        '_Game__movies': games_table.c.movies,
         '_Game__publisher': relationship(Publisher)
     })
