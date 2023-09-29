@@ -3,7 +3,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import mapper, relationship
 
-from games.domainmodel.model import Publisher, Game
+from games.domainmodel.model import Publisher, Game, Genre, Tag
 
 metadata = MetaData()
 
@@ -32,6 +32,30 @@ games_table = Table(
     Column('publisher_name', ForeignKey('publishers.name'))
 )
 
+genres_table = Table(
+    'genres', metadata,
+    Column('genre_name', String(64), primary_key=True, nullable=False)
+)
+
+game_genres_table = Table(
+    'game_genres', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('game_id', ForeignKey('games.game_id')),
+    Column('genre_name', ForeignKey('genres.genre_name'))
+)
+
+tags_table = Table(
+    'tags', metadata,
+    Column('tag_name', String(64), primary_key=True, nullable=False)
+)
+
+game_tags_table = Table(
+    'game_tags', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('game_id', ForeignKey('games.game_id')),
+    Column('tag_name', ForeignKey('tags.tag_name'))
+)
+
 def map_model_to_tables():
     mapper(Publisher, publishers_table, properties={
         '_Publisher__publisher_name': publishers_table.c.name
@@ -53,5 +77,15 @@ def map_model_to_tables():
         '_Game__developer': games_table.c.developer,
         '_Game__screenshots': games_table.c.screenshots,
         '_Game__movies': games_table.c.movies,
-        '_Game__publisher': relationship(Publisher)
+        '_Game__publisher': relationship(Publisher),
+        '_Game__genres': relationship(Genre, secondary=game_genres_table),
+        '_Game__tags': relationship(Tag, secondary=game_tags_table)
+    })
+
+    mapper(Genre, genres_table, properties={
+        '_Genre__genre_name': genres_table.c.genre_name
+    })
+
+    mapper(Tag, tags_table, properties={
+        '_Tag__tag_name': tags_table.c.tag_name
     })

@@ -1,7 +1,7 @@
 import csv
 import os
 
-from games.domainmodel.model import Genre, Game, Publisher
+from games.domainmodel.model import Genre, Game, Publisher, Tag
 
 
 class GameFileCSVReader:
@@ -40,12 +40,13 @@ class GameFileCSVReader:
                         self.__dataset_of_genres.add(genre)
                         game.add_genre(genre)
 
-                    tags = row["Tags"].split(",")
-                    for tag in tags:
-                        # Could maybe make a class for tags, probably make a general class that parents genre and tag.
-                        tag = tag.strip().lower()
-                        self.__dataset_of_tags.add(tag)
-                        game.add_tag(tag)
+                    # Could maybe make a general class that parents genre and tag.
+                    tag_names = row["Tags"].split(",")
+                    if tag_names != ['']:
+                        for tag_name in tag_names:
+                            tag = Tag(tag_name.strip().lower())
+                            self.__dataset_of_tags.add(tag)
+                            game.add_tag(tag)
 
                     # Shhhhh don't tell anyone how bad of a security flaw this is
                     game.languages = eval(row["Supported languages"])

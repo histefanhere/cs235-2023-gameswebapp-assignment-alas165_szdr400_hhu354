@@ -65,7 +65,35 @@ class Genre:
 
     def __hash__(self):
         return hash(self.__genre_name)
-    
+
+
+class Tag:
+    def __init__(self, tag_name: str):
+        if tag_name == "" or type(tag_name) is not str:
+            self.__tag_name = None
+        else:
+            self.__tag_name = tag_name.strip()
+
+    @property
+    def tag_name(self) -> str:
+        return self.__tag_name
+
+    def __repr__(self) -> str:
+        return f'<Tag {self.__tag_name}>'
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return other.__tag_name == self.__tag_name
+
+    def __lt__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__tag_name < other.__tag_name
+
+    def __hash__(self):
+        return hash(self.__tag_name)
+
 
 class Recommendations(int):
     def __str__(self):
@@ -230,13 +258,13 @@ class Game:
     def tags(self) -> list:
         return self.__tags
     
-    def add_tag(self, tag: str):
-        if not isinstance(tag, str) or tag in self.__tags:
+    def add_tag(self, tag: Tag):
+        if not isinstance(tag, Tag) or tag in self.__tags:
             return
         self.__tags.append(tag)
     
-    def remove_tag(self, tag: str):
-        if not isinstance(tag, str):
+    def remove_tag(self, tag: Tag):
+        if not isinstance(tag, Tag):
             return
         try:
             self.__tags.remove(tag)

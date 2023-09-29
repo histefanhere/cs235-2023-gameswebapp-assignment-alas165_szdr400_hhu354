@@ -138,7 +138,7 @@
 <!-- tags -->
 <h2><i class="fas fa-tags header-icon"></i>Tags</h2>
 {% for tag in game.tags %}
-    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=tag) }}"><div class="button">{{ tag }}</div></a>
+    <a href="{{ url_for('games_bp.browse_games_with_options', subpath=tag.tag_name) }}"><div class="button">{{ tag.tag_name }}</div></a>
 {% endfor %}
 
 <div style="height: 200px"></div>

@@ -127,8 +127,7 @@ def create_app(test_config=None):
     @app.context_processor
     def inject_genres():
         genres = repo.repo_instance.get_genres()
-        # return dict(all_genres = [g.genre_name for g in genres]) # TODO: Bring this back
-        return dict(all_genres = [])
+        return dict(all_genres = [g.genre_name for g in genres])
 
     @app.route('/')
     def home():

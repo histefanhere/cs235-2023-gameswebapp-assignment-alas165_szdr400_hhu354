@@ -44,6 +44,16 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
     
     @abc.abstractmethod
+    def add_genre(self, genre: Genre):
+        """ Adds a genre to the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def add_genres(self, genres: List[Genre]):
+        """ Adds a list of genres to the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
     def get_genres(self) -> list[Genre]:
         """ Returns the list of genres. """
         raise NotImplementedError

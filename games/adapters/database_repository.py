@@ -86,9 +86,20 @@ class DatabaseRepository(AbstractRepository):
         """ Returns the number of games that exist in the repository. """
         pass
 
+    def add_genre(self, genre: Genre):
+        with self.__scm as scm:
+            scm.session.merge(genre)
+            scm.commit()
+
+    def add_genres(self, genres: List[Genre]):
+        with self.__scm as scm:
+            for genre in genres:
+                scm.session.merge(genre)
+            scm.commit()
+
     def get_genres(self) -> list[Genre]:
-        """ Returns the list of genres. """
-        pass
+        with self.__scm as scm:
+            return scm.session.query(Genre).all()
 
     def get_tags(self) -> list[str]:
         """ Returns the list of tags. """
@@ -133,10 +144,8 @@ def populate(data_path: Path, repo: AbstractRepository):
     # Add games to the repo:
     repo.add_games(games)
     
-    # # Add tags to the repo:
+    # Addding these specifically isn't needed because the ORM already automatically adds them when adding games & relates everything
     # for tag in tags:
     #     repo.add_tag(tag)
-    
-    # # Add genres to the repo:
-    # for genre in genres:
-    #     repo.add_genre(genre)
+    # Add genres to the repo
+    # repo.add_genres(genres)
