@@ -1,8 +1,10 @@
 import datetime
 
 
+# Allows us to use wishlist for type hinting before it's defined.
 class Wishlist:
     pass
+
 
 class Publisher:
     def __init__(self, publisher_name: str):
