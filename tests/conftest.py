@@ -1,16 +1,38 @@
 from pathlib import Path
 import pytest
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, clear_mappers
+
 from games import create_app
 from games.adapters import memory_repository as memory_repo
 
+from games.adapters import database_repository as db_repo
+from games.adapters.orm import metadata, map_model_to_tables
+
+
 TEST_DATA_PATH = Path('games') / '..' / 'tests' / 'data'
 
+TEST_DATABASE_URI_IN_MEMORY = 'sqlite://'
+TEST_DATABASE_URI_FILE = 'sqlite:///games-test.db'
+REPOSITORY = 'database'
 
 @pytest.fixture
 def repo():
-    repo = memory_repo.MemoryRepository()
-    memory_repo.populate(TEST_DATA_PATH, repo)
+    repo = None
+    if REPOSITORY == 'database':
+        clear_mappers()
+        engine = create_engine(TEST_DATABASE_URI_FILE)
+        metadata.create_all(engine)
+        for table in reversed(metadata.sorted_tables):
+            engine.execute(table.delete())
+        map_model_to_tables()
+        session_factory = sessionmaker(autocommit=False, autoflush=True, bind=engine)
+        repo = db_repo.DatabaseRepository(session_factory)
+        db_repo.populate(TEST_DATA_PATH, repo)
+    elif REPOSITORY == 'memory':
+        repo = memory_repo.MemoryRepository()
+        memory_repo.populate(TEST_DATA_PATH, repo)
     return repo
 
 
