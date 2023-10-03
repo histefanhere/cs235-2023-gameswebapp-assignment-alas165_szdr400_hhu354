@@ -19,12 +19,11 @@
     - [x] Publisher
     - [x] Genre
     - [x] Tag
-    - [ ] Recommendations (maybe?)
     - [x] Game
     - [ ] User
     - [ ] Review
     - [ ] Wishlist
-  - [ ] Browse and search features implemented with database
+  - [x] Browse and search features implemented with database
   - [ ] any updates to games details must be stored in database
   - [ ] User authentication should work with database
   - [ ] Users need to be saved/loaded to/from database
