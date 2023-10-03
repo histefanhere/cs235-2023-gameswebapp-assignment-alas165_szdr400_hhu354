@@ -20,4 +20,4 @@ class Config:
 
     REPOSITORY = environ.get('REPOSITORY')
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_ECHO = environ.get('SQLALCHEMY_ECHO') == 'True'
+    SQLALCHEMY_ECHO = environ.get('SQLALCHEMY_ECHO') == 'False'

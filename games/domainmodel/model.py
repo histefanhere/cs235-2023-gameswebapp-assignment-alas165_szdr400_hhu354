@@ -58,7 +58,7 @@ class Genre:
     def __eq__(self, other) -> bool:
         if not isinstance(other, self.__class__):
             return False
-        return other.genre_name == self.__genre_name
+        return other.genre_name.lower() == self.__genre_name.lower()
 
     def __lt__(self, other):
         if not isinstance(other, self.__class__):
@@ -82,6 +82,9 @@ class Tag:
 
     def __repr__(self) -> str:
         return f'<Tag {self.__tag_name}>'
+    
+    def __str__(self) -> str:
+        return self.__tag_name
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, self.__class__):
@@ -127,7 +130,7 @@ class Game:
         self.__reviews: list = []
         self.__publisher = None
         self.__tags: list = []
-        self.__recommendations = Recommendations(0)
+        self.__recommendations = 0
         self.__languages: list = []
         self.__windows: bool = False
         self.__mac: bool = False
@@ -276,12 +279,12 @@ class Game:
     
     @property
     def recommendations(self) -> float:
-        return self.__recommendations
+        return Recommendations(self.__recommendations)
     
     @recommendations.setter
     def recommendations(self, recommendations: int):
         if type(recommendations) is int and recommendations >= 0:
-            self.__recommendations = Recommendations(recommendations)
+            self.__recommendations = recommendations
 
     @property
     def languages(self) -> list:

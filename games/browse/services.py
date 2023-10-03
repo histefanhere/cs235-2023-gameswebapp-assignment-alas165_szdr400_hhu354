@@ -31,8 +31,7 @@ def parse_subpath(subpath, repo: AbstractRepository):
         tags_in_path = subpath[1:]
     else:
         tags_in_path = subpath
-
-    all_tags = repo.get_tags()
+    all_tags = [str(t).lower() for t in repo.get_tags()]
     # tags = list(filter(lambda x: x in all_tags, tags)).sort()
     redirect = False
     tags = []
@@ -41,7 +40,7 @@ def parse_subpath(subpath, repo: AbstractRepository):
             bisect.insort_left(tags, tag)
         else:
             redirect = True
-        
+    
     tag_str = '/'.join(tags)
     
     if tags == []:
@@ -62,7 +61,8 @@ def search_games(repo: AbstractRepository, page: int = 1, sort: str = None, *arg
 
 def get_random_tags(repo: AbstractRepository, n: int = 5) -> list[str]:
     from random import sample
-    return sample(repo.get_tags(), n)
+    tags = [t.tag_name for t in repo.get_tags()]
+    return sample(tags, n)
 
 def get_all_genres(repo: AbstractRepository) -> list[Genre]:
     return [g.genre_name for g in repo.get_genres()]

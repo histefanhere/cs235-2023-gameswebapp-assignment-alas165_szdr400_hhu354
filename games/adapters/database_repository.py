@@ -6,7 +6,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Publisher, Game, Genre, Review, User
+from games.domainmodel.model import Publisher, Game, Genre, Review, User, Tag
 
 
 # This manages the session to the database and lets us very simply interface with SQLAlchemy
@@ -84,7 +84,8 @@ class DatabaseRepository(AbstractRepository):
 
     def get_number_of_games(self):
         """ Returns the number of games that exist in the repository. """
-        pass
+        with self.__scm as scm:
+            return scm.session.query(Game).count()
 
     def add_genre(self, genre: Genre):
         with self.__scm as scm:
@@ -101,17 +102,50 @@ class DatabaseRepository(AbstractRepository):
         with self.__scm as scm:
             return scm.session.query(Genre).all()
 
-    def get_tags(self) -> list[str]:
+    def get_tags(self) -> list[Tag]:
         """ Returns the list of tags. """
-        pass
+        with self.__scm as scm:
+            return scm.session.query(Tag).all()
 
-    def search_games(self, price: float = float('inf'),
-                    #  release_date: (int, str idk),
-                    tags: list[str] = None,
-                    recommendations: int = 0,
-                    genre: Genre = None ) -> list[Game]:
+    def search_games(self,
+                     title: str = '',
+                     price: float = float('inf'),
+                     # release_date: (int, str idk),
+                     tags: list[str] = None,
+                     recommendations: int = 0,
+                     genre: Genre = None ) -> list[Game]:
         """ Returns the list of games that match the given criteria. """
-        pass
+        games = []
+        with self.__scm as scm:
+            games = scm.session.query(Game)
+            if title:
+                games = games.filter(Game._Game__game_title.contains(title))
+            games = games.filter(Game._Game__price <= price, Game._Game__recommendations >= recommendations)
+            
+            games = games.all()
+
+            # If someone know how to do this with SQLAlchemy, please let me know
+            if genre:
+                if isinstance(genre, str):
+                    genre = Genre(genre)
+                print(genre)
+                filtered_games = []
+                for game in games:
+                    print(game.genres)
+                    if genre in game.genres:
+                        filtered_games.append(game)
+                games = filtered_games
+
+            if tags:
+                filtered_games = []
+                tags = [Tag(t) for t in tags]
+                for game in games:
+                    if all(tag in game.tags for tag in tags):
+                        filtered_games.append(game)
+                games = filtered_games
+                
+
+        return games
     
     def get_user(self, username: str):
         """ Gets a user from the repository. """
