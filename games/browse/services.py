@@ -9,21 +9,6 @@ GAMES_PER_PAGE = 15
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 
-# def get_games(repo: AbstractRepository):
-#     games = repo.get_games()
-#     game_dicts = []
-#     for game in games:
-#         game_dict = {
-#             'game_id': game.game_id,
-#             'title': game.title,
-#             'game_url': game.release_date # wtf is this, I didn't write this did I?
-#         }
-#         game_dicts.append(game_dict)
-#     return game_dicts
-
-# def get_games_with_tags(repo: AbstractRepository, tags: list[str]):
-#     return repo.get_games_with_tags(tags)
-
 def sort_games(games: list[Game], sort: str):
     if sort == 'title':
         games.sort(key=lambda x: x.title)
