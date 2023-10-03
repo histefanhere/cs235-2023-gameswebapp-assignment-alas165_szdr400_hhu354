@@ -56,6 +56,38 @@ game_tags_table = Table(
     Column('tag_name', ForeignKey('tags.tag_name'))
 )
 
+users_table = Table(
+    'users', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('username', String(64), nullable=False),
+    Column('password', String(64), nullable=False),
+    Column('wishlist', ForeignKey('games.game_id'))
+)
+
+reviews_table = Table(
+    'reviews', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('user_id', ForeignKey('users.id'), nullable=False),
+    Column('game_id', ForeignKey('games.game_id'), nullable=False),
+    Column('rating', Integer, nullable=False),
+    Column('comment', String(255), nullable=False),
+    Column('timestamp', PickleType, nullable=False)    
+)
+
+wishlists_table = Table(
+    'wishlists', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('user_id', ForeignKey('users.id'), nullable=False)
+)
+
+wishlist_games_table = Table(
+    'wishlist_games', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('wishlist_id', ForeignKey('wishlists.id'), nullable=False),
+    Column('game_id', ForeignKey('games.game_id'), nullable=False)
+)
+
+
 def map_model_to_tables():
     mapper(Publisher, publishers_table, properties={
         '_Publisher__publisher_name': publishers_table.c.name
@@ -89,3 +121,5 @@ def map_model_to_tables():
     mapper(Tag, tags_table, properties={
         '_Tag__tag_name': tags_table.c.tag_name
     })
+
+    # Mapper needs to be done for User, review and wishlist.
