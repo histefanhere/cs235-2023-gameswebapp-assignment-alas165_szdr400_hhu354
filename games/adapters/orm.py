@@ -3,8 +3,6 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import mapper, relationship
 
-from games.domainmodel.model import Publisher, Game, Genre, Tag
-
 from games.domainmodel.model import Publisher, Game, Genre, Tag, User, Review, Wishlist
 
 metadata = MetaData()
