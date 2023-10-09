@@ -3,6 +3,10 @@ from typing import List
 
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, clear_mappers
+from games.adapters.orm import metadata, map_model_to_tables
+
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
@@ -149,15 +153,28 @@ class DatabaseRepository(AbstractRepository):
     
     def get_user(self, username: str):
         """ Gets a user from the repository. """
-        pass
-    
+        user = None
+        try:
+            user = self.__scm.session.query(User).filter(User._User__username == username).one()
+        except NoResultFound:
+            # Ignore any exception and return None.
+            pass
+
+        return user
+
     def add_user(self, user):
         """ Adds a user to the repository. """
-        pass
-    
+        with self.__scm as scm:
+            scm.session.add(user)
+            scm.commit()
+
     def add_review(self, review):
         """ Adds a review to the repository. """
-        pass
+        if isinstance(review, Review):
+            with self.__scm as scm:
+                scm.session.add(review)
+                scm.commit()
+
 
 
 def populate(data_path: Path, repo: AbstractRepository):
