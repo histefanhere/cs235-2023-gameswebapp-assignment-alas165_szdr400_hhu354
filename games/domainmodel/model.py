@@ -459,8 +459,11 @@ class Review:
 
         if not isinstance(user, User):
             raise ValueError("User must be an instance of User class")
+        
         self.__user = user
-
+        if user:
+            user.add_review(self)
+        
         if not isinstance(game, Game):
             raise ValueError("Game must be an instance of Game class")
         self.__game = game

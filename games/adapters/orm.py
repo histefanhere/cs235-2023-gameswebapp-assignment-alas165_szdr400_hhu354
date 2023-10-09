@@ -131,27 +131,22 @@ def map_model_to_tables():
 
     # User Mapping:
     mapper(User, users_table, properties={
-        '_User__id': users_table.c.id,
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
-        '_User__wishlist_games': relationship(Game, secondary=wishlist_games_table)
+        '_User__wishlist': relationship(Wishlist, back_populates="_Wishlist__user", uselist=False)  # Linking User to its Wishlist
     })
 
     # Review Mapping:
     mapper(Review, reviews_table, properties={
-        '_Review__id': reviews_table.c.id,
-        '_Review__user_id': reviews_table.c.user_id,
-        '_Review__game_id': reviews_table.c.game_id,
+        '_Review__user': relationship(User),
+        '_Review__game': relationship(Game),
         '_Review__rating': reviews_table.c.rating,
         '_Review__comment': reviews_table.c.comment,
         '_Review__timestamp': reviews_table.c.timestamp,
-        '_Review__user': relationship(User),
-        '_Review__game': relationship(Game)
     })
 
     # Wishlist Mapping:
     mapper(Wishlist, wishlists_table, properties={
-        '_Wishlist__id': wishlists_table.c.id,
-        '_Wishlist__user_id': wishlists_table.c.user_id,
-        '_Wishlist__games': relationship(Game, secondary=wishlist_games_table)
+        '_Wishlist__user': relationship(User, back_populates="_User__wishlist", uselist=False),  # back reference to the User
+        '_Wishlist__list_of_games': relationship(Game, secondary=wishlist_games_table)  # relation to the list of games in the wishlist
     })
