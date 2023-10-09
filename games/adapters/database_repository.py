@@ -132,10 +132,8 @@ class DatabaseRepository(AbstractRepository):
             if genre:
                 if isinstance(genre, str):
                     genre = Genre(genre)
-                print(genre)
                 filtered_games = []
                 for game in games:
-                    print(game.genres)
                     if genre in game.genres:
                         filtered_games.append(game)
                 games = filtered_games

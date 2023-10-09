@@ -9,7 +9,3 @@ venv
 *.db
 *.egg-info
 .DS_Store
-*.py
-*.py
-*.py
-*.py
