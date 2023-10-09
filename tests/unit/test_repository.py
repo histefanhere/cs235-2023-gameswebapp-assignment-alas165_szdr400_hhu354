@@ -35,6 +35,10 @@ class TestDatabaseRepository(unittest.TestCase):
         self.assertIsNotNone(retrieved_user)
         self.assertEqual(retrieved_user.username, "testuser")
         self.assertEqual(retrieved_user.password, "TestPassword123")
+    
+    def tearDown(self):
+        self.repo.reset_session()
+
 
 if __name__ == "__main__":
     unittest.main()
