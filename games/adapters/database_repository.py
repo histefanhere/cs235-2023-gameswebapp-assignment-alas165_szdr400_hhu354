@@ -3,10 +3,6 @@ from typing import List
 
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, clear_mappers
-from games.adapters.orm import metadata, map_model_to_tables
-
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
