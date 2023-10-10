@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 from typing import List
 
@@ -161,14 +162,14 @@ class DatabaseRepository(AbstractRepository):
     def add_user(self, user):
         """ Adds a user to the repository. """
         with self.__scm as scm:
-            scm.session.add(user)
+            scm.session.merge(user)
             scm.commit()
 
     def add_review(self, review):
         """ Adds a review to the repository. """
         if isinstance(review, Review):
             with self.__scm as scm:
-                scm.session.add(review)
+                scm.session.merge(review)
                 scm.commit()
 
 
@@ -196,3 +197,41 @@ def populate(data_path: Path, repo: AbstractRepository):
     #     repo.add_tag(tag)
     # Add genres to the repo
     # repo.add_genres(genres)
+
+
+    # TESTING: Add a bunch of random users to the repo
+    from games.authentication.services import add_user
+    add_user('test', 'test', repo)
+    add_user('bob', 'Bob123', repo)
+    add_user('alice', 'Alice123', repo)
+    add_user('david', 'David123', repo)
+
+    # TESTING: Add a bunch of random reviews to each game
+    import random
+    rand_reviews = [
+        "This game is okay, with good visuals but bad gameplay. Something to play if you want to show others your powerful PC.",
+        "Best game I've ever played! I've spent over 1000 hours on this game and I'm still not bored of it.",
+        "This game is terrible. I can't believe I wasted my money on this.",
+        "I don't know why this game is so popular. It's just a generic shooter.",
+        "This game is great, but it's a little short.",
+        "This game is great, but it's a little long.",
+        "It's very similar to Minecraft, but it's still a good game.",
+        "This game is amazing! I love the story and the characters.",
+        "This game is amazing! I love the gameplay and the graphics.",
+    ]
+    rand_users = [
+        repo.get_user('bob'),
+        repo.get_user('alice'),
+        repo.get_user('david'),
+    ]
+
+    for game in repo.get_games():
+    # game = repo.get_game(7940)
+    # if True:
+        for i in range(3):
+            rand_date = datetime.date(random.randint(2010, 2023), random.randint(1, 12), random.randint(1, 28))
+            rev = Review(rand_users[i], game, random.randint(0, 5), rand_reviews[random.randint(0, len(rand_reviews)-1)], rand_date)
+            # Seems like none of these are required to add a review to SQLAlchemy - how? why? what is this black magic?
+            # rand_users[i].add_review(rev)
+            # game.add_review(rev)
+            # repo.add_review(rev)

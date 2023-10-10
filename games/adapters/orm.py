@@ -1,5 +1,5 @@
 from sqlalchemy import (
-    Table, MetaData, Integer, Column, Text, Float, String, Boolean, PickleType, ForeignKey
+    Table, MetaData, Integer, Column, Text, Float, String, Boolean, PickleType, ForeignKey, Date
 )
 from sqlalchemy.orm import mapper, relationship
 
@@ -72,7 +72,7 @@ reviews_table = Table(
     Column('game_id', ForeignKey('games.game_id'), nullable=False),
     Column('rating', Integer, nullable=False),
     Column('comment', String(255), nullable=False),
-    Column('timestamp', PickleType, nullable=False)    
+    Column('date', Date, nullable=False)
 )
 
 wishlists_table = Table(
@@ -113,7 +113,8 @@ def map_model_to_tables():
         '_Game__movies': games_table.c.movies,
         '_Game__publisher': relationship(Publisher),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
-        '_Game__tags': relationship(Tag, secondary=game_tags_table)
+        '_Game__tags': relationship(Tag, secondary=game_tags_table),
+        '_Game__reviews': relationship(Review, back_populates="_Review__game")
     })
 
     mapper(Genre, genres_table, properties={
@@ -124,23 +125,22 @@ def map_model_to_tables():
         '_Tag__tag_name': tags_table.c.tag_name
     })
 
-    # Mapper needs to be done for User, review and wishlist.
-    # User, Review, Wishlist
-
     # User Mapping:
     mapper(User, users_table, properties={
+        '_User__id': users_table.c.id,
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
+        '_User__reviews': relationship(Review, back_populates="_Review__user"),
         '_User__wishlist': relationship(Wishlist, back_populates="_Wishlist__user", uselist=False)  # Linking User to its Wishlist
     })
 
     # Review Mapping:
     mapper(Review, reviews_table, properties={
-        '_Review__user': relationship(User),
-        '_Review__game': relationship(Game),
         '_Review__rating': reviews_table.c.rating,
         '_Review__comment': reviews_table.c.comment,
-        '_Review__timestamp': reviews_table.c.timestamp,
+        '_Review__date': reviews_table.c.date,
+        '_Review__user': relationship(User, back_populates="_User__reviews"),
+        '_Review__game': relationship(Game, back_populates="_Game__reviews"),
     })
 
     # Wishlist Mapping:
