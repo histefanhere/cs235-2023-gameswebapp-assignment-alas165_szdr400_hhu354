@@ -69,6 +69,7 @@
 
 .stars {
     color: rgb(209, 136, 1);
+    white-space: nowrap;
 }
 
 /* Total review count */
