@@ -24,6 +24,11 @@ def game_view(game_id):
     if game_data is None:
         abort(404)
 
+    in_wishlist = False
+    if 'username' in session:
+        user = repo.repo_instance.get_user(session['username'])
+        in_wishlist = game_data in user.wishlist
+
     form = ReviewForm()
 
     if request.method == 'POST':
@@ -35,7 +40,7 @@ def game_view(game_id):
             rating = int(form.rating.data)
             comment = form.comment.data
             try:
-                services.add_review(repo.repo_instance, game_id, rating, comment)
+                services.review(repo.repo_instance, game_id, rating, comment)
             except ValueError:
                 # User has already reviewed this game
                 pass
@@ -73,6 +78,7 @@ def game_view(game_id):
         platform_support = platform_support,
         cloud_support = cloud_support,
         already_reviewed = already_reviewed,
+        in_wishlist = in_wishlist,
     )
 
 class ReviewForm(FlaskForm):
@@ -87,7 +93,7 @@ class ReviewForm(FlaskForm):
     submit = SubmitField('Submit review')
 
 
-@game_blueprint.route('/game/add_to_wishlist', methods=['GET'])
+@game_blueprint.route('/game/add_to_wishlist', methods=['POST'])
 @login_required
 def add_to_wishlist():
     # Something should actually happen to let the user know that the item has been added to their wishlist
@@ -95,5 +101,15 @@ def add_to_wishlist():
     user = repo.repo_instance.get_user(session['username'])
     game = repo.repo_instance.get_game(game_id)
     user.wishlist.add_game(game)
+    repo.repo_instance.add_user(user)
+    return redirect(url_for('game_bp.game_view', game_id=game_id))
+
+@game_blueprint.route('/game/remove_from_wishlist', methods=['POST'])
+@login_required
+def remove_from_wishlist():
+    game_id = int(request.args['game_id'])
+    user = repo.repo_instance.get_user(session['username'])
+    game = repo.repo_instance.get_game(game_id)
+    user.wishlist.remove_game(game)
     repo.repo_instance.add_user(user)
     return redirect(url_for('game_bp.game_view', game_id=game_id))

@@ -70,7 +70,16 @@
     <!-- info chips -->
     <div class="chip price-chip"><i class="fas fa-dollar-sign"></i>{{ game.price }} USD</div>
     <div class="chip recommendation-chip"><i class="fas fa-thumbs-up"></i>{{ game.recommendations }} Recommend This</div>
-    <a href="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}"><div class="chip button">Add to wishlist</div></a>
+    {% if in_wishlist %}
+        <form action="{{ url_for('game_bp.remove_from_wishlist', game_id = game_id) }}" method="POST">
+            {{ form.csrf_token }}
+            <button type="submit" class="chip button">Remove from wishlist</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}" method="POST">
+            {{ form.csrf_token }}
+            <button type="submit" class="chip button">Add to wishlist</button>
+    {% endif %}
 </div>
 
 <!-- description -->
