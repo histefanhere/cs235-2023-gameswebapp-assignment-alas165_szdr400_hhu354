@@ -242,7 +242,7 @@ class Game:
         self.__reviews.remove(review)
 
     @property
-    def genres(self) -> list:
+    def genres(self) -> list[Genre]:
         return self.__genres
 
     def add_genre(self, genre: Genre):
@@ -260,7 +260,7 @@ class Game:
             pass
     
     @property
-    def tags(self) -> list:
+    def tags(self) -> list[Tag]:
         return self.__tags
     
     def add_tag(self, tag: Tag):
