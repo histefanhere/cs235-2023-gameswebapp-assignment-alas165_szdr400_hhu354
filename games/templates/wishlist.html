@@ -28,7 +28,10 @@
                     </div>
                 </div>
             </a><br>
-            <a href="{{ url_for('wishlist_bp.remove_from_wishlist', game_id=game.game_id, page=page) }}"><div class="remove_from_wishlist">Remove from wishlist</div></a>
+            <form method="POST" action="{{ url_for('wishlist_bp.remove_from_wishlist', game_id=game.game_id, page=page) }}">
+                {{ form.csrf_token }}
+                <button type="submit" class="chip button">Remove from wishlist</button>
+            </form>
         </div>
     {% endfor %}
 

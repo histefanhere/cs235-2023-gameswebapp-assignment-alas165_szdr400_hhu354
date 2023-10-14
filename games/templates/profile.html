@@ -3,6 +3,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chip.css') }}" />
     <script src="{{ url_for('static', filename='javascript/scripts.js') }}"></script>
     <title>CS235</title>
 {% endblock %}
@@ -43,7 +44,10 @@
                         </div>
                     </div>
                     <div class="game_score">
-                        <a href="{{ url_for('wishlist_bp.remove_from_wishlist', game_id = game.game_id) }}" class="remove-button">Remove</a>
+                        <form method="POST" action="{{ url_for('wishlist_bp.remove_from_wishlist', game_id = game.game_id) }}">
+                            {{ form.csrf_token }}
+                            <button type="submit" class="chip button">Remove from wishlist</button>
+                        </form>
                     </div>
                 </div>
             </div>

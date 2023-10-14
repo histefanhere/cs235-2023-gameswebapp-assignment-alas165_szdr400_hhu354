@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, url_for
+from flask_wtf import FlaskForm
+
 import games.profile.services as services
 from games.authentication.authentication import login_required
 import games.adapters.repository as repo
@@ -14,4 +16,5 @@ def profile():
         user = repo.repo_instance.get_user(session['username']),
         short_wishlist=services.get_short_wishlist(),
         empty_wishlist=True if len(services.get_short_wishlist()) == 0 else False,
+        form=FlaskForm,
         )
