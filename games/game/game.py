@@ -40,7 +40,7 @@ def game_view(game_id):
             rating = int(form.rating.data)
             comment = form.comment.data
             try:
-                services.review(repo.repo_instance, game_id, rating, comment)
+                services.add_review(repo.repo_instance, game_id, rating, comment)
             except ValueError:
                 # User has already reviewed this game
                 pass
