@@ -13,26 +13,13 @@ from games.adapters.orm import metadata, map_model_to_tables
 
 TEST_DATA_PATH = Path('games') / '..' / 'tests' / 'data'
 
-TEST_DATABASE_URI_IN_MEMORY = 'sqlite://'
-TEST_DATABASE_URI_FILE = 'sqlite:///games-test.db'
-REPOSITORY = 'database'
+# Might make it so that this is only the memory repo, db gets used in the e2e tests by the client.
+REPOSITORY = 'memory'
 
 @pytest.fixture
 def repo():
-    repo = None
-    if REPOSITORY == 'database':
-        clear_mappers()
-        engine = create_engine(TEST_DATABASE_URI_FILE)
-        metadata.create_all(engine)
-        for table in reversed(metadata.sorted_tables):
-            engine.execute(table.delete())
-        map_model_to_tables()
-        session_factory = sessionmaker(autocommit=False, autoflush=True, bind=engine)
-        repo = db_repo.DatabaseRepository(session_factory)
-        db_repo.populate(TEST_DATA_PATH, repo)
-    elif REPOSITORY == 'memory':
-        repo = memory_repo.MemoryRepository()
-        memory_repo.populate(TEST_DATA_PATH, repo)
+    repo = memory_repo.MemoryRepository()
+    memory_repo.populate(TEST_DATA_PATH, repo)
     return repo
 
 
@@ -41,7 +28,8 @@ def client():
     my_app = create_app({
         'TESTING': True,                                # Set to True during testing.
         'TEST_DATA_PATH': TEST_DATA_PATH,               # Path for loading test data into the repository.
-        'WTF_CSRF_ENABLED': False                       # test_client will not send a CSRF token, so disable validation.
+        'WTF_CSRF_ENABLED': False,                      # test_client will not send a CSRF token, so disable validation.
+        'REPOSITORY': 'memory',
     })
 
     return my_app.test_client()

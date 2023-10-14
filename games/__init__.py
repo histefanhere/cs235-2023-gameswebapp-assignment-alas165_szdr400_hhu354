@@ -53,8 +53,6 @@ def create_app(test_config=None):
 
     elif app.config['REPOSITORY'] == 'database':
         uri = app.config['SQLALCHEMY_DATABASE_URI']
-        if test_config is not None:
-            uri = app.config['SQLALCHEMY_DATABASE_TEST_URI']
         echo = app.config['SQLALCHEMY_ECHO']
 
         database_engine = create_engine(uri, echo=echo,

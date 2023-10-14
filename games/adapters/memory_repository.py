@@ -31,6 +31,10 @@ class MemoryRepository(AbstractRepository):
                 self.add_tag(tag)
             for genre in game.genres:
                 self.add_genre(genre)
+    
+    def add_games(self, games):
+        for game in games:
+            self.add_game(game)
 
 
     def get_games(self) -> List[Game]:
@@ -51,6 +55,10 @@ class MemoryRepository(AbstractRepository):
         if (isinstance(genre, Genre) and
             genre not in self.__genres):
             insort_left(self.__genres, genre)
+    
+    def add_genres(self, genres):
+        for genre in genres:
+            self.add_genre(genre)
 
     def get_tags(self) -> list[str]:
         return self.__tags
@@ -61,17 +69,6 @@ class MemoryRepository(AbstractRepository):
             return
         elif tag not in self.__tags:
             insort_left(self.__tags, tag)
-        
-    # def get_random_tags(self, n: int) -> list[str]: # Probably should be dealt with by services?
-    #     import random
-    #     return random.sample(self.__tags, n)
-    
-    # def get_games_with_tags(self, tags: list[str]) -> List[Game]:
-    #     games = []
-    #     for game in self.__games:
-    #         if all(tag in game.tags for tag in tags):
-    #             games.append(game)
-    #     return games
     
     def search_games(self, title: str = None,
                     price: float = float('inf'),
