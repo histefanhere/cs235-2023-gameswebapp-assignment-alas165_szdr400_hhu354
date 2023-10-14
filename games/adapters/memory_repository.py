@@ -6,7 +6,7 @@ from typing import List
 
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, Review, User, Publisher
+from games.domainmodel.model import Game, Genre, Review, User, Publisher, Tag
 
 
 class MemoryRepository(AbstractRepository):
@@ -60,11 +60,11 @@ class MemoryRepository(AbstractRepository):
         for genre in genres:
             self.add_genre(genre)
 
-    def get_tags(self) -> list[str]:
+    def get_tags(self) -> list[Tag]:
         return self.__tags
 
-    def add_tag(self, tag: str):
-        if (not isinstance(tag, str) or
+    def add_tag(self, tag: Tag):
+        if (not isinstance(tag, Tag) or
             tag == ''):
             return
         elif tag not in self.__tags:

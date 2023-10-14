@@ -1,7 +1,7 @@
 import pytest
 
 from games.adapters.memory_repository import MemoryRepository, populate
-from games.domainmodel.model import Game, Genre, Publisher
+from games.domainmodel.model import Game, Genre, Publisher, Tag
 
 def test_adding_games():
     repo = MemoryRepository()
@@ -35,12 +35,15 @@ def test_adding_genres():
 def test_adding_tags():
     repo = MemoryRepository()
     assert repo.get_tags() == []
-    repo.add_tag('tag a')
-    assert repo.get_tags() == ['tag a']
-    repo.add_tag('tag b')
-    assert repo.get_tags() == ['tag a', 'tag b']
-    repo.add_tag('tag a')
-    assert repo.get_tags() == ['tag a', 'tag b']
+    tag_a, tag_b, tag_c = Tag('tag a'), Tag('tag b'), Tag('tag c')
+    repo.add_tag(tag_a)
+    assert repo.get_tags() == [tag_a]
+    repo.add_tag(tag_b)
+    assert repo.get_tags() == [tag_a, tag_b]
+    repo.add_tag(tag_a)
+    assert repo.get_tags() == [tag_a, tag_b]
+    assert repo.get_tags() != [tag_b, tag_a]
+    assert tag_c not in repo.get_tags()
 
 def test_populate():
     # Check that the repo is empty before populating
@@ -63,9 +66,9 @@ def test_populate():
     assert Genre('not a real genre') not in repo.get_genres()
 
     # Check that the repo has tags in it.
-    assert '2d' in repo.get_tags()
-    assert '3d' in repo.get_tags()
-    assert 'not a real tag' not in repo.get_tags()
+    assert Tag('2d') in repo.get_tags()
+    assert Tag('3d') in repo.get_tags()
+    assert Tag('not a real tag') not in repo.get_tags()
 
 def test_search_games():
     repo = MemoryRepository()
