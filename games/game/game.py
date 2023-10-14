@@ -93,21 +93,19 @@ class ReviewForm(FlaskForm):
     submit = SubmitField('Submit review')
 
 
-@game_blueprint.route('/game/add_to_wishlist', methods=['POST'])
+@game_blueprint.route('/game/add_to_wishlist/<int:game_id>', methods=['POST'])
 @login_required
-def add_to_wishlist():
+def add_to_wishlist(game_id: int):
     # Something should actually happen to let the user know that the item has been added to their wishlist
-    game_id = int(request.args['game_id'])
     user = repo.repo_instance.get_user(session['username'])
     game = repo.repo_instance.get_game(game_id)
     user.wishlist.add_game(game)
     repo.repo_instance.add_user(user)
     return redirect(url_for('game_bp.game_view', game_id=game_id))
 
-@game_blueprint.route('/game/remove_from_wishlist', methods=['POST'])
+@game_blueprint.route('/game/remove_from_wishlist/<int:game_id>', methods=['POST'])
 @login_required
-def remove_from_wishlist():
-    game_id = int(request.args['game_id'])
+def remove_from_wishlist(game_id: int):
     user = repo.repo_instance.get_user(session['username'])
     game = repo.repo_instance.get_game(game_id)
     user.wishlist.remove_game(game)

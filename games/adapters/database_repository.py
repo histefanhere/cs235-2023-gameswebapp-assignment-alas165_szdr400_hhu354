@@ -160,10 +160,8 @@ class DatabaseRepository(AbstractRepository):
     def add_user(self, user):
         """ Adds a user to the repository. """
         with self.__scm as scm:
-            # Only add the user if they don't already exist in the repository.
-            if self.get_user(user.username) is None:
-                scm.session.merge(user)
-                scm.commit()
+            scm.session.merge(user)
+            scm.commit()
 
     def add_review(self, review):
         """ Adds a review to the repository. """
