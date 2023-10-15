@@ -52,5 +52,5 @@ def empty_session():
     map_model_to_tables()
     
     session_factory = sessionmaker(bind=engine)
-    yield session_factory
+    yield session_factory()
     metadata.drop_all(engine)
