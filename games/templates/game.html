@@ -79,6 +79,7 @@
         <form action="{{ url_for('game_bp.add_to_wishlist', game_id = game_id) }}" method="POST">
             {{ form.csrf_token }}
             <button type="submit" class="chip button">Add to wishlist</button>
+        </form>
     {% endif %}
 </div>
 
